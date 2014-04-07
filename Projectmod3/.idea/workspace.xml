@@ -121,19 +121,19 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="Protocol.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="Protocol.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/protocol/Protocol.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="5" column="13" selection-start="70" selection-end="70" vertical-scroll-proportion="0.111292966" vertical-offset="0" max-vertical-offset="611">
+            <state line="5" column="13" selection-start="70" selection-end="70" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="289">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Packet.java" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="Packet.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/protocol/Packet.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="19" column="144" selection-start="753" selection-end="753" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="544">
+            <state line="14" column="49" selection-start="521" selection-end="521" vertical-scroll-proportion="0.3979933" vertical-offset="0" max-vertical-offset="598">
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -464,19 +464,19 @@
     <option name="showOnlyWarnings" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/protocol/Packet.java">
+    <entry file="file://$PROJECT_DIR$/src/protocol/Protocol.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="19" column="144" selection-start="753" selection-end="753" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="544">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+        <state line="5" column="13" selection-start="70" selection-end="70" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="289">
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/protocol/Protocol.java">
+    <entry file="file://$PROJECT_DIR$/src/protocol/Packet.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="5" column="13" selection-start="70" selection-end="70" vertical-scroll-proportion="0.111292966" vertical-offset="0" max-vertical-offset="611">
-          <folding />
+        <state line="14" column="49" selection-start="521" selection-end="521" vertical-scroll-proportion="0.3979933" vertical-offset="0" max-vertical-offset="598">
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
