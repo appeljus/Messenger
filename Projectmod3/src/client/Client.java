@@ -2,6 +2,8 @@ package client;
 
 import java.io.IOException;
 import java.net.*;
+import java.util.ArrayList;
+
 import protocol.*;
 
 public class Client {
@@ -11,6 +13,7 @@ public class Client {
 	String id3 = "192.168.5.3";
 	String id4 = "192.168.5.4";
 	MulticastSocket s;
+	ArrayList<String> array = new ArrayList<String>();
 	
 	
 	public static void main(String[] args) {
