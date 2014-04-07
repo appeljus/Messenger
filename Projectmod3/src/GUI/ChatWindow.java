@@ -12,9 +12,11 @@ import java.awt.event.KeyListener;
 import java.io.InputStream;
 import java.util.Scanner;
 
+import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
+import javax.swing.border.Border;
 
 public class ChatWindow extends JFrame implements KeyListener {
 	
@@ -44,6 +46,8 @@ public class ChatWindow extends JFrame implements KeyListener {
 		
 		typeArea.setEditable(true);
 		textArea.setEditable(false);
+		
+		typeArea.setBorder(new Border(Borderfactory.createBevelBorder(2)));
 		
 		typeArea.addKeyListener(this);
 		
