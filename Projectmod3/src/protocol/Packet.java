@@ -1,5 +1,10 @@
 package protocol;
 
-public class Packet {
+public abstract class Packet {
 
+    private byte[] data;
+
+    public Packet(byte[] data){
+
+    }
 }
