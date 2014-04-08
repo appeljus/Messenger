@@ -9,7 +9,7 @@ public class ChatWindow extends JFrame implements KeyListener, ActionListener,
 		MouseListener {
 
 	/**
-	 * 
+	 * ############################
 	 */
 	private static final long serialVersionUID = 1L;
 
