@@ -49,7 +49,7 @@ public class LoginWindow extends JFrame implements ActionListener, KeyListener{
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		String txt = nameField.getText();
-		if(txt.length() != 0 && !txt.contains(" ")){
+		if(txt.length() != 0 && !txt.contains(" ") && !txt.equals("/w")){
 			System.out.println(txt);
 			this.dispose();
 			new ChatWindow(txt);
@@ -60,7 +60,7 @@ public class LoginWindow extends JFrame implements ActionListener, KeyListener{
 	public void keyPressed(KeyEvent arg0) {
 		if (arg0.getKeyCode() == 10) {
 			String txt = nameField.getText();
-			if(txt.length() != 0){
+			if(txt.length() != 0 && !txt.contains(" ") && !txt.equals("/w")){
 				this.dispose();
 				new ChatWindow(txt);
 			}
