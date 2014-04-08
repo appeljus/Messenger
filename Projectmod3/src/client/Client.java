@@ -13,7 +13,7 @@ public class Client {
 	String id3 = "192.168.5.3";
 	String id4 = "192.168.5.4";
 	MulticastSocket s;
-	ArrayList<String> array = new ArrayList<String>();
+	ArrayList<String> list = new ArrayList<String>();
 	
 	
 	public static void main(String[] args) {
@@ -26,6 +26,10 @@ public class Client {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		list.add(id1);
+		list.add(id2);
+		list.add(id3);
+		list.add(id4);
 	}
 	
 	public void receive() { 
@@ -45,6 +49,15 @@ public class Client {
 	}
 	
 	public void send(Packet packet) { 
-		InetAddress address = InetAddress.getByName(host);
+		String message = 
+		for (int i = 0; i<list.size(); i++) {
+			try {
+				InetAddress address = InetAddress.getByName(list.get(i));
+			} catch (UnknownHostException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+						
+		}
 	}
 }
