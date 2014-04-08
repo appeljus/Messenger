@@ -6,20 +6,14 @@ import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.GridLayout;
-import java.awt.Rectangle;
-import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.io.InputStream;
-import java.net.InetAddress;
-import java.net.UnknownHostException;
-import java.util.Scanner;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 import javax.swing.BorderFactory;
-import javax.swing.Box;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -27,24 +21,22 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import javax.swing.border.Border;
-import javax.swing.text.DefaultCaret;
 
 import client.Client;
 
-public class ChatWindow extends JFrame implements KeyListener, ActionListener {
+public class ChatWindow extends JFrame implements KeyListener, ActionListener,
+		MouseListener {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	
+
 	Client client;
-	
+
 	String myName;
-	
+
 	Container cont;
 	JPanel mainFrame;
 	JPanel menuBar;
@@ -104,7 +96,7 @@ public class ChatWindow extends JFrame implements KeyListener, ActionListener {
 
 		typeArea.addKeyListener(this);
 		sendBar.setLayout(new GridBagLayout());
-		
+
 		msgScroller = new JScrollPane(textArea);
 
 		GridBagConstraints c = new GridBagConstraints();
@@ -173,7 +165,7 @@ public class ChatWindow extends JFrame implements KeyListener, ActionListener {
 
 		pt1 = new JLabel("None");
 		pt1.setForeground(Color.WHITE);
-		// pt1.addMouseListener(this);
+		pt1.addMouseListener(this);
 		pt1.setPreferredSize(ptDim);
 		pt1.setMaximumSize(ptDim);
 		pt1.setMinimumSize(ptDim);
@@ -182,7 +174,7 @@ public class ChatWindow extends JFrame implements KeyListener, ActionListener {
 
 		pt2 = new JLabel("None");
 		pt2.setForeground(Color.WHITE);
-		// pt2.addMouseListener(this);
+		pt2.addMouseListener(this);
 		pt2.setPreferredSize(ptDim);
 		pt2.setMaximumSize(ptDim);
 		pt2.setMinimumSize(ptDim);
@@ -191,7 +183,7 @@ public class ChatWindow extends JFrame implements KeyListener, ActionListener {
 
 		pt3 = new JLabel("None");
 		pt3.setForeground(Color.WHITE);
-		// pt3.addMouseListener(this);
+		pt3.addMouseListener(this);
 		pt3.setPreferredSize(ptDim);
 		pt3.setMaximumSize(ptDim);
 		pt3.setMinimumSize(ptDim);
@@ -221,13 +213,28 @@ public class ChatWindow extends JFrame implements KeyListener, ActionListener {
 	}
 
 	private void addText(String txt) {
-		list.addElement(txt + "\n");
-		textArea.ensureIndexIsVisible(list.getSize()-1);
-		typeArea.setText("");
-		client.sendPacket(txt);
+		String[] words = txt.split(" ");
+		if (words[1] != words[2] && words[3] != null
+				&& words[1].equals("/w")) {
+			// whisper
+			String target = words[1];
+			words[1] = "";
+			words[2] = "";
+			String data = "";
+			for (int i = 3; i < words.length; i++) {
+				data = data + words[i];
+
+			}
+			System.out.println(data);
+		} else {
+			list.addElement(txt + "\n");
+			textArea.ensureIndexIsVisible(list.getSize() - 1);
+			typeArea.setText("");
+			client.sendPacket(txt);
+		}
 	}
-	
-	private String generateLine(String text){
+
+	private String generateLine(String text) {
 		return myName + ": " + text;
 	}
 
@@ -259,7 +266,7 @@ public class ChatWindow extends JFrame implements KeyListener, ActionListener {
 			System.exit(0);
 		} else if (arg0.getSource() == this.invite) {
 			this.addText("Type the ip-address of the person you want to invite in your typing area please.");
-			
+
 			inviting = true;
 		} else if (arg0.getSource() == this.opt) {
 			// display options window
@@ -268,5 +275,39 @@ public class ChatWindow extends JFrame implements KeyListener, ActionListener {
 			this.addText(generateLine(txt));
 			// also.. send the text
 		}
+	}
+
+	@Override
+	public void mouseClicked(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		if (arg0.getSource() == this.pt1 || arg0.getSource() == this.pt2
+				|| arg0.getSource() == this.pt3) {
+			JLabel x = (JLabel) arg0.getSource();
+			typeArea.setText("/w " + x.getText() + " ");
+		}
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void mouseExited(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void mousePressed(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+
 	}
 }
