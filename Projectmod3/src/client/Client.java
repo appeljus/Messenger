@@ -62,8 +62,8 @@ public class Client {
 		}
 	}
 	
-	public void sendPacket() {
-		
+	public void sendPacket(String message) {
+		byte[] data = message.getBytes();
 		for (int i = 0; i<list.size(); i++) {
 			InetAddress address = null;
 			if(list.get(i) != this.getIP()) {
@@ -74,10 +74,13 @@ public class Client {
 					e.printStackTrace();
 				}
 				DatagramPacket packetToSend = new DatagramPacket(data, data.length, address, port);
-				s.send(packetToSend);
-			}
-			
-			
+				try {
+					s.send(packetToSend);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}	
 		}
 	}
 }
