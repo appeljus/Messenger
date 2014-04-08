@@ -214,10 +214,10 @@ public class ChatWindow extends JFrame implements KeyListener, ActionListener,
 
 	private void addText(String txt) {
 		String[] words = txt.split(" ");
-		typeArea.setText("");
 
 		if (words.length >= 3 && words[1].equals("/w")) {
 			System.out.println(txt);
+			typeArea.setText(words[1] + " " + words[2] + " ");
 			// whisper
 			String target = words[2];
 			words[1] = "";
