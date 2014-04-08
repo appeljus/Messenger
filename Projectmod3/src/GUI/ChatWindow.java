@@ -1,28 +1,8 @@
 package GUI;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Container;
-import java.awt.Dimension;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-
-import javax.swing.BorderFactory;
-import javax.swing.DefaultListModel;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JList;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTextField;
-
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
 import client.Client;
 
 public class ChatWindow extends JFrame implements KeyListener, ActionListener,
@@ -34,6 +14,8 @@ public class ChatWindow extends JFrame implements KeyListener, ActionListener,
 	private static final long serialVersionUID = 1L;
 
 	Client client;
+	
+	Boolean wantPersTabs = true;
 
 	String myName;
 
@@ -42,8 +24,6 @@ public class ChatWindow extends JFrame implements KeyListener, ActionListener,
 	JPanel menuBar;
 	JPanel sendBar;
 
-	// private Dimension windowSize =
-	// Toolkit.getDefaultToolkit().getScreenSize();
 	private Dimension windowSize = new Dimension(800, 600);
 
 	JTextField typeArea = new JTextField();
@@ -272,9 +252,7 @@ public class ChatWindow extends JFrame implements KeyListener, ActionListener,
 		if (arg0.getSource() == this.exit) {
 			System.exit(0);
 		} else if (arg0.getSource() == this.invite) {
-			this.addText("Type the ip-address of the person you want to invite in your typing area please.");
-
-			inviting = true;
+			this.addText("Nope");
 		} else if (arg0.getSource() == this.opt) {
 			// display options window
 		} else if (arg0.getSource() == this.send) {
@@ -290,7 +268,11 @@ public class ChatWindow extends JFrame implements KeyListener, ActionListener,
 		if (arg0.getSource() == this.pt1 || arg0.getSource() == this.pt2
 				|| arg0.getSource() == this.pt3) {
 			JLabel x = (JLabel) arg0.getSource();
-			typeArea.setText("/w " + x.getText() + " ");
+			if(this.wantPersTabs){
+				new PersonalChat(client, myName, x.getText());
+			}else{
+				typeArea.setText("/w " + x.getText() + " ");
+			}
 		}
 	}
 
