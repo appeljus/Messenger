@@ -223,10 +223,6 @@ public class ChatWindow extends JFrame implements KeyListener, ActionListener {
 		typeArea.setText("");
 		client.sendPacket(txt);
 	}
-
-	public static void main(String[] arg0) {
-		ChatWindow x = new ChatWindow("Ei");
-	}
 	
 	private String generateLine(String text){
 		return myName + ": " + text;

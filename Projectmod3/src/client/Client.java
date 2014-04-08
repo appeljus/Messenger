@@ -67,7 +67,6 @@ public class Client {
 	}
 	
 	public void sendPacket(String message) {
-		System.out.println(message);
 		byte[] data = message.getBytes();
 		for (int i = 0; i<list.size(); i++) {
 			InetAddress address = null;
