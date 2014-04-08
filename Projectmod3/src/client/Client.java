@@ -16,7 +16,6 @@ public class Client extends Thread {
 	String id4 = "192.168.5.4";
 	MulticastSocket s;
 	InetAddress group;
-	//	ArrayList<String> list = new ArrayList<String>();
 
 	public Client(ChatWindow c) {
 		chatwindow = c;
@@ -30,11 +29,6 @@ public class Client extends Thread {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		Thread x = new Thread(this);
-		//		list.add(id1);
-		//		list.add(id2);
-		//		list.add(id3);
-		//		list.add(id4);
 	}
 	
 	public void run(){
@@ -61,7 +55,7 @@ public class Client extends Thread {
 
 			s.receive(packet);
 			byte[] receiveData = packet.getData();
-			chatwindow.addText(receiveData.toString());
+			chatwindow.incoming(receiveData.toString());
 			String destination = packet.getAddress().toString();
 			if (!destination.equals(this.getIP())) {
 				s.send(packet);
