@@ -49,7 +49,8 @@ public class LoginWindow extends JFrame implements ActionListener, KeyListener{
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		String txt = nameField.getText();
-		if(txt.length() != 0 && !txt.contains(" ") && !txt.equals("/w")){
+		if(txt.length() != 0 && !txt.contains(" ")){
+			System.out.println(txt);
 			this.dispose();
 			new ChatWindow(txt);
 		}
