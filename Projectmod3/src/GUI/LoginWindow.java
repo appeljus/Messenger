@@ -33,7 +33,7 @@ public class LoginWindow extends JFrame implements ActionListener, KeyListener{
 		
 		nameField = new JTextField();
 		nameField.addKeyListener(this);
-		nameField.setBorder(BorderFactory.createLineBorder(Color.black, 3));
+		nameField.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY, 3));
 		
 		c.add(nameField,BorderLayout.CENTER);
 		c.add(loginButton,BorderLayout.EAST);

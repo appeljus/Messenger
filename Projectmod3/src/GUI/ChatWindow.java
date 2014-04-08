@@ -92,7 +92,7 @@ public class ChatWindow extends JFrame implements KeyListener, ActionListener,
 
 		typeArea.setEditable(true);
 
-		typeArea.setBorder(BorderFactory.createLineBorder(Color.black, 3));
+		typeArea.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY, 3));
 
 		typeArea.addKeyListener(this);
 		sendBar.setLayout(new GridBagLayout());
@@ -111,7 +111,7 @@ public class ChatWindow extends JFrame implements KeyListener, ActionListener,
 		c.gridx = 1;
 
 		send = new JButton("Send");
-		send.setPreferredSize(new Dimension(64, 32));
+		send.setPreferredSize(new Dimension(96, 32));
 		send.addActionListener(this);
 		sendBar.add(send);
 
@@ -216,7 +216,6 @@ public class ChatWindow extends JFrame implements KeyListener, ActionListener,
 		String[] words = txt.split(" ");
 
 		if (words.length >= 3 && words[1].equals("/w")) {
-			System.out.println(txt);
 			typeArea.setText(words[1] + " " + words[2] + " ");
 			// whisper
 			String target = words[2];
@@ -235,6 +234,7 @@ public class ChatWindow extends JFrame implements KeyListener, ActionListener,
 			textArea.ensureIndexIsVisible(list.getSize() - 1);
 		} else {
 			client.sendPacket(txt);
+			typeArea.setText("");
 			list.addElement(txt + "\n");
 			textArea.ensureIndexIsVisible(list.getSize() - 1);
 		}
