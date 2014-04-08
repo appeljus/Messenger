@@ -173,7 +173,7 @@ public class ChatWindow extends JFrame implements KeyListener, ActionListener {
 		//pt3.addMouseListener(this);
 		pt3.setPreferredSize(ptDim);
 		pt3.setMaximumSize(ptDim);
-		pt3.setMinimumSize(buttonDim);
+		pt3.setMinimumSize(ptDim);
 		c.gridy = 7;
 		menuBar.add(pt3, c);
 		
