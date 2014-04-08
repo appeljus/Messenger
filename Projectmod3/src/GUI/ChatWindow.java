@@ -160,7 +160,7 @@ public class ChatWindow extends JFrame implements KeyListener, ActionListener {
 		c.gridy = 3;
 		menuBar.add(exit, c);
 
-		pt0 = new JLabel("None");
+		pt0 = new JLabel(myName);
 		pt0.setForeground(Color.WHITE);
 		// pt0.addMouseListener(this);
 		pt0.setPreferredSize(ptDim);
