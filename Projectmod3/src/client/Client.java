@@ -27,11 +27,6 @@ public class Client {
 		chatwindow = c;
 		try {
 			group = InetAddress.getByName("228.5.6.7");
-		} catch (UnknownHostException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		try {
 			s = new MulticastSocket(port);
 			s.joinGroup(group);
 		} catch (IOException e) {
