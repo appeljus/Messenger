@@ -30,8 +30,10 @@ public class ChatWindow extends JFrame implements KeyListener, ActionListener {
 	Container cont;
 	JPanel mainFrame;
 	JPanel menuBar;
+	JPanel sendBar;
 	
-	private Dimension windowSize = Toolkit.getDefaultToolkit().getScreenSize();;
+	//private Dimension windowSize = Toolkit.getDefaultToolkit().getScreenSize();
+	private Dimension windowSize = new Dimension(800, 600);
 	
 	JTextField typeArea = new JTextField();
 	JTextArea textArea = new JTextArea();
@@ -39,6 +41,8 @@ public class ChatWindow extends JFrame implements KeyListener, ActionListener {
 	JButton invite;
 	JButton opt;
 	JButton exit;
+	
+	JButton send;
 	
 	JLabel title;
 	JLabel pt0;
@@ -66,7 +70,10 @@ public class ChatWindow extends JFrame implements KeyListener, ActionListener {
 		
 		mainFrame = new JPanel();
 		mainFrame.setBackground(Color.DARK_GRAY);
-		mainFrame.setLayout(new BorderLayout());		
+		mainFrame.setLayout(new BorderLayout());	
+		
+		sendBar = new JPanel();
+		sendBar.setBackground(Color.DARK_GRAY);
 		
 		typeArea.setEditable(true);
 		textArea.setEditable(false);
@@ -74,6 +81,24 @@ public class ChatWindow extends JFrame implements KeyListener, ActionListener {
 		typeArea.setBorder(BorderFactory.createLineBorder(Color.black, 3));
 		
 		typeArea.addKeyListener(this);
+		sendBar.setLayout(new GridBagLayout());
+		
+		GridBagConstraints c = new GridBagConstraints();
+		c.anchor = GridBagConstraints.WEST;
+		c.fill = GridBagConstraints.BOTH;
+		c.weightx = 1;
+		c.gridx = 0;
+		c.gridy = 0;
+		
+		sendBar.add(typeArea, c);
+		
+		c.gridx = 1;
+		
+		send = new JButton("Send");
+		send.setPreferredSize(new Dimension(64, 32));
+		send.addActionListener(this);
+		sendBar.add(send);
+		
 		
 		menuBar = new JPanel();
 		menuBar.setLayout(new GridBagLayout());
@@ -81,12 +106,7 @@ public class ChatWindow extends JFrame implements KeyListener, ActionListener {
 		menuBar.setPreferredSize(menuBarDim);
 		//Menu buttons		
 		
-		GridBagConstraints c = new GridBagConstraints();
-		c.anchor = GridBagConstraints.WEST;
-		c.fill = GridBagConstraints.HORIZONTAL;
-		c.weightx = 1;
-		c.gridx = 0;
-		c.gridy = 0;
+		
 		
 		title = new JLabel("SolarMessenger");
 		title.setForeground(Color.WHITE);
@@ -170,7 +190,9 @@ public class ChatWindow extends JFrame implements KeyListener, ActionListener {
 		
 		//////////////////////////////
 		
-		mainFrame.add(typeArea, BorderLayout.SOUTH);
+				
+		
+		mainFrame.add(sendBar, BorderLayout.SOUTH);
 		mainFrame.add(textArea, BorderLayout.CENTER);
 		mainFrame.add(menuBar, BorderLayout.WEST);
 		
@@ -220,6 +242,11 @@ public class ChatWindow extends JFrame implements KeyListener, ActionListener {
 		}
 		else if(arg0.getSource() == this.opt){
 			//display options window
+		}
+		else if(arg0.getSource() == this.send){
+			String txt = typeArea.getText();
+			this.addText(txt);
+			//also.. send the text
 		}
 	}
 }
