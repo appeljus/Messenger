@@ -38,6 +38,9 @@ public class ChatWindow extends JFrame implements KeyListener, ActionListener {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	
+	
+	
 	Container cont;
 	JPanel mainFrame;
 	JPanel menuBar;
