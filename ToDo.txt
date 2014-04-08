@@ -1,1 +1,2 @@
 - Error geven als mensen max bytes dreigen te overschrijden.
+- wat als sluit
