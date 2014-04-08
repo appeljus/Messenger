@@ -56,11 +56,12 @@ public class Client extends Thread {
 			s.receive(packet);
 			byte[] receiveData = packet.getData();
 			String txt = new String(receiveData,"UTF-8");
+			txt = txt.substring(1);
 			chatwindow.incoming(txt);
-			String destination = packet.getAddress().toString();
-			if (!destination.equals(this.getIP())) {
-				s.send(packet);
-			}
+			//String destination = packet.getAddress().toString();
+			//if (!destination.equals(this.getIP())) {
+			//	s.send(packet);
+			//}
 
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -68,6 +69,7 @@ public class Client extends Thread {
 	}
 
 	public void sendPacket(String message) {
+		message = "0" + message;
 		byte[] data = message.getBytes();
 		DatagramPacket packetToSend = new DatagramPacket(data, data.length, group, port);
 		try {
