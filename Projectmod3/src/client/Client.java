@@ -5,7 +5,6 @@ import java.net.*;
 import java.util.ArrayList;
 
 import GUI.ChatWindow;
-import protocol.*;
 
 public class Client {
 	ChatWindow chatwindow;
