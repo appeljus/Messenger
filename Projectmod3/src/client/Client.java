@@ -8,7 +8,7 @@ import GUI.ChatWindow;
 
 public class Client extends Thread {
 	ChatWindow chatwindow;
-
+	////dsdsdsdsdsd
 	static int port = 4242;
 	String id1 = "192.168.5.1";
 	String id2 = "192.168.5.2";
