@@ -1,1 +1,6 @@
-.idea
+*.idea
+*.aux
+*.pdf
+*.log
+*.toc
+*.synctex.gz
