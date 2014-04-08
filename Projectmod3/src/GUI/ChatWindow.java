@@ -32,6 +32,8 @@ import javax.swing.JTextField;
 import javax.swing.border.Border;
 import javax.swing.text.DefaultCaret;
 
+import client.Client;
+
 public class ChatWindow extends JFrame implements KeyListener, ActionListener {
 
 	/**
@@ -39,7 +41,9 @@ public class ChatWindow extends JFrame implements KeyListener, ActionListener {
 	 */
 	private static final long serialVersionUID = 1L;
 	
+	Client client;
 	
+	String myName;
 	
 	Container cont;
 	JPanel mainFrame;
@@ -75,8 +79,10 @@ public class ChatWindow extends JFrame implements KeyListener, ActionListener {
 	Dimension menuBarDim = new Dimension(96, 576);
 	Dimension rigidDim = new Dimension(96, 32);
 
-	public ChatWindow() {
+	public ChatWindow(String name) {
 		super("SolarMessenger");
+		client = new Client(this);
+		myName = name;
 		init();
 	}
 
@@ -212,19 +218,25 @@ public class ChatWindow extends JFrame implements KeyListener, ActionListener {
 		setVisible(true);
 	}
 
-	public void addText(String txt) {
+	private void addText(String txt) {
 		list.addElement(txt + "\n");
 		typeArea.setText("");
+		client.sendPacket(txt);
 	}
 
 	public static void main(String[] arg0) {
-		ChatWindow x = new ChatWindow();
+		ChatWindow x = new ChatWindow("Ei");
+	}
+	
+	private String generateLine(String text){
+		return myName + ": " + text;
 	}
 
 	@Override
 	public void keyPressed(KeyEvent arg0) {
 		if (arg0.getKeyCode() == 10) {
 			String txt = typeArea.getText();
+			txt = generateLine(txt);
 			this.addText(txt);
 			// also.. send the text
 		}
@@ -248,12 +260,13 @@ public class ChatWindow extends JFrame implements KeyListener, ActionListener {
 			System.exit(0);
 		} else if (arg0.getSource() == this.invite) {
 			this.addText("Type the ip-address of the person you want to invite in your typing area please.");
+			
 			inviting = true;
 		} else if (arg0.getSource() == this.opt) {
 			// display options window
 		} else if (arg0.getSource() == this.send) {
 			String txt = typeArea.getText();
-			this.addText(txt);
+			this.addText(generateLine(txt));
 			// also.. send the text
 		}
 	}

@@ -4,9 +4,12 @@ import java.io.IOException;
 import java.net.*;
 import java.util.ArrayList;
 
+import GUI.ChatWindow;
 import protocol.*;
 
 public class Client {
+	ChatWindow chatwindow;
+	
 	static int port = 4242;
 	String id1 = "192.168.5.1";
 	String id2 = "192.168.5.2";
@@ -19,7 +22,8 @@ public class Client {
 	public static void main(String[] args) {
 	}
 	
-	public Client() {
+	public Client(ChatWindow c) {
+		chatwindow = c;
 		try {
 			s = new MulticastSocket(port);
 		} catch (IOException e) {
@@ -63,6 +67,7 @@ public class Client {
 	}
 	
 	public void sendPacket(String message) {
+		System.out.println(message);
 		byte[] data = message.getBytes();
 		for (int i = 0; i<list.size(); i++) {
 			InetAddress address = null;
