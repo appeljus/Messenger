@@ -220,7 +220,6 @@ public class ChatWindow extends JFrame implements KeyListener, ActionListener,
 	}
 	
 	public void incoming(String txt){
-		typeArea.setText("");
 		list.addElement(txt + "\n");
 		textArea.ensureIndexIsVisible(list.getSize() - 1);
 	}
