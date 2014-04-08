@@ -30,6 +30,7 @@ public class Client extends Thread {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		Thread x = new Thread(this);
 		//		list.add(id1);
 		//		list.add(id2);
 		//		list.add(id3);
