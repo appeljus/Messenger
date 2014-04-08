@@ -14,7 +14,7 @@ public class LoginWindow extends JFrame implements ActionListener, KeyListener{
 	JButton loginButton;
 	JTextField nameField;
 	
-	Dimension windowSize = new Dimension(300, 25);
+	Dimension windowSize = new Dimension(300, 64);
 
 	public LoginWindow(){
 		super("Log In");
