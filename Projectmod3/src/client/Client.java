@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 import GUI.ChatWindow;
 
-public class Client {
+public class Client extends Thread {
 	ChatWindow chatwindow;
 
 	static int port = 4242;
@@ -18,24 +18,29 @@ public class Client {
 	InetAddress group;
 	//	ArrayList<String> list = new ArrayList<String>();
 
-
-	public static void main(String[] args) {
-	}
-
 	public Client(ChatWindow c) {
 		chatwindow = c;
 		try {
 			group = InetAddress.getByName("228.5.6.7");
 			s = new MulticastSocket(port);
 			s.joinGroup(group);
+			Thread t = new Thread(this);
+			t.start();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		Thread x = new Thread(this);
 		//		list.add(id1);
 		//		list.add(id2);
 		//		list.add(id3);
 		//		list.add(id4);
+	}
+	
+	public void run(){
+		while(true){
+			receivePacket();
+		}
 	}
 
 	public String getIP() {
@@ -54,13 +59,12 @@ public class Client {
 			byte[] buf = new byte[1024];
 			DatagramPacket packet = new DatagramPacket(buf, buf.length);
 
-			while(true) {
-				s.receive(packet);
-				byte[] receiveData = packet.getData();
-				String destination = packet.getAddress().toString();
-				if (!destination.equals(this.getIP())) {
-					s.send(packet);
-				}
+			s.receive(packet);
+			byte[] receiveData = packet.getData();
+			chatwindow.addText(receiveData.toString());
+			String destination = packet.getAddress().toString();
+			if (!destination.equals(this.getIP())) {
+				s.send(packet);
 			}
 
 		} catch (IOException e) {
