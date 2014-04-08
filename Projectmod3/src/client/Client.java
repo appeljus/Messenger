@@ -55,7 +55,8 @@ public class Client extends Thread {
 
 			s.receive(packet);
 			byte[] receiveData = packet.getData();
-			chatwindow.incoming(receiveData.toString());
+			String txt = new String(receiveData,"UTF-8");
+			chatwindow.incoming(txt);
 			String destination = packet.getAddress().toString();
 			if (!destination.equals(this.getIP())) {
 				s.send(packet);
