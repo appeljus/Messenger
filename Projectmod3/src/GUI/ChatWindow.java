@@ -104,6 +104,8 @@ public class ChatWindow extends JFrame implements KeyListener, ActionListener {
 
 		typeArea.addKeyListener(this);
 		sendBar.setLayout(new GridBagLayout());
+		
+		msgScroller = new JScrollPane(textArea);
 
 		GridBagConstraints c = new GridBagConstraints();
 		c.anchor = GridBagConstraints.WEST;
@@ -210,7 +212,7 @@ public class ChatWindow extends JFrame implements KeyListener, ActionListener {
 		// ////////////////////////////
 
 		mainFrame.add(sendBar, BorderLayout.SOUTH);
-		mainFrame.add(textArea, BorderLayout.CENTER);
+		mainFrame.add(msgScroller, BorderLayout.CENTER);
 		mainFrame.add(menuBar, BorderLayout.WEST);
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -220,6 +222,7 @@ public class ChatWindow extends JFrame implements KeyListener, ActionListener {
 
 	private void addText(String txt) {
 		list.addElement(txt + "\n");
+		textArea.ensureIndexIsVisible(list.getSize()-1);
 		typeArea.setText("");
 		client.sendPacket(txt);
 	}
