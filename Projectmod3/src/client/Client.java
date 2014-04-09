@@ -97,16 +97,14 @@ public class Client extends Thread {
 					this.sendPacket("[NAME_IN_USE]: " + words[1] + " STUFF");
 				}
 				chatwindow.updateNames(words[1]);
-				if (words.length == 3) {
-					nameList.add(words[1]);
-					pubKeys.add(words[2]);
+				if(nameList.contains(words[1])){
+					System.out.println("TRUE: " + words[1]);
+					stillAlive.add(true);
 				}
-				for(int i=0; i<nameList.size(); i++){
-					if(words[1].equals(nameList.get(i))){
-						if(stillAlive.size() < i){
-							stillAlive.add(true);
-						}
-					}
+				else {
+					nameList.add(words[1]);
+					stillAlive.add(true);
+					pubKeys.add(words[2]);
 				}
 			} else if (txt.startsWith("[NAME_IN_USE]: ") && !packet.getAddress().equals(myAddress)) {
 				String[] words = txt.split(" ");
@@ -139,14 +137,16 @@ public class Client extends Thread {
 	
 	public void checkConnections(){
 		for(int i=0; i<nameList.size(); i++){
+			System.out.println(nameList.get(i) + stillAlive.get(i));
 			if(!stillAlive.get(i)){
 				chatwindow.incoming(nameList.get(i) + " has left!");
 				nameList.remove(i);
 				pubKeys.remove(i);
+				stillAlive.remove(i);
 			}
+			else stillAlive.set(i, false);
 		}
-		stillAlive = new ArrayList<Boolean>();
-		stillAlive.add(true);
+		stillAlive.set(0, true);
 	}
 }
 

@@ -14,10 +14,10 @@ public class SecondTimer extends TimerTask {
 	@Override
 	public void run() {
 		secCount++;
-		if(secCount == 3){
+		if(secCount == 5){
 			client.checkConnections();
 			secCount = 0;
 		}
-		client.sendPacket("[BROADCAST]: " + client.getClientName() + " " + client.getPubKey());
+		client.sendPacket("[BROADCAST]: " + client.getClientName() + " STUFF");
 	}
 }
