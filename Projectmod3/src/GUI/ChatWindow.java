@@ -55,8 +55,6 @@ public class ChatWindow extends JFrame implements KeyListener, ActionListener,
 	JList<String> pArea = new JList<String>(pList);
 	JScrollPane pListScroller = new JScrollPane(pArea);
 
-	boolean inviting = false;
-
 	Dimension buttonDim = new Dimension(96, 64);
 	Dimension ptDim = new Dimension(96, 16);
 	Dimension menuBarDim = new Dimension(96, 576);
@@ -225,10 +223,21 @@ public class ChatWindow extends JFrame implements KeyListener, ActionListener,
 		return myName + ": " + text;
 	}
 
+	public void disconnect(String name) {
+		if (pNameList.contains(name)) {
+			int index = pNameList.indexOf(name);
+			pList.remove(index);
+			pNameList.remove(index);
+		}
+	}
+
 	public void updateNames(String name) {
 		if (!pNameList.contains(name)) {
 			pList.addElement(name);
 			pNameList.add(name);
+
+			list.addElement(name + " joined Pigeon!" + "\n");
+			textArea.ensureIndexIsVisible(list.getSize() - 1);
 		}
 	}
 
@@ -270,15 +279,13 @@ public class ChatWindow extends JFrame implements KeyListener, ActionListener,
 
 	@Override
 	public void mouseClicked(MouseEvent arg0) {
-		// TODO Auto-generated method stub
 		JList list = (JList) arg0.getSource();
 		Rectangle r = list.getCellBounds(0, list.getLastVisibleIndex());
-		if (arg0.getClickCount() == 2 && r != null && r.contains(arg0.getPoint())) {
+		if (arg0.getClickCount() == 2 && r != null
+				&& r.contains(arg0.getPoint())) {
 			String person = pNameList.get(list.getSelectedIndex());
 			new PersonalChat(client, myName, person);
 		}
-		
-
 	}
 
 	@Override
