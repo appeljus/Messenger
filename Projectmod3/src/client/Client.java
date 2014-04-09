@@ -22,7 +22,6 @@ public class Client extends Thread {
 
 	public Client(ChatWindow c, String name) {
 		myName = name;
-
 		try {
 			Enumeration e = NetworkInterface.getNetworkInterfaces();
 			while (e.hasMoreElements()) {
@@ -36,7 +35,6 @@ public class Client extends Thread {
 				}
 			}
 		} catch (SocketException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 
@@ -75,7 +73,6 @@ public class Client extends Thread {
 		try {
 			result = InetAddress.getLocalHost().getHostName();
 		} catch (UnknownHostException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return result;
@@ -106,14 +103,10 @@ public class Client extends Thread {
 					new LoginWindow();
 					this.destroy();
 				}
-			} else if(!packet.getAddress().equals(myAddress)){
-				System.out.println(myAddress);
+			}
+			else if(!packet.getAddress().equals(myAddress)){
 				chatwindow.incoming(txt);
 			}
-			// String destination = packet.getAddress().toString();
-			// if (!destination.equals(this.getIP())) {
-			// s.send(packet);
-			// }
 
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -127,10 +120,8 @@ public class Client extends Thread {
 		DatagramPacket packetToSend = new DatagramPacket(data, data.length,
 				group, port);
 		try {
-			//packetToSend.setAddress(myAddress);
 			s.send(packetToSend);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
