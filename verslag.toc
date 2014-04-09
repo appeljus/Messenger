@@ -2,7 +2,8 @@
 \contentsline {section}{\numberline {1}Inleiding}{2}
 \contentsline {section}{\numberline {2}Systeem ontwerp}{3}
 \contentsline {subsection}{\numberline {2.1}Pakketjes}{3}
-\contentsline {subsection}{\numberline {2.2}Pakket verlies}{3}
+\contentsline {subsection}{\numberline {2.2}Bestanden verzenden}{3}
+\contentsline {subsection}{\numberline {2.3}Pakket verlies}{3}
 \contentsline {section}{\numberline {3}Beveiling}{3}
 \contentsline {subsection}{\numberline {3.1}Encryptie}{3}
 \contentsline {section}{\numberline {4}Testing}{3}
