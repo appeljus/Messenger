@@ -2,7 +2,10 @@ package GUI;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.util.ArrayList;
+
 import javax.swing.*;
+
 import client.Client;
 
 public class ChatWindow extends JFrame implements KeyListener, ActionListener,
@@ -14,7 +17,7 @@ public class ChatWindow extends JFrame implements KeyListener, ActionListener,
 	private static final long serialVersionUID = 1L;
 
 	Client client;
-	
+
 	Boolean wantPersTabs = true;
 
 	String myName;
@@ -23,6 +26,7 @@ public class ChatWindow extends JFrame implements KeyListener, ActionListener,
 	JPanel mainFrame;
 	JPanel menuBar;
 	JPanel sendBar;
+	JCheckBox checkTabs;
 
 	private Dimension windowSize = new Dimension(800, 600);
 
@@ -34,15 +38,15 @@ public class ChatWindow extends JFrame implements KeyListener, ActionListener,
 	JButton invite;
 	JButton opt;
 	JButton exit;
-
 	JButton send;
 
 	JLabel title;
-	JLabel pt0;
-	JLabel pt1;
-	JLabel pt2;
-	JLabel pt3;
 	JLabel pusher;
+	
+	ArrayList<String> pNameList = new ArrayList<String>();
+	DefaultListModel<String> pList = new DefaultListModel<String>();
+	JList<String> pArea = new JList<String>(pList);
+	JScrollPane pListScroller = new JScrollPane(pArea);
 
 	boolean inviting = false;
 
@@ -50,6 +54,8 @@ public class ChatWindow extends JFrame implements KeyListener, ActionListener,
 	Dimension ptDim = new Dimension(96, 16);
 	Dimension menuBarDim = new Dimension(96, 576);
 	Dimension rigidDim = new Dimension(96, 32);
+	
+	boolean done = false;
 
 	public ChatWindow(String name) {
 		super("SolarMessenger");
@@ -81,7 +87,7 @@ public class ChatWindow extends JFrame implements KeyListener, ActionListener,
 
 		GridBagConstraints c = new GridBagConstraints();
 		c.anchor = GridBagConstraints.WEST;
-		c.fill = GridBagConstraints.BOTH;
+		c.fill = GridBagConstraints.HORIZONTAL;
 		c.weightx = 1;
 		c.gridx = 0;
 		c.gridy = 0;
@@ -103,72 +109,11 @@ public class ChatWindow extends JFrame implements KeyListener, ActionListener,
 
 		title = new JLabel("SolarMessenger");
 		title.setForeground(Color.WHITE);
-		// title.addMouseListener(this);
 		title.setPreferredSize(buttonDim);
 		title.setMaximumSize(buttonDim);
 		title.setMinimumSize(buttonDim);
 		c.weighty = 1;
 		menuBar.add(title, c);
-
-		invite = new JButton("Invite");
-		invite.addActionListener(this);
-		invite.setPreferredSize(buttonDim);
-		invite.setMinimumSize(buttonDim);
-		invite.setMaximumSize(buttonDim);
-		c.gridy = 1;
-		menuBar.add(invite, c);
-
-		opt = new JButton("Options");
-		opt.addActionListener(this);
-		opt.setPreferredSize(buttonDim);
-		opt.setMinimumSize(buttonDim);
-		opt.setMaximumSize(buttonDim);
-		c.gridy = 2;
-		menuBar.add(opt, c);
-
-		exit = new JButton("Exit");
-		exit.addActionListener(this);
-		exit.setPreferredSize(buttonDim);
-		exit.setMinimumSize(buttonDim);
-		exit.setMaximumSize(buttonDim);
-		c.gridy = 3;
-		menuBar.add(exit, c);
-
-		pt0 = new JLabel(myName);
-		pt0.setForeground(Color.WHITE);
-		// pt0.addMouseListener(this);
-		pt0.setPreferredSize(ptDim);
-		pt0.setMaximumSize(ptDim);
-		pt0.setMinimumSize(ptDim);
-		c.gridy = 4;
-		menuBar.add(pt0, c);
-
-		pt1 = new JLabel("None");
-		pt1.setForeground(Color.WHITE);
-		pt1.addMouseListener(this);
-		pt1.setPreferredSize(ptDim);
-		pt1.setMaximumSize(ptDim);
-		pt1.setMinimumSize(ptDim);
-		c.gridy = 5;
-		menuBar.add(pt1, c);
-
-		pt2 = new JLabel("None");
-		pt2.setForeground(Color.WHITE);
-		pt2.addMouseListener(this);
-		pt2.setPreferredSize(ptDim);
-		pt2.setMaximumSize(ptDim);
-		pt2.setMinimumSize(ptDim);
-		c.gridy = 6;
-		menuBar.add(pt2, c);
-
-		pt3 = new JLabel("None");
-		pt3.setForeground(Color.WHITE);
-		pt3.addMouseListener(this);
-		pt3.setPreferredSize(ptDim);
-		pt3.setMaximumSize(ptDim);
-		pt3.setMinimumSize(ptDim);
-		c.gridy = 7;
-		menuBar.add(pt3, c);
 
 		// pushes other buttons and labels up
 		pusher = new JLabel("");
@@ -176,10 +121,58 @@ public class ChatWindow extends JFrame implements KeyListener, ActionListener,
 		pusher.setMaximumSize(ptDim);
 		pusher.setMinimumSize(ptDim);
 		c.fill = GridBagConstraints.BOTH;
-		c.gridy = 8;
+		c.gridy++;
+		c.anchor = GridBagConstraints.WEST;
+		c.weightx = 1;
+		menuBar.add(pusher, c);
+
+		opt = new JButton("Options");
+		opt.addActionListener(this);
+		opt.setPreferredSize(buttonDim);
+		opt.setMinimumSize(buttonDim);
+		opt.setMaximumSize(buttonDim);
+		c.gridy++;
+		menuBar.add(opt, c);
+		
+		pArea.setBackground(Color.DARK_GRAY);
+		pArea.setForeground(Color.WHITE);
+		
+		updateNames(myName);
+		
+		c.gridy++;
+		menuBar.add(pListScroller,c);
+		
+		/*
+		pt0 = new JLabel(myName);
+		pt0.setForeground(Color.WHITE);
+		// pt0.addMouseListener(this);
+		pt0.setPreferredSize(ptDim);
+		pt0.setMaximumSize(ptDim);
+		pt0.setMinimumSize(ptDim);
+		c.gridy++;
+		menuBar.add(pt0, c);
+		*/
+
+		// pushes other buttons and labels up
+		pusher = new JLabel("");
+		pusher.setPreferredSize(ptDim);
+		pusher.setMaximumSize(ptDim);
+		pusher.setMinimumSize(ptDim);
+		c.fill = GridBagConstraints.BOTH;
+		c.gridy++;
 		c.weighty = 5000;
 		c.anchor = GridBagConstraints.NORTH;
 		menuBar.add(pusher, c);
+
+		exit = new JButton("Exit");
+		exit.addActionListener(this);
+		exit.setPreferredSize(buttonDim);
+		exit.setMinimumSize(buttonDim);
+		exit.setMaximumSize(buttonDim);
+		c.gridy++;
+		c.weighty = -5000;
+		c.anchor = GridBagConstraints.SOUTH;
+		menuBar.add(exit, c);
 
 		// ////////////////////////////
 
@@ -190,6 +183,8 @@ public class ChatWindow extends JFrame implements KeyListener, ActionListener,
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		cont.add(mainFrame);
 		setVisible(true);
+		
+		done = true;
 	}
 
 	private void addText(String txt) {
@@ -218,14 +213,23 @@ public class ChatWindow extends JFrame implements KeyListener, ActionListener,
 		}
 
 	}
-	
-	public void incoming(String txt){
+
+	public void incoming(String txt) {
 		list.addElement(txt + "\n");
 		textArea.ensureIndexIsVisible(list.getSize() - 1);
 	}
 
 	private String generateLine(String text) {
 		return myName + ": " + text;
+	}
+	
+	public void updateNames(String name){
+			if(!pNameList.contains(name)){
+				pList.addElement(name);
+			}
+			
+			//pArea.ensureIndexIsVisible(0);
+			
 	}
 
 	@Override
@@ -266,17 +270,17 @@ public class ChatWindow extends JFrame implements KeyListener, ActionListener,
 	}
 
 	@Override
-	public void mouseClicked(MouseEvent arg0) {
+	public void mouseClicked(MouseEvent arg0) {/*
 		// TODO Auto-generated method stub
 		if (arg0.getSource() == this.pt1 || arg0.getSource() == this.pt2
 				|| arg0.getSource() == this.pt3) {
 			JLabel x = (JLabel) arg0.getSource();
-			if(this.wantPersTabs){
+			if (this.wantPersTabs) {
 				new PersonalChat(client, myName, x.getText());
-			}else{
+			} else {
 				typeArea.setText("/w " + x.getText() + " ");
 			}
-		}
+		}*/
 	}
 
 	@Override
