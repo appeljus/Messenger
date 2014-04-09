@@ -12,7 +12,7 @@ public class ChatWindow extends JFrame implements KeyListener, ActionListener,
 		MouseListener {
 
 	/**
-	 * ############################
+	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 
@@ -215,6 +215,7 @@ public class ChatWindow extends JFrame implements KeyListener, ActionListener,
 	public void updateNames(String name){
 			if(!pNameList.contains(name)){
 				pList.addElement(name);
+				pNameList.add(name);
 			}			
 	}
 
