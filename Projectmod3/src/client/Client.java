@@ -3,36 +3,69 @@ package client;
 import java.io.IOException;
 import java.net.*;
 import java.util.ArrayList;
+import java.util.Enumeration;
+import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import GUI.ChatWindow;
+import GUI.LoginWindow;
 
 public class Client extends Thread {
 	ChatWindow chatwindow;
-	////dsdsdsdsdsd
 	static int port = 4242;
-	String id1 = "192.168.5.1";
-	String id2 = "192.168.5.2";
-	String id3 = "192.168.5.3";
-	String id4 = "192.168.5.4";
 	MulticastSocket s;
 	InetAddress group;
+	String myName;
+	InetAddress myAddress;
+	List<String> pubKeys = new ArrayList<String>();
 
-	public Client(ChatWindow c) {
+	public Client(ChatWindow c, String name) {
+		myName = name;
+
+		try {
+			Enumeration e = NetworkInterface.getNetworkInterfaces();
+			while (e.hasMoreElements()) {
+				NetworkInterface n = (NetworkInterface) e.nextElement();
+				Enumeration ee = n.getInetAddresses();
+				while (ee.hasMoreElements()) {
+					InetAddress i = (InetAddress) ee.nextElement();
+					if(n.getDisplayName().contains("wlan")){
+						myAddress = i;
+					}
+				}
+			}
+		} catch (SocketException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+
 		chatwindow = c;
+		pubKeys.add("THISISMYPUBKEY");
 		try {
 			group = InetAddress.getByName("228.5.6.7");
 			s = new MulticastSocket(port);
 			s.joinGroup(group);
+			this.sendPacket("[BROADCAST]: " + myName + " " + pubKeys.get(0));
 			Thread t = new Thread(this);
 			t.start();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			Timer timer = new Timer();
+			timer.scheduleAtFixedRate(new SecondTimer(this), 1000, 1000);
+		} catch (IOException e2) {
+			e2.printStackTrace();
 		}
 	}
-	
-	public void run(){
-		while(true){
+
+	public String getClientName() {
+		return myName;
+	}
+
+	public String getPubKey() {
+		return pubKeys.get(0);
+	}
+
+	public void run() {
+		while (true) {
 			receivePacket();
 		}
 	}
@@ -48,20 +81,39 @@ public class Client extends Thread {
 		return result;
 	}
 
-	public void receivePacket() { 
+	public void receivePacket() {
 		try {
 			byte[] buf = new byte[1024];
 			DatagramPacket packet = new DatagramPacket(buf, buf.length);
 
 			s.receive(packet);
 			byte[] receiveData = packet.getData();
-			String txt = new String(receiveData,"UTF-8");
+			String txt = new String(receiveData, "UTF-8");
 			txt = txt.substring(1);
-			chatwindow.incoming(txt);
-			//String destination = packet.getAddress().toString();
-			//if (!destination.equals(this.getIP())) {
-			//	s.send(packet);
-			//}
+			if (txt.startsWith("[BROADCAST]:") && !packet.getAddress().equals(myAddress)) {
+				String[] words = txt.split(" ");
+				if (words[1].equals(myName)) {
+					this.sendPacket("[NAME_IN_USE]: " + words[1]);
+				}
+				chatwindow.updateNames(words[1]);
+				if (words.length == 4) {
+					pubKeys.add(words[3]);
+				}
+			} else if (txt.startsWith("[NAME_IN_USE]: ") && !packet.getAddress().equals(myAddress)) {
+				String[] words = txt.split(" ");
+				if (words[1].equals(myName)) {
+					chatwindow.dispose();
+					new LoginWindow();
+					this.destroy();
+				}
+			} else if(!packet.getAddress().equals(myAddress)){
+				System.out.println(myAddress);
+				chatwindow.incoming(txt);
+			}
+			// String destination = packet.getAddress().toString();
+			// if (!destination.equals(this.getIP())) {
+			// s.send(packet);
+			// }
 
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -69,10 +121,13 @@ public class Client extends Thread {
 	}
 
 	public void sendPacket(String message) {
+		if(!message.startsWith("[")) chatwindow.incoming(message);
 		message = "0" + message;
 		byte[] data = message.getBytes();
-		DatagramPacket packetToSend = new DatagramPacket(data, data.length, group, port);
+		DatagramPacket packetToSend = new DatagramPacket(data, data.length,
+				group, port);
 		try {
+			//packetToSend.setAddress(myAddress);
 			s.send(packetToSend);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
