@@ -87,7 +87,6 @@ public class Client extends Thread {
 			byte[] receiveData = packet.getData();
 			String txt = new String(receiveData, "UTF-8");
 			txt = txt.substring(1);
-			chatwindow.incoming(txt + " | " + myAddress);
 			if (txt.startsWith("[BROADCAST]:") && !packet.getAddress().equals(myAddress)) {
 				String[] words = txt.split(" ");
 				if (words[1].equals(myName)) {
