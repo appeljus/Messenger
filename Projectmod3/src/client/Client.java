@@ -98,8 +98,7 @@ public class Client extends Thread {
 				}
 				chatwindow.updateNames(words[1]);
 				if(nameList.contains(words[1])){
-					System.out.println("TRUE: " + words[1]);
-					stillAlive.add(true);
+					stillAlive.set(nameList.indexOf(words[1]),true);
 				}
 				else {
 					nameList.add(words[1]);
@@ -115,8 +114,8 @@ public class Client extends Thread {
 			}
 			else if(!packet.getAddress().equals(myAddress)){
 				chatwindow.incoming(txt);
+				
 			}
-
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -137,7 +136,6 @@ public class Client extends Thread {
 	
 	public void checkConnections(){
 		for(int i=0; i<nameList.size(); i++){
-			System.out.println(nameList.get(i) + stillAlive.get(i));
 			if(!stillAlive.get(i)){
 				chatwindow.incoming(nameList.get(i) + " has left!");
 				chatwindow.disconnect(nameList.get(i));

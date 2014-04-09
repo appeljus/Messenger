@@ -14,7 +14,7 @@ public class SecondTimer extends TimerTask {
 	@Override
 	public void run() {
 		secCount++;
-		if(secCount == 5){
+		if(secCount == 3){
 			client.checkConnections();
 			secCount = 0;
 		}
