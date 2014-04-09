@@ -140,6 +140,7 @@ public class Client extends Thread {
 			System.out.println(nameList.get(i) + stillAlive.get(i));
 			if(!stillAlive.get(i)){
 				chatwindow.incoming(nameList.get(i) + " has left!");
+				chatwindow.disconnect(nameList.get(i));
 				nameList.remove(i);
 				pubKeys.remove(i);
 				stillAlive.remove(i);
