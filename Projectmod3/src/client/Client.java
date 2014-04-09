@@ -19,6 +19,8 @@ public class Client extends Thread {
 	String myName;
 	InetAddress myAddress;
 	List<String> pubKeys = new ArrayList<String>();
+	List<String> nameList = new ArrayList<String>();
+	List<Boolean> stillAlive = new ArrayList<Boolean>();
 
 	public Client(ChatWindow c, String name) {
 		myName = name;
@@ -40,6 +42,8 @@ public class Client extends Thread {
 
 		chatwindow = c;
 		pubKeys.add("THISISMYPUBKEY");
+		nameList.add(myName);
+		stillAlive.add(true);
 		try {
 			group = InetAddress.getByName("228.5.6.7");
 			s = new MulticastSocket(port);
@@ -93,8 +97,16 @@ public class Client extends Thread {
 					this.sendPacket("[NAME_IN_USE]: " + words[1] + " STUFF");
 				}
 				chatwindow.updateNames(words[1]);
-				if (words.length == 4) {
-					pubKeys.add(words[3]);
+				if (words.length == 3) {
+					nameList.add(words[1]);
+					pubKeys.add(words[2]);
+				}
+				for(int i=0; i<nameList.size(); i++){
+					if(words[1].equals(nameList.get(i))){
+						if(stillAlive.size() < i){
+							stillAlive.add(true);
+						}
+					}
 				}
 			} else if (txt.startsWith("[NAME_IN_USE]: ") && !packet.getAddress().equals(myAddress)) {
 				String[] words = txt.split(" ");
@@ -124,4 +136,17 @@ public class Client extends Thread {
 			e.printStackTrace();
 		}
 	}
+	
+	public void checkConnections(){
+		for(int i=0; i<nameList.size(); i++){
+			if(!stillAlive.get(i)){
+				chatwindow.incoming(nameList.get(i) + " has left!");
+				nameList.remove(i);
+				pubKeys.remove(i);
+			}
+		}
+		stillAlive = new ArrayList<Boolean>();
+		stillAlive.add(true);
+	}
 }
+
