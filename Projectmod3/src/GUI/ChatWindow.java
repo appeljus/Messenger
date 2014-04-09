@@ -116,8 +116,7 @@ public class ChatWindow extends JFrame implements KeyListener, ActionListener,
 
 		title = new JLabel("");
 		try {
-			iconBuff = ImageIO.read(new FileInputStream(
-					"res/PigeonTitle.png"));
+			iconBuff = ImageIO.read(new FileInputStream("res/PigeonTitle.png"));
 			icon = new ImageIcon(iconBuff);
 		} catch (IOException e) {
 			System.out.println("Fuck the image!");
@@ -132,8 +131,8 @@ public class ChatWindow extends JFrame implements KeyListener, ActionListener,
 
 		// pushes other buttons and labels up
 		pusher = new JLabel("");
-		pusher.setPreferredSize(new Dimension(0,0));
-		pusher.setMaximumSize(new Dimension(0,0));
+		pusher.setPreferredSize(new Dimension(0, 0));
+		pusher.setMaximumSize(new Dimension(0, 0));
 		c.fill = GridBagConstraints.BOTH;
 		c.gridy++;
 		c.anchor = GridBagConstraints.WEST;
@@ -150,7 +149,7 @@ public class ChatWindow extends JFrame implements KeyListener, ActionListener,
 
 		pArea.setBackground(Color.DARK_GRAY);
 		pArea.setForeground(Color.WHITE);
-
+		pArea.addMouseListener(this);
 		updateNames(myName);
 
 		c.gridy++;
@@ -270,20 +269,16 @@ public class ChatWindow extends JFrame implements KeyListener, ActionListener,
 	}
 
 	@Override
-	public void mouseClicked(MouseEvent arg0) {/*
-												 * // TODO Auto-generated method
-												 * stub if (arg0.getSource() ==
-												 * this.pt1 || arg0.getSource()
-												 * == this.pt2 ||
-												 * arg0.getSource() == this.pt3)
-												 * { JLabel x = (JLabel)
-												 * arg0.getSource(); if
-												 * (this.wantPersTabs) { new
-												 * PersonalChat(client, myName,
-												 * x.getText()); } else {
-												 * typeArea.setText("/w " +
-												 * x.getText() + " "); } }
-												 */
+	public void mouseClicked(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		JList list = (JList) arg0.getSource();
+		Rectangle r = list.getCellBounds(0, list.getLastVisibleIndex());
+		if (arg0.getClickCount() == 2 && r != null && r.contains(arg0.getPoint())) {
+			String person = pNameList.get(list.getSelectedIndex());
+			new PersonalChat(client, myName, person);
+		}
+		
+
 	}
 
 	@Override
@@ -309,4 +304,5 @@ public class ChatWindow extends JFrame implements KeyListener, ActionListener,
 		// TODO Auto-generated method stub
 
 	}
+
 }
