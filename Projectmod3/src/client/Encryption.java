@@ -7,10 +7,8 @@ import org.apache.commons.codec.binary.Base64;
 import javax.crypto.*;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
-import java.security.InvalidAlgorithmParameterException;
-import java.security.InvalidKeyException;
-import java.security.KeyFactory;
-import java.security.NoSuchAlgorithmException;
+import java.io.File;
+import java.security.*;
 import java.security.interfaces.RSAPublicKey;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.X509EncodedKeySpec;
@@ -21,22 +19,66 @@ import java.util.Random;
  */
 public class Encryption {
 
-    public static byte[] encrypt(byte[] data, byte[] key){
+    public static KeyPair generateKey(){
+        KeyPairGenerator keyGen = null;
+        try {
+            keyGen = KeyPairGenerator.getInstance("RSA");
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        keyGen.initialize(1024);
+        KeyPair key = keyGen.generateKeyPair();
 
-        return null;
+        return key;
+    }
+
+    public static byte[] encrypt(byte[] data, Key key){
+
+        byte[] cipherText = null;
+        try {
+            Cipher cipher = Cipher.getInstance("RSA");
+            cipher.init(Cipher.ENCRYPT_MODE, key);
+            cipherText = cipher.doFinal(data);
+        }
+        catch (     NoSuchPaddingException |
+                    InvalidKeyException |
+                    NoSuchAlgorithmException |
+                    IllegalBlockSizeException |
+                    BadPaddingException e)
+        {
+            e.printStackTrace();
+        }
+        return cipherText;
 
     }
 
-    public static byte[] decrypt(byte[] data,byte[] key){
-        return null;
+    public static byte[] decrypt(byte[] data,Key key){
+        byte[] decryptedText = null;
+        try{
+            Cipher cipher = Cipher.getInstance("RSA");
+            cipher.init(Cipher.DECRYPT_MODE, key);
+            decryptedText = cipher.doFinal(data);
+        }
+        catch (     NoSuchPaddingException |
+                    InvalidKeyException |
+                    NoSuchAlgorithmException |
+                    IllegalBlockSizeException |
+                    BadPaddingException e)
+        {
+            e.printStackTrace();
+        }
+        return decryptedText;
     }
 
 
 
     public static void main(String[] agrs){
         String hallo = "hallo";
-        byte[] key = {(byte)1, (byte)2, (byte)3, (byte)4, (byte)5, (byte)6, (byte)7, (byte)8};
-        System.out.println(Encryption.encrypt(hallo.getBytes(), key));
+        KeyPair keys = generateKey();
+        System.out.println(Encryption.encrypt(hallo.getBytes(), keys.getPublic()));
+        String result = new String(Encryption.decrypt(encrypt(hallo.getBytes(), keys.getPublic()), keys.getPrivate()));
+        System.out.println(result);
+
     }
 
 }
