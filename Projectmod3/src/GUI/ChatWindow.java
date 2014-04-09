@@ -215,6 +215,7 @@ public class ChatWindow extends JFrame implements KeyListener, ActionListener,
 	public void updateNames(String name){
 			if(!pNameList.contains(name)){
 				pList.addElement(name);
+				pNameList.add(name);
 			}			
 	}
 
