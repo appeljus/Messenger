@@ -101,7 +101,6 @@ public class Client extends Thread {
 				if (myName.equals(words[1])) {
 					chatwindow.dispose();
 					new LoginWindow();
-					this.destroy();
 				}
 			}
 			else if(!packet.getAddress().equals(myAddress)){
