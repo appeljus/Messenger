@@ -90,7 +90,7 @@ public class Client extends Thread {
 			if (txt.startsWith("[BROADCAST]:") && !packet.getAddress().equals(myAddress)) {
 				String[] words = txt.split(" ");
 				if (words[1].equals(myName)) {
-					this.sendPacket("[NAME_IN_USE]: " + words[1]);
+					this.sendPacket("[NAME_IN_USE]: " + words[1] + " STUFF");
 				}
 				chatwindow.updateNames(words[1]);
 				if (words.length == 4) {
@@ -98,7 +98,7 @@ public class Client extends Thread {
 				}
 			} else if (txt.startsWith("[NAME_IN_USE]: ") && !packet.getAddress().equals(myAddress)) {
 				String[] words = txt.split(" ");
-				if (words[1].equals(myName)) {
+				if (myName.equals(words[1])) {
 					chatwindow.dispose();
 					new LoginWindow();
 					this.destroy();
