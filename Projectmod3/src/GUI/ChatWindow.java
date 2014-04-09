@@ -127,42 +127,25 @@ public class ChatWindow extends JFrame implements KeyListener, ActionListener,
 		c.weighty = 1;
 		menuBar.add(title, c);
 
-		// pushes other buttons and labels up
-		pusher = new JLabel("");
-		pusher.setPreferredSize(new Dimension(0, 0));
-		pusher.setMaximumSize(new Dimension(0, 0));
-		c.fill = GridBagConstraints.BOTH;
-		c.gridy++;
-		c.anchor = GridBagConstraints.WEST;
-		c.weightx = 1;
-		menuBar.add(pusher, c);
-
-		opt = new JButton("Options");
-		opt.addActionListener(this);
-		opt.setPreferredSize(buttonDim);
-		opt.setMinimumSize(buttonDim);
-		opt.setMaximumSize(buttonDim);
-		c.gridy++;
-		menuBar.add(opt, c);
-
 		pArea.setBackground(Color.DARK_GRAY);
 		pArea.setForeground(Color.WHITE);
 		pArea.addMouseListener(this);
 		updateNames(myName);
-
 		c.gridy++;
-		menuBar.add(pListScroller, c);
-
-		// pushes other buttons and labels up
-		pusher = new JLabel("");
-		pusher.setPreferredSize(ptDim);
-		pusher.setMaximumSize(ptDim);
-		pusher.setMinimumSize(ptDim);
 		c.fill = GridBagConstraints.BOTH;
-		c.gridy++;
 		c.weighty = 5000;
 		c.anchor = GridBagConstraints.NORTH;
-		menuBar.add(pusher, c);
+		menuBar.add(pListScroller, c);
+
+		// options here
+		
+		checkTabs = new JCheckBox(
+				"<html>Seperate<br>window for<br>personal<br>chat</html>");
+		c.gridy++;
+		c.weighty = -5000;
+		c.anchor = GridBagConstraints.SOUTH;
+		menuBar.add(checkTabs, c);
+		
 
 		exit = new JButton("Exit");
 		exit.addActionListener(this);
@@ -170,8 +153,6 @@ public class ChatWindow extends JFrame implements KeyListener, ActionListener,
 		exit.setMinimumSize(buttonDim);
 		exit.setMaximumSize(buttonDim);
 		c.gridy++;
-		c.weighty = -5000;
-		c.anchor = GridBagConstraints.SOUTH;
 		menuBar.add(exit, c);
 
 		// ////////////////////////////
@@ -215,6 +196,14 @@ public class ChatWindow extends JFrame implements KeyListener, ActionListener,
 	}
 
 	public void incoming(String txt) {
+		//txt = txt.replace(":D", "😀");
+		txt = txt.replace("8)", "😎");
+		txt = txt.replace(":)", "😉");
+		//txt = txt.replace(":P", "😛");
+		//txt = txt.replace(":/", "😕");
+		//txt = txt.replace("(sleep)", "😴");
+		//txt = txt.replace("-.-", "😑");
+		//txt = txt.replace(":O", "😮");
 		list.addElement(txt + "\n");
 		textArea.ensureIndexIsVisible(list.getSize() - 1);
 	}
