@@ -25,25 +25,34 @@ In het verslag zullen we het proces van het ontwerpen van de applicatie, en de k
 De gebruiker kan in een user interface berichten typen en versturen. Deze berichten worden dan in een pakket opgeslagen, en het pakket wordt verstuurd. Het versturen gebeurt via een multicast socket. Dit betekent dat het bericht naar iedereen verstuurd wordt. Als een socket een pakket ontvangt, wordt deze in de GUI weergeven. 
 
 \subsection{Pakketjes}
+Voor het versturen van de pakketjes gebruikt multicast socket een Datagram packet. Deze gebruiken wij ook voor het versturen van data. Een datagram packet heeft een byte array met data, een IP adres van de ontvanger, en een poort van de ontvanger. In mulitcast wordt een pakketje dus naar iedereen verstuurd, het IP adres is dan ook het adres van een multicast network, een IP van de IP-klasse D. De poort is een standaard poort waar wij voor hebben gekozen. In de data van de datagram packet worden nog enkele andere velden aangewezen. %Welke velden staan waar voor?
 
 
 \subsection{Bestanden verzenden}
-TODO
+%TODO
 
 \subsection{Pakket verlies}
-TODO
+%TODO
 %Hoe zorgen we ervoor dat als er pakket verlies optreedt, dat het pakket opnieuw verzonden wordt. 
 
-\section{Beveiling}
+\subsection{User interface}
 
+
+\section{Beveiling}
+Om te zorgen dat niet iedereen de inhoudt van de pakketten kan lezen, gebruiken we encryptie. 
 
 \subsection{Encryptie}
 
 
-\section{Testing}
+\section{Test plan}
 
 
-\subsection{Test methodes}
+\subsection{Test cases}
+%Voor elke case moet beschreven zijn:
+%		Wat je van het systeem verwacht
+%		Wat de preciese test opstelling is. Aan de hand hiervan moet de test herhaal kunnen worden
+%		Hoe het test scenario er uit ziet
+%		Welke performance we van het systeem verwachten
 
 
 \end{document}
