@@ -196,14 +196,8 @@ public class ChatWindow extends JFrame implements KeyListener, ActionListener,
 	}
 
 	public void incoming(String txt) {
-		txt = txt.replace(":D", "😀");
 		txt = txt.replace("8)", "😎");
 		txt = txt.replace(":)", "😉");
-		txt = txt.replace(":P", "😛");
-		txt = txt.replace(":/", "😕");
-		txt = txt.replace("(sleep)", "😴");
-		txt = txt.replace("-.-", "😑");
-		txt = txt.replace(":O", "😮");
 		list.addElement(txt + "\n");
 		textArea.ensureIndexIsVisible(list.getSize() - 1);
 	}
