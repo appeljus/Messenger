@@ -1,18 +1,7 @@
 package client;
 
-
-import org.apache.commons.codec.*;
-import org.apache.commons.codec.binary.Base64;
-
 import javax.crypto.*;
-import javax.crypto.spec.IvParameterSpec;
-import javax.crypto.spec.SecretKeySpec;
-import java.io.File;
 import java.security.*;
-import java.security.interfaces.RSAPublicKey;
-import java.security.spec.InvalidKeySpecException;
-import java.security.spec.X509EncodedKeySpec;
-import java.util.Random;
 
 /**
  * Created by Martijn on 9-4-14.

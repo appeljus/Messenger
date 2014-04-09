@@ -138,14 +138,13 @@ public class ChatWindow extends JFrame implements KeyListener, ActionListener,
 		menuBar.add(pListScroller, c);
 
 		// options here
-		
+
 		checkTabs = new JCheckBox(
 				"<html>Seperate<br>window for<br>personal<br>chat</html>");
 		c.gridy++;
 		c.weighty = -5000;
 		c.anchor = GridBagConstraints.SOUTH;
 		menuBar.add(checkTabs, c);
-		
 
 		exit = new JButton("Exit");
 		exit.addActionListener(this);
