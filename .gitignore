@@ -1,6 +1,6 @@
 *.class
 .mtj.tmp/
-.idea/
+/.idea/
 *.jar
 *.war
 *.ear
