@@ -2,8 +2,12 @@ package GUI;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.awt.image.BufferedImage;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 
 import client.Client;
@@ -42,7 +46,10 @@ public class ChatWindow extends JFrame implements KeyListener, ActionListener,
 
 	JLabel title;
 	JLabel pusher;
-	
+
+	BufferedImage iconBuff;
+	ImageIcon icon;
+
 	ArrayList<String> pNameList = new ArrayList<String>();
 	DefaultListModel<String> pList = new DefaultListModel<String>();
 	JList<String> pArea = new JList<String>(pList);
@@ -54,11 +61,11 @@ public class ChatWindow extends JFrame implements KeyListener, ActionListener,
 	Dimension ptDim = new Dimension(96, 16);
 	Dimension menuBarDim = new Dimension(96, 576);
 	Dimension rigidDim = new Dimension(96, 32);
-	
+
 	boolean done = false;
 
 	public ChatWindow(String name) {
-		super("SolarMessenger");
+		super("Pigeon");
 		client = new Client(this, name);
 		myName = name;
 		init();
@@ -107,7 +114,15 @@ public class ChatWindow extends JFrame implements KeyListener, ActionListener,
 		menuBar.setPreferredSize(menuBarDim);
 		// Menu buttons
 
-		title = new JLabel("SolarMessenger");
+		title = new JLabel("");
+		try {
+			iconBuff = ImageIO.read(new FileInputStream(
+					"res/PigeonTitle.png"));
+			icon = new ImageIcon(iconBuff);
+		} catch (IOException e) {
+			System.out.println("Fuck the image!");
+		}
+		title.setIcon(icon);
 		title.setForeground(Color.WHITE);
 		title.setPreferredSize(buttonDim);
 		title.setMaximumSize(buttonDim);
@@ -117,9 +132,8 @@ public class ChatWindow extends JFrame implements KeyListener, ActionListener,
 
 		// pushes other buttons and labels up
 		pusher = new JLabel("");
-		pusher.setPreferredSize(ptDim);
-		pusher.setMaximumSize(ptDim);
-		pusher.setMinimumSize(ptDim);
+		pusher.setPreferredSize(new Dimension(0,0));
+		pusher.setMaximumSize(new Dimension(0,0));
 		c.fill = GridBagConstraints.BOTH;
 		c.gridy++;
 		c.anchor = GridBagConstraints.WEST;
@@ -133,14 +147,14 @@ public class ChatWindow extends JFrame implements KeyListener, ActionListener,
 		opt.setMaximumSize(buttonDim);
 		c.gridy++;
 		menuBar.add(opt, c);
-		
+
 		pArea.setBackground(Color.DARK_GRAY);
 		pArea.setForeground(Color.WHITE);
-		
+
 		updateNames(myName);
-		
+
 		c.gridy++;
-		menuBar.add(pListScroller,c);
+		menuBar.add(pListScroller, c);
 
 		// pushes other buttons and labels up
 		pusher = new JLabel("");
@@ -172,7 +186,7 @@ public class ChatWindow extends JFrame implements KeyListener, ActionListener,
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		cont.add(mainFrame);
 		setVisible(true);
-		
+
 		done = true;
 	}
 
@@ -211,12 +225,12 @@ public class ChatWindow extends JFrame implements KeyListener, ActionListener,
 	private String generateLine(String text) {
 		return myName + ": " + text;
 	}
-	
-	public void updateNames(String name){
-			if(!pNameList.contains(name)){
-				pList.addElement(name);
-				pNameList.add(name);
-			}			
+
+	public void updateNames(String name) {
+		if (!pNameList.contains(name)) {
+			pList.addElement(name);
+			pNameList.add(name);
+		}
 	}
 
 	@Override
@@ -257,16 +271,19 @@ public class ChatWindow extends JFrame implements KeyListener, ActionListener,
 
 	@Override
 	public void mouseClicked(MouseEvent arg0) {/*
-		// TODO Auto-generated method stub
-		if (arg0.getSource() == this.pt1 || arg0.getSource() == this.pt2
-				|| arg0.getSource() == this.pt3) {
-			JLabel x = (JLabel) arg0.getSource();
-			if (this.wantPersTabs) {
-				new PersonalChat(client, myName, x.getText());
-			} else {
-				typeArea.setText("/w " + x.getText() + " ");
-			}
-		}*/
+												 * // TODO Auto-generated method
+												 * stub if (arg0.getSource() ==
+												 * this.pt1 || arg0.getSource()
+												 * == this.pt2 ||
+												 * arg0.getSource() == this.pt3)
+												 * { JLabel x = (JLabel)
+												 * arg0.getSource(); if
+												 * (this.wantPersTabs) { new
+												 * PersonalChat(client, myName,
+												 * x.getText()); } else {
+												 * typeArea.setText("/w " +
+												 * x.getText() + " "); } }
+												 */
 	}
 
 	@Override
