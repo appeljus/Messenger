@@ -59,7 +59,7 @@ public class ChatWindow extends JFrame implements KeyListener, ActionListener,
 
 	public ChatWindow(String name) {
 		super("SolarMessenger");
-		client = new Client(this);
+		client = new Client(this, name);
 		myName = name;
 		init();
 	}
@@ -141,17 +141,6 @@ public class ChatWindow extends JFrame implements KeyListener, ActionListener,
 		
 		c.gridy++;
 		menuBar.add(pListScroller,c);
-		
-		/*
-		pt0 = new JLabel(myName);
-		pt0.setForeground(Color.WHITE);
-		// pt0.addMouseListener(this);
-		pt0.setPreferredSize(ptDim);
-		pt0.setMaximumSize(ptDim);
-		pt0.setMinimumSize(ptDim);
-		c.gridy++;
-		menuBar.add(pt0, c);
-		*/
 
 		// pushes other buttons and labels up
 		pusher = new JLabel("");
@@ -226,10 +215,7 @@ public class ChatWindow extends JFrame implements KeyListener, ActionListener,
 	public void updateNames(String name){
 			if(!pNameList.contains(name)){
 				pList.addElement(name);
-			}
-			
-			//pArea.ensureIndexIsVisible(0);
-			
+			}			
 	}
 
 	@Override
@@ -238,7 +224,6 @@ public class ChatWindow extends JFrame implements KeyListener, ActionListener,
 			String txt = typeArea.getText();
 			txt = generateLine(txt);
 			this.addText(txt);
-			// also.. send the text
 		}
 	}
 
