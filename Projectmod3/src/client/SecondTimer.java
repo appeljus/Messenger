@@ -11,6 +11,6 @@ public class SecondTimer extends TimerTask {
 
 	@Override
 	public void run() {
-		client.sendPacket("[BROADCAST]: " + client.getClientName() + " " + client.getPubKey());
+		client.sendPacket("[BROADCAST]: " + client.getClientName());
 	}
 }
