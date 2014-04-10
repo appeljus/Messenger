@@ -111,7 +111,6 @@ public class Client extends Thread {
 			}
 			else if(!packet.getAddress().equals(myAddress)){
 				chatwindow.incoming(txt);
-				
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -129,6 +128,11 @@ public class Client extends Thread {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public void sendPrivate(String target, String message) {
+		byte[] data = message.getBytes();
+		//byte[] encryptedData = Encryption.encrypt(data, pubKeys.get(index));
 	}
 	
 	public void checkConnections(){
