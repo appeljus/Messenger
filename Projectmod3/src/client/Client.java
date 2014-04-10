@@ -153,7 +153,7 @@ public class Client extends Thread {
 				if(chatwindow.pNameList.contains(words[2])){
 					stillAlive.set(chatwindow.pNameList.indexOf(words[2]),true);
 				}
-				else {
+				else if(words[2].length() <= 24){
 					chatwindow.updateNames(words[2]);
 					stillAlive.add(true);
 					Key k = extractKey(receiveData);
