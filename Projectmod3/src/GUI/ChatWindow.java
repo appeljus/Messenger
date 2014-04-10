@@ -22,7 +22,7 @@ public class ChatWindow extends JFrame implements KeyListener, ActionListener,
 
 	Client client;
 
-	Boolean wantPersTabs = true;
+	Boolean wantPersTabs = false;
 
 	String myName;
 
@@ -32,15 +32,13 @@ public class ChatWindow extends JFrame implements KeyListener, ActionListener,
 	JPanel sendBar;
 	JCheckBox checkTabs;
 
-	private Dimension windowSize = new Dimension(800, 600);
+	Dimension windowSize = new Dimension(800, 600);
 
 	JTextField typeArea = new JTextField();
 	DefaultListModel<String> list = new DefaultListModel<String>();
 	JList<String> textArea = new JList<String>(list);
 	JScrollPane msgScroller;
 
-	JButton invite;
-	JButton opt;
 	JButton exit;
 	JButton send;
 
@@ -50,7 +48,7 @@ public class ChatWindow extends JFrame implements KeyListener, ActionListener,
 	BufferedImage iconBuff;
 	ImageIcon icon;
 
-	ArrayList<String> pNameList = new ArrayList<String>();
+	public ArrayList<String> pNameList = new ArrayList<String>();
 	DefaultListModel<String> pList = new DefaultListModel<String>();
 	JList<String> pArea = new JList<String>(pList);
 	JScrollPane pListScroller = new JScrollPane(pArea);
@@ -163,11 +161,9 @@ public class ChatWindow extends JFrame implements KeyListener, ActionListener,
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		cont.add(mainFrame);
 		setVisible(true);
-
-		done = true;
 	}
 
-	private void addText(String txt) {
+	protected void addText(String txt) {
 		String[] words = txt.split(" ");
 
 		if (words.length >= 3 && words[1].equals("/w")) {
@@ -225,7 +221,7 @@ public class ChatWindow extends JFrame implements KeyListener, ActionListener,
 
 	@Override
 	public void keyPressed(KeyEvent arg0) {
-		if (arg0.getKeyCode() == 10) {
+		if (arg0.getKeyCode() == 10 && typeArea.getText() != null) {
 			String txt = typeArea.getText();
 			txt = generateLine(txt);
 			this.addText(txt);
@@ -241,17 +237,13 @@ public class ChatWindow extends JFrame implements KeyListener, ActionListener,
 	@Override
 	public void keyTyped(KeyEvent arg0) {
 		// TODO Auto-generated method stub
-
+		typeArea.requestFocus();
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		if (arg0.getSource() == this.exit) {
 			System.exit(0);
-		} else if (arg0.getSource() == this.invite) {
-			this.addText("Nope");
-		} else if (arg0.getSource() == this.opt) {
-			// display options window
 		} else if (arg0.getSource() == this.send) {
 			String txt = typeArea.getText();
 			this.addText(generateLine(txt));
@@ -266,7 +258,11 @@ public class ChatWindow extends JFrame implements KeyListener, ActionListener,
 		if (arg0.getClickCount() == 2 && r != null
 				&& r.contains(arg0.getPoint())) {
 			String person = pNameList.get(list.getSelectedIndex());
-			new PersonalChat(client, myName, person);
+			if(checkTabs.isSelected()){
+			new PersonalChat(this, client, myName, person);}
+			else{
+				typeArea.setText("/w " + person + " ");
+			}
 		}
 	}
 

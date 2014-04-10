@@ -11,6 +11,7 @@ public class PersonalChat extends JFrame implements KeyListener, ActionListener 
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	ChatWindow chatWindow;
 	Client client;
 	String hisName;
 	String myName;
@@ -28,11 +29,12 @@ public class PersonalChat extends JFrame implements KeyListener, ActionListener 
 
 	Dimension windowSize = new Dimension(400, 300);
 
-	public PersonalChat(Client c, String myName1, String hisName2) {
+	public PersonalChat(ChatWindow chatWindow, Client c, String myName1, String hisName2) {
 		super("Chatting with " + hisName2);
 		client = c;
 		myName = myName1;
 		hisName = hisName2;
+		this.chatWindow = chatWindow;
 		init();
 	}
 
@@ -82,24 +84,19 @@ public class PersonalChat extends JFrame implements KeyListener, ActionListener 
 		cont.add(mainFrame);
 		setVisible(true);
 	}
-	
-	private void addText(String txt) {
-		//############################################ whisper method here
-			client.sendPacket(txt);
-			typeArea.setText("");
-			list.addElement(txt + "\n");
-			textArea.ensureIndexIsVisible(list.getSize() - 1);
-	}
 
-	private String generateLine(String text) {
-		return myName + ": " + text;
+	private void addText(String txt) {
+		list.addElement(txt + "\n");
+		txt = "/w " + hisName + " " + txt;
+		typeArea.setText("");
+		chatWindow.addText(txt);
+		this.textArea.ensureIndexIsVisible(list.getSize() - 1);
 	}
 
 	@Override
 	public void keyPressed(KeyEvent arg0) {
 		if (arg0.getKeyCode() == 10) {
 			String txt = typeArea.getText();
-			txt = generateLine(txt);
 			this.addText(txt);
 			// also.. send the text
 		}
@@ -116,12 +113,12 @@ public class PersonalChat extends JFrame implements KeyListener, ActionListener 
 		// TODO Auto-generated method stub
 
 	}
-	
+
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		if (arg0.getSource() == this.send) {
 			String txt = typeArea.getText();
-			this.addText(generateLine(txt));
+			this.addText(txt);
 			// also.. send the text
 		}
 	}
