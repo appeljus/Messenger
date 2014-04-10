@@ -97,7 +97,7 @@ public class PersonalChat extends JFrame implements KeyListener, ActionListener 
 	@Override
 	public void keyPressed(KeyEvent arg0) {
 		typeArea.requestFocus(true);
-		if (arg0.getKeyCode() == 10) {
+		if (arg0.getKeyCode() == 10 && !typeArea.getText().equals("")) {
 			String txt = typeArea.getText();
 			this.addText(txt);
 			// also.. send the text

@@ -56,7 +56,6 @@ public class ChatWindow extends JFrame implements KeyListener, ActionListener,
 	Dimension buttonDim = new Dimension(96, 64);
 	Dimension ptDim = new Dimension(96, 16);
 	Dimension menuBarDim = new Dimension(96, 576);
-	Dimension rigidDim = new Dimension(96, 32);
 
 	boolean done = false;
 
@@ -94,8 +93,9 @@ public class ChatWindow extends JFrame implements KeyListener, ActionListener,
 		c.weightx = 1;
 		c.gridx = 0;
 		c.gridy = 0;
-
+		c.fill = GridBagConstraints.BOTH;
 		sendBar.add(typeArea, c);
+		c.fill = GridBagConstraints.HORIZONTAL;
 
 		c.gridx = 1;
 
@@ -221,7 +221,7 @@ public class ChatWindow extends JFrame implements KeyListener, ActionListener,
 
 	@Override
 	public void keyPressed(KeyEvent arg0) {
-		if (arg0.getKeyCode() == 10 && typeArea.getText() != null) {
+		if (arg0.getKeyCode() == 10 && !typeArea.getText().equals("")) {
 			String txt = typeArea.getText();
 			txt = generateLine(txt);
 			this.addText(txt);
