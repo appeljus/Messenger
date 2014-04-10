@@ -212,6 +212,10 @@ public class ChatWindow extends JFrame implements KeyListener, ActionListener,
 		list.addElement(txt + "\n");
 		textArea.ensureIndexIsVisible(list.getSize() - 1);
 	}
+	
+	public void privateIncoming(String sender, String txt){
+		
+	}
 
 	private String generateLine(String text) {
 		return myName + ": " + text;
