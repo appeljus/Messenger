@@ -169,25 +169,30 @@ public class ChatWindow extends JFrame implements KeyListener, ActionListener,
 		if (words.length >= 3 && words[1].equals("/w")) {
 			typeArea.setText(words[1] + " " + words[2] + " ");
 			String target = words[2];
-			words[1] = "";
-			words[2] = "";
-			String data = "";
-			if (words.length == 3) {
-				data = " ";
-			} else {
-				for (int i = 3; i < words.length; i++) {
-					data = data + " " + words[i];
-				}
+			if(!pNameList.contains(target)){
+				incoming(target + " isn't connected!");
+				typeArea.setText("");
 			}
-			data = "To " + target + ": " + data;
-			list.addElement(data + "\n");
-			textArea.ensureIndexIsVisible(list.getSize() - 1);
-			client.sendPrivate(target, data);
+			else {
+				words[1] = "";
+				words[2] = "";
+				String data = "";
+				if (words.length == 3) {
+					data = " ";
+				} else {
+					for (int i = 3; i < words.length; i++) {
+						data = data + " " + words[i];
+					}
+				}
+				data = "To " + target + ": " + data;
+				list.addElement(data + "\n");
+				textArea.ensureIndexIsVisible(list.getSize() - 1);
+				client.sendPrivate(target, data);
+			}
 		} else {
 			client.sendPacket(txt);
 			typeArea.setText("");
 		}
-
 	}
 
 	public void incoming(String txt) {
