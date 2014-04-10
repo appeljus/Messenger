@@ -30,8 +30,10 @@ public class Client extends Thread {
 	List<Boolean> stillAlive = new ArrayList<Boolean>();
 	Timer timer;
 	
+	private static final int BUFFER_SIZE = 16;
+	ArrayList<DatagramPacket> lastMsgs = new ArrayList<DatagramPacket>();
 	HashMap<Integer, List<Integer>> seqNrs = new HashMap<Integer, List<Integer>>();
-	int current_sqn = 0;
+	int currentSeq = 0;
 	
 	public Client(ChatWindow c, String name) {
 		myName = name;
@@ -146,6 +148,9 @@ public class Client extends Thread {
 			byte[] receiveData = packet.getData();
 			String txt = new String(receiveData, "UTF-8");
 			
+			// gooi dat seq nummer in de goed lijst! ff samen met kevin doen..
+			//########################################################################
+			
 			if (txt.startsWith("[BROADCAST]:") && !packet.getAddress().equals(myAddress)) {
 				String[] words = txt.split(" ");
 				if (words[1].equals(myName)) {
@@ -183,6 +188,23 @@ public class Client extends Thread {
 				}
 			}
 			
+			else if(txt.startsWith("[NACK]: ")){
+				String[] words = txt.split(" ");
+				int missedI = Integer.parseInt(words[1]);
+				if(missedI < currentSeq-BUFFER_SIZE){
+					byte[] data = "[TOO_LATE]".getBytes();
+					DatagramPacket rePacket = new DatagramPacket(data, data.length,
+							group, port);
+					retransmit(rePacket);
+				}else{
+				int iOfList = BUFFER_SIZE-(currentSeq-missedI)-1;
+				retransmit(lastMsgs.get(iOfList));
+				}
+			}
+			else if(txt.startsWith("[TOO_LATE]")){
+				
+			}
+			
 			else if(!packet.getAddress().equals(myAddress)){
 				chatwindow.incoming(txt);
 			}
@@ -204,18 +226,34 @@ public class Client extends Thread {
 			e.printStackTrace();
 		}
 	}
+	
+	private void retransmit(DatagramPacket packet){
+		try {
+			s.send(packet);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 
 	public void sendPacket(String message) {
+		
+		
 		if(!message.startsWith("[")) chatwindow.incoming(message);
 		byte[] data = message.getBytes();
 		DatagramPacket packetToSend = new DatagramPacket(data, data.length,
 				group, port);
+		
+		lastMsgs.add(packetToSend);
+		if(lastMsgs.size() > BUFFER_SIZE){
+			lastMsgs.remove(0);
+		}
 		try {
 			s.send(packetToSend);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		current_sqn++;
+		
+		currentSeq++;
 	}
 	
 	public void sendPacket(String message, Key k) {
