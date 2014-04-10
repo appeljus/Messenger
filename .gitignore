@@ -13,3 +13,5 @@
 *.xml
 /bin
 hs_err_pid*
+*/.metadata
+*/out
