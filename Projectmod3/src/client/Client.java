@@ -168,6 +168,7 @@ public class Client extends Thread {
 			}
 			else if(txt.startsWith("[PRIV_MSG]: ")){
 				String[] words = txt.split(" ");
+				System.out.println(words[1]);
 				if(words[1].equals(myName)){
 					//byte[] noZeros = removeZeros(receiveData);
 					//byte[] msg = removeFirst(noZeros,18);
@@ -236,7 +237,7 @@ public class Client extends Thread {
 	}
 	
 	public void sendPrivate(String target, String message) {
-		byte[] returnBytes = ("[PRIV_MSG]: " + target + message).getBytes();
+		byte[] returnBytes = ("[PRIV_MSG]: " + target + " " + message).getBytes();
 		DatagramPacket packetToSend = new DatagramPacket(returnBytes, returnBytes.length, group, port);
 		try {
 			s.send(packetToSend);
