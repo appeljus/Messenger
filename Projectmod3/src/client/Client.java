@@ -2,17 +2,17 @@ package client;
 
 import java.io.IOException;
 import java.net.*;
-import java.security.KeyPair;
 import java.util.ArrayList;
 import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
+
 import GUI.ChatWindow;
 import GUI.LoginWindow;
 
 public class Client extends Thread {
-
 	ChatWindow chatwindow;
 	static int port = 4242;
 	MulticastSocket s;
@@ -21,12 +21,12 @@ public class Client extends Thread {
 	InetAddress myAddress;
 	List<String> pubKeys = new ArrayList<String>();
 	List<Boolean> stillAlive = new ArrayList<Boolean>();
-    KeyPair keys;
-
+	
+	HashMap<Integer, List<Integer>> seqNrs = new HashMap<Integer, List<Integer>>();
+	int current_sqn = 0;
+	
 	public Client(ChatWindow c, String name) {
 		myName = name;
-        keys = Encryption.generateKey();
-
 		try {
 			Enumeration e = NetworkInterface.getNetworkInterfaces();
 			while (e.hasMoreElements()) {
@@ -92,7 +92,6 @@ public class Client extends Thread {
 			s.receive(packet);
 			byte[] receiveData = packet.getData();
 			String txt = new String(receiveData, "UTF-8");
-			txt = txt.substring(1);
 			if (txt.startsWith("[BROADCAST]:") && !packet.getAddress().equals(myAddress)) {
 				String[] words = txt.split(" ");
 				if (words[1].equals(myName)) {
@@ -115,16 +114,30 @@ public class Client extends Thread {
 			}
 			else if(!packet.getAddress().equals(myAddress)){
 				chatwindow.incoming(txt);
-				
 			}
+			
+			InetAddress addr = packet.getAddress();
+			byte[] addrB = addr.getAddress();
+			int deviceNr = ((int)(addrB[3])) & 0xFF;
+			deviceNr--;
+			
+			if(seqNrs.containsKey(deviceNr)){
+				seqNrs.get(deviceNr).add(3);//#########################
+			}
+			else{
+				seqNrs.put(deviceNr, new ArrayList<Integer>());
+				seqNrs.get(deviceNr).add(3);//#########################
+			}
+			
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		
+		
 	}
 
 	public void sendPacket(String message) {
 		if(!message.startsWith("[")) chatwindow.incoming(message);
-		message = "0" + message;
 		byte[] data = message.getBytes();
 		DatagramPacket packetToSend = new DatagramPacket(data, data.length,
 				group, port);
@@ -133,6 +146,12 @@ public class Client extends Thread {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		current_sqn++;
+	}
+	
+	public void sendPrivate(String target, String message) {
+		byte[] data = message.getBytes();
+		//byte[] encryptedData = Encryption.encrypt(data, pubKeys.get(index));
 	}
 	
 	public void checkConnections(){
@@ -148,4 +167,3 @@ public class Client extends Thread {
 		stillAlive.set(0, true);
 	}
 }
-
