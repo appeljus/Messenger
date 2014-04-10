@@ -50,7 +50,7 @@ public class ChatWindow extends JFrame implements KeyListener, ActionListener,
 
 	BufferedImage iconBuff;
 	ImageIcon icon;
-	
+
 	ArrayList<File> sendingFiles = new ArrayList<File>();
 
 	public ArrayList<String> pNameList = new ArrayList<String>();
@@ -146,7 +146,7 @@ public class ChatWindow extends JFrame implements KeyListener, ActionListener,
 		c.weighty = -5000;
 		c.anchor = GridBagConstraints.SOUTH;
 		menuBar.add(checkTabs, c);
-		
+
 		sendFile = new JButton("<html>Send<br>File</html>");
 		sendFile.addActionListener(this);
 		sendFile.setPreferredSize(buttonDim);
@@ -180,13 +180,10 @@ public class ChatWindow extends JFrame implements KeyListener, ActionListener,
 		if (words.length >= 3 && words[1].equals("/w")) {
 			typeArea.setText(words[1] + " " + words[2] + " ");
 			String target = words[2];
-			if(!pNameList.contains(target)){
+			if (!pNameList.contains(target)) {
 				incoming(target + " isn't connected!");
 				typeArea.setText("");
-			}
-			else {
-				words[1] = "";
-				words[2] = "";
+			} else {
 				String data = "";
 				if (words.length == 3) {
 					data = " ";
@@ -207,17 +204,25 @@ public class ChatWindow extends JFrame implements KeyListener, ActionListener,
 		}
 	}
 
-
 	public void incoming(String txt) {
 		txt = txt.replace("8)", "😎");
 		txt = txt.replace(":)", "😉");
 		list.addElement(txt);
 		textArea.ensureIndexIsVisible(list.getSize() - 1);
 	}
-	
-	public void privateIncoming(String sender, String txt){
-		
-		incoming(sender + ": " + txt);
+
+	public void privateIncoming(String sender, String txt) {
+		if (checkTabs.isSelected()) {
+			
+			pChats.add(new PersonalChat(this, client, myName, sender));
+		} else {
+			txt = txt.replace("8)", "😎");
+			txt = txt.replace(":)", "😉");
+			list.addElement("From " + sender + ": " + txt);
+			textArea.ensureIndexIsVisible(list.getSize() - 1);
+		}
+
+		// incoming(sender + ": " + txt);
 	}
 
 	private String generateLine(String text) {
@@ -236,7 +241,6 @@ public class ChatWindow extends JFrame implements KeyListener, ActionListener,
 		if (!pNameList.contains(name)) {
 			pList.addElement(name);
 			pNameList.add(name);
-
 			list.addElement(name + " joined Pigeon!");
 			textArea.ensureIndexIsVisible(list.getSize() - 1);
 		}
@@ -275,7 +279,7 @@ public class ChatWindow extends JFrame implements KeyListener, ActionListener,
 			int returnVal = fc.showOpenDialog(this);
 			if (returnVal == JFileChooser.APPROVE_OPTION) {
 				sendingFiles.add(fc.getSelectedFile());
-				addText("Sending file..");
+				incoming("Sending file..");
 			}
 		}
 	}
@@ -288,7 +292,7 @@ public class ChatWindow extends JFrame implements KeyListener, ActionListener,
 				&& r.contains(arg0.getPoint())) {
 			String person = pNameList.get(list.getSelectedIndex());
 			if (checkTabs.isSelected()) {
-				new PersonalChat(this, client, myName, person);
+				this.pChats.add(new PersonalChat(this, client, myName, person));
 			} else {
 				typeArea.setText("/w " + person + " ");
 			}
