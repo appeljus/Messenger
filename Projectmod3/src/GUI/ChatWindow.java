@@ -24,6 +24,7 @@ public class ChatWindow extends JFrame implements KeyListener, ActionListener,
 	Client client;
 
 	Boolean wantPersTabs = false;
+	
 
 	String myName;
 
@@ -194,10 +195,11 @@ public class ChatWindow extends JFrame implements KeyListener, ActionListener,
 						data = data + " " + words[i];
 					}
 				}
-				data = "To " + target + ": " + data;
-				list.addElement(data + "\n");
+				String toData = "To " + target + ": " + data;
+				list.addElement(toData + "\n");
 				textArea.ensureIndexIsVisible(list.getSize() - 1);
-				client.sendPrivate(target, data);
+				String fromData = "From " + myName + ": " + data;
+				client.sendPrivate(target, fromData);
 			}
 		} else {
 			client.sendPacket(txt);
