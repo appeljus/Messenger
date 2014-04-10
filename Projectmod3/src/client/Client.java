@@ -19,7 +19,6 @@ public class Client extends Thread {
 	String myName;
 	InetAddress myAddress;
 	List<String> pubKeys = new ArrayList<String>();
-	List<String> nameList = new ArrayList<String>();
 	List<Boolean> stillAlive = new ArrayList<Boolean>();
 
 	public Client(ChatWindow c, String name) {
@@ -42,7 +41,6 @@ public class Client extends Thread {
 
 		chatwindow = c;
 		pubKeys.add("THISISMYPUBKEY");
-		nameList.add(myName);
 		stillAlive.add(true);
 		try {
 			group = InetAddress.getByName("228.5.6.7");
@@ -97,11 +95,10 @@ public class Client extends Thread {
 					this.sendPacket("[NAME_IN_USE]: " + words[1] + " STUFF");
 				}
 				chatwindow.updateNames(words[1]);
-				if(nameList.contains(words[1])){
-					stillAlive.set(nameList.indexOf(words[1]),true);
+				if(chatwindow.pNameList.contains(words[1])){
+					stillAlive.set(chatwindow.pNameList.indexOf(words[1]),true);
 				}
 				else {
-					nameList.add(words[1]);
 					stillAlive.add(true);
 					pubKeys.add(words[2]);
 				}
@@ -135,11 +132,10 @@ public class Client extends Thread {
 	}
 	
 	public void checkConnections(){
-		for(int i=0; i<nameList.size(); i++){
+		for(int i=0; i<chatwindow.pNameList.size(); i++){
 			if(!stillAlive.get(i)){
-				chatwindow.incoming(nameList.get(i) + " has left!");
-				chatwindow.disconnect(nameList.get(i));
-				nameList.remove(i);
+				chatwindow.incoming(chatwindow.pNameList.get(i) + " has left!");
+				chatwindow.disconnect(chatwindow.pNameList.get(i));
 				pubKeys.remove(i);
 				stillAlive.remove(i);
 			}
