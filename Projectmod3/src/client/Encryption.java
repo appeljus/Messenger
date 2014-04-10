@@ -1,9 +1,10 @@
 package client;
 
-import Utils.messageUtils;
-import com.sun.deploy.util.ArrayUtil;
 
 import javax.crypto.*;
+
+import Utils.messageUtils;
+
 import java.security.*;
 
 /**
