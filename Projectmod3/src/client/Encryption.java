@@ -44,13 +44,16 @@ public class Encryption {
                     }
                     else {
                         System.arraycopy(data, i, temp, 0, 100);
+
                     }
 
                     if (cipherText.length == 0){
                         cipherText = cipher.doFinal(temp);
+                        System.out.println(cipherText.length);
                     }
                     else {
                         cipherText = messageUtils.concatenate(cipherText, cipher.doFinal(temp));
+                        System.out.println(cipherText.length);
                     }
                 }
             }
@@ -70,11 +73,33 @@ public class Encryption {
     }
 
     public static byte[] decrypt(byte[] data,Key key){
+        byte[] temp;
         byte[] decryptedText = null;
         try{
             Cipher cipher = Cipher.getInstance("RSA");
             cipher.init(Cipher.DECRYPT_MODE, key);
-            decryptedText = cipher.doFinal(data);
+            if (data.length < 128){
+                decryptedText = cipher.doFinal(data);
+            }
+            else {
+                temp = new byte[127];
+                decryptedText = new byte[0];
+                for (int i = 0; i < data.length; i = i + 127){
+                    if ((data.length - i) < 127 ){
+                        System.arraycopy(data, i, temp, 0, (data.length - i));
+                    }
+                    else {
+                        System.arraycopy(data, i, temp, 0, 127);
+                    }
+
+                    if (decryptedText.length == 0){
+                        decryptedText = cipher.doFinal(temp);
+                    }
+                    else {
+                        decryptedText = messageUtils.concatenate(decryptedText, cipher.doFinal(temp));
+                    }
+                }
+            }
         }
         catch (     NoSuchPaddingException |
                     InvalidKeyException |
@@ -95,10 +120,8 @@ public class Encryption {
         String result = "";
         result = new String(Encryption.encrypt(hallo.getBytes(), keys.getPublic()));
         System.out.println(result);
-        /*
         result = new String(Encryption.decrypt(result.getBytes(), keys.getPrivate()));
         System.out.println(result);
-        */
     }
 
 }
