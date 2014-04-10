@@ -28,6 +28,7 @@ public class Client extends Thread {
 	KeyPair keyPair;
 	List<Key> pubKeys = new ArrayList<Key>();
 	List<Boolean> stillAlive = new ArrayList<Boolean>();
+	Timer timer;
 	
 	HashMap<Integer, List<Integer>> seqNrs = new HashMap<Integer, List<Integer>>();
 	int current_sqn = 0;
@@ -61,7 +62,7 @@ public class Client extends Thread {
 			this.sendPacket(myName, pubKeys.get(0));
 			Thread t = new Thread(this);
 			t.start();
-			Timer timer = new Timer();
+			timer = new Timer();
 			timer.scheduleAtFixedRate(new SecondTimer(this), 1000, 1000);
 		} catch (IOException e2) {
 			e2.printStackTrace();
@@ -77,7 +78,7 @@ public class Client extends Thread {
 	}
 
 	public void run() {
-		while (true) {
+		while (!s.isClosed()) {
 			receivePacket();
 		}
 	}
@@ -160,10 +161,14 @@ public class Client extends Thread {
 					//pubKeys.add(k);
 				}
 			} else if (txt.startsWith("[NAME_IN_USE]: ") && !packet.getAddress().equals(myAddress)) {
+				System.out.println(txt);
 				String[] words = txt.split(" ");
 				if (myName.equals(words[1])) {
 					chatwindow.dispose();
 					new LoginWindow();
+					s.close();
+					timer.cancel();
+					
 				}
 			}
 			else if(txt.startsWith("[PRIV_MSG]: ")){
@@ -173,6 +178,7 @@ public class Client extends Thread {
 					for(int i=3; i<words.length; i++){
 						data = data + words[i] + " ";
 					}
+					//data = data.substring(0, data.length()-1);
 					chatwindow.privateIncoming(words[2], data);
 				}
 			}
@@ -224,7 +230,7 @@ public class Client extends Thread {
 		System.arraycopy(data, 0, destination, bCast.length + key.length, data.length);
 		System.arraycopy(filler, 0, destination, bCast.length + key.length + data.length, filler.length);*/
 		
-		byte[] destination = ("[BROADCAST]: " + message).getBytes();
+		byte[] destination = ("[BROADCAST]: " + message + " STUFF").getBytes();
 		DatagramPacket packetToSend = new DatagramPacket(destination, destination.length, group, port);
 		try {
 			s.send(packetToSend);
