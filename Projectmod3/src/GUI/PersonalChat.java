@@ -88,8 +88,9 @@ public class PersonalChat extends JFrame implements KeyListener, ActionListener 
 	}
 
 	private void addText(String txt) {
-		list.addElement(myName + ": " + txt + "\n");
+		list.addElement(myName + ": " + txt);
 		typeArea.setText("");
+		txt = (myName + " " + txt);
 		client.sendPrivate(hisName, txt);
 		this.textArea.ensureIndexIsVisible(list.getSize() - 1);
 	}

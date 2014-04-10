@@ -24,7 +24,7 @@ public class ChatWindow extends JFrame implements KeyListener, ActionListener,
 	Client client;
 
 	Boolean wantPersTabs = false;
-	
+	ArrayList<PersonalChat> pChats = new ArrayList<PersonalChat>();
 
 	String myName;
 
@@ -196,9 +196,9 @@ public class ChatWindow extends JFrame implements KeyListener, ActionListener,
 					}
 				}
 				String toData = "To " + target + ": " + data;
-				list.addElement(toData + "\n");
+				list.addElement(toData);
 				textArea.ensureIndexIsVisible(list.getSize() - 1);
-				String fromData = "From " + myName + ": " + data;
+				String fromData = myName + " " + data;
 				client.sendPrivate(target, fromData);
 			}
 		} else {
@@ -211,7 +211,7 @@ public class ChatWindow extends JFrame implements KeyListener, ActionListener,
 	public void incoming(String txt) {
 		txt = txt.replace("8)", "😎");
 		txt = txt.replace(":)", "😉");
-		list.addElement(txt + "\n");
+		list.addElement(txt);
 		textArea.ensureIndexIsVisible(list.getSize() - 1);
 	}
 	
@@ -236,7 +236,7 @@ public class ChatWindow extends JFrame implements KeyListener, ActionListener,
 			pList.addElement(name);
 			pNameList.add(name);
 
-			list.addElement(name + " joined Pigeon!" + "\n");
+			list.addElement(name + " joined Pigeon!");
 			textArea.ensureIndexIsVisible(list.getSize() - 1);
 		}
 	}
