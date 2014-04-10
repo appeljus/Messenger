@@ -248,7 +248,7 @@ public class Client extends Thread {
 			if(!stillAlive.get(i)){
 				chatwindow.incoming(chatwindow.pNameList.get(i) + " has left!");
 				chatwindow.disconnect(chatwindow.pNameList.get(i));
-				pubKeys.remove(i);
+				//pubKeys.remove(i);
 				stillAlive.remove(i);
 			}
 			else stillAlive.set(i, false);
