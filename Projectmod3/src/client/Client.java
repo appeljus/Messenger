@@ -92,7 +92,6 @@ public class Client extends Thread {
 			s.receive(packet);
 			byte[] receiveData = packet.getData();
 			String txt = new String(receiveData, "UTF-8");
-			txt = txt.substring(1);
 			if (txt.startsWith("[BROADCAST]:") && !packet.getAddress().equals(myAddress)) {
 				String[] words = txt.split(" ");
 				if (words[1].equals(myName)) {
@@ -139,7 +138,6 @@ public class Client extends Thread {
 
 	public void sendPacket(String message) {
 		if(!message.startsWith("[")) chatwindow.incoming(message);
-		message = "0" + message;
 		byte[] data = message.getBytes();
 		DatagramPacket packetToSend = new DatagramPacket(data, data.length,
 				group, port);
