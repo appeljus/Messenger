@@ -216,7 +216,8 @@ public class ChatWindow extends JFrame implements KeyListener, ActionListener,
 	}
 	
 	public void privateIncoming(String sender, String txt){
-		addText(sender + ": " + txt);
+		
+		incoming(sender + ": " + txt);
 	}
 
 	private String generateLine(String text) {
