@@ -1,0 +1,42 @@
+#!/bin/bash
+
+# Make sure only root can run our script
+if [ "$(id -u)" != "0" ]; then
+   echo "This script must be run as root" 1>&2
+   exit 1
+fi
+
+echo -ne "Bringing down the wireless interface..."
+ifconfig wlan1 down
+tput cuf $(($(tput cols)-48))
+echo -ne "["
+tput setaf 2
+echo -ne "OK"
+tput setaf 7
+echo "]     "
+echo -ne "Changing interface back to managed networks..."
+iwconfig wlan1 mode Managed
+tput cuf $(($(tput cols)-55))
+echo -ne "["
+tput setaf 2
+echo -ne "OK"
+tput setaf 7
+echo "]     "
+echo -ne "Starting NetworkManager..."
+service network-manager start &> /dev/null
+tput cuf $(($(tput cols)-35))
+echo -ne "["
+tput setaf 2
+echo -ne "OK"
+tput setaf 7
+echo "]     "
+echo -ne "Restarting NetworkManager to reconnect..."
+sleep 1
+service network-manager restart &> /dev/null
+tput cuf $(($(tput cols)-50))
+echo -ne "["
+tput setaf 2
+echo -ne "OK"
+tput setaf 7
+echo -ne "]     "
+echo "You are now being connected to normal wireless communications."
