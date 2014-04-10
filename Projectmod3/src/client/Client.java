@@ -173,7 +173,13 @@ public class Client extends Thread {
 				if(words[1].equals(myName)){
 					byte[] noZeros = removeZeros(receiveData);
 					byte[] msg = removeFirst(noZeros,18);
-					chatwindow.incoming(new String(Encryption.decrypt(msg, keyPair.getPrivate())));
+					String data = new String(Encryption.decrypt(msg, keyPair.getPrivate()));
+					String[] wordss = data.split(" ");
+					data = "";
+					for(int i=1; i<wordss.length; i++){
+						data = data + wordss[i];
+					}
+					chatwindow.privateIncoming(wordss[0], data);
 				}
 			}
 			
