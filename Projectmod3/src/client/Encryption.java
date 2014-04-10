@@ -1,5 +1,8 @@
 package client;
 
+import Utils.messageUtils;
+import com.sun.deploy.util.ArrayUtil;
+
 import javax.crypto.*;
 import java.security.*;
 
@@ -22,12 +25,35 @@ public class Encryption {
     }
 
     public static byte[] encrypt(byte[] data, Key key){
+        byte[] temp;
 
         byte[] cipherText = null;
         try {
             Cipher cipher = Cipher.getInstance("RSA");
             cipher.init(Cipher.ENCRYPT_MODE, key);
-            cipherText = cipher.doFinal(data);
+            if (data.length < 101){
+                cipherText = cipher.doFinal(data);
+            }
+            else {
+                temp = new byte[100];
+                cipherText = new byte[0];
+                for (int i = 0; i < data.length; i = i + 100){
+                    if ((data.length - i) < 100 ){
+                        System.arraycopy(data, i, temp, 0, (data.length - i));
+                    }
+                    else {
+                        System.arraycopy(data, i, temp, 0, 100);
+                    }
+
+                    if (cipherText.length == 0){
+                        cipherText = cipher.doFinal(temp);
+                    }
+                    else {
+                        cipherText = messageUtils.concatenate(cipherText, cipher.doFinal(temp));
+                    }
+                }
+            }
+
         }
         catch (     NoSuchPaddingException |
                     InvalidKeyException |
@@ -37,6 +63,7 @@ public class Encryption {
         {
             e.printStackTrace();
         }
+
         return cipherText;
 
     }
@@ -62,12 +89,15 @@ public class Encryption {
 
 
     public static void main(String[] agrs){
-        String hallo = "hallo";
+        String hallo = "hallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallo";
         KeyPair keys = generateKey();
-        System.out.println(Encryption.encrypt(hallo.getBytes(), keys.getPublic()));
-        String result = new String(Encryption.decrypt(encrypt(hallo.getBytes(), keys.getPublic()), keys.getPrivate()));
+        String result = "";
+        result = new String(Encryption.encrypt(hallo.getBytes(), keys.getPublic()));
         System.out.println(result);
-
+        /*
+        result = new String(Encryption.decrypt(result.getBytes(), keys.getPrivate()));
+        System.out.println(result);
+        */
     }
 
 }
