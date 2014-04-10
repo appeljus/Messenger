@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.*;
 import java.util.ArrayList;
 import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -20,7 +21,10 @@ public class Client extends Thread {
 	InetAddress myAddress;
 	List<String> pubKeys = new ArrayList<String>();
 	List<Boolean> stillAlive = new ArrayList<Boolean>();
-
+	
+	HashMap<Integer, List<Integer>> seqNrs = new HashMap<Integer, List<Integer>>();
+	int current_sqn = 0;
+	
 	public Client(ChatWindow c, String name) {
 		myName = name;
 		try {
@@ -112,9 +116,25 @@ public class Client extends Thread {
 			else if(!packet.getAddress().equals(myAddress)){
 				chatwindow.incoming(txt);
 			}
+			
+			InetAddress addr = packet.getAddress();
+			byte[] addrB = addr.getAddress();
+			int deviceNr = ((int)(addrB[3])) & 0xFF;
+			deviceNr--;
+			
+			if(seqNrs.containsKey(deviceNr)){
+				seqNrs.get(deviceNr).add(3);//#########################
+			}
+			else{
+				seqNrs.put(deviceNr, new ArrayList<Integer>());
+				seqNrs.get(deviceNr).add(3);//#########################
+			}
+			
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		
+		
 	}
 
 	public void sendPacket(String message) {
@@ -128,6 +148,7 @@ public class Client extends Thread {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		current_sqn++;
 	}
 	
 	public void sendPrivate(String target, String message) {
