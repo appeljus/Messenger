@@ -94,6 +94,13 @@ public class PersonalChat extends JFrame implements KeyListener, ActionListener 
 		client.sendPrivate(hisName, txt);
 		this.textArea.ensureIndexIsVisible(list.getSize() - 1);
 	}
+	
+	public void incoming(String txt) {
+		txt = txt.replace("8)", "😎");
+		txt = txt.replace(":)", "😉");
+		list.addElement(txt);
+		textArea.ensureIndexIsVisible(list.getSize() - 1);
+	}
 
 	@Override
 	public void keyPressed(KeyEvent arg0) {
@@ -124,5 +131,9 @@ public class PersonalChat extends JFrame implements KeyListener, ActionListener 
 			this.addText(txt);
 			// also.. send the text
 		}
+	}
+	
+	public String getTarget(){
+		return hisName;
 	}
 }

@@ -213,8 +213,11 @@ public class ChatWindow extends JFrame implements KeyListener, ActionListener,
 
 	public void privateIncoming(String sender, String txt) {
 		if (checkTabs.isSelected()) {
+			if(doIHaveWindow(sender) == -1){
+				pChats.add(new PersonalChat(this, client, myName, sender));
+			}
+			pChats.get(doIHaveWindow(sender)).incoming(sender + ": " + txt);
 			
-			pChats.add(new PersonalChat(this, client, myName, sender));
 		} else {
 			txt = txt.replace("8)", "😎");
 			txt = txt.replace(":)", "😉");
@@ -223,6 +226,17 @@ public class ChatWindow extends JFrame implements KeyListener, ActionListener,
 		}
 
 		// incoming(sender + ": " + txt);
+	}
+
+	private int doIHaveWindow(String target) {
+		int ret = -1;
+		for (int i = 0; i < pChats.size(); i++) {
+			if (pChats.get(i).getTarget().equals(target)) {
+				ret = i;
+				break;
+			}
+		}
+		return ret;
 	}
 
 	private String generateLine(String text) {
