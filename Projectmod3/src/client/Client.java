@@ -214,7 +214,7 @@ public class Client extends Thread {
 	
 	public void sendPacket(String message, Key k) {
 		byte[] bCast = "[BROADCAST]: ".getBytes();
-		message = " " + message;
+		message = " " + message + " ";
 		byte[] data = message.getBytes();
 		byte[] key = k.getEncoded();
 		byte[] filler = { new Byte((byte) 255) } ;
