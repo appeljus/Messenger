@@ -152,11 +152,11 @@ public class Client extends Thread {
 				if (words[2].equals(myName)) {
 					this.sendPacket("[NAME_IN_USE]: " + words[2] + " STUFF");
 				}
-				chatwindow.updateNames(words[2]);
 				if(chatwindow.pNameList.contains(words[2])){
 					stillAlive.set(chatwindow.pNameList.indexOf(words[2]),true);
 				}
 				else {
+					chatwindow.updateNames(words[2]);
 					stillAlive.add(true);
 					Key k = extractKey(receiveData);
 					pubKeys.add(k);
@@ -214,7 +214,7 @@ public class Client extends Thread {
 	
 	public void sendPacket(String message, Key k) {
 		byte[] bCast = "[BROADCAST]: ".getBytes();
-		message = " " + message;
+		message = " " + message + " ";
 		byte[] data = message.getBytes();
 		byte[] key = k.getEncoded();
 		byte[] filler = { new Byte((byte) 255) } ;
