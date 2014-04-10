@@ -168,7 +168,6 @@ public class ChatWindow extends JFrame implements KeyListener, ActionListener,
 
 		if (words.length >= 3 && words[1].equals("/w")) {
 			typeArea.setText(words[1] + " " + words[2] + " ");
-			// whisper
 			String target = words[2];
 			words[1] = "";
 			words[2] = "";
@@ -183,6 +182,7 @@ public class ChatWindow extends JFrame implements KeyListener, ActionListener,
 			data = "To " + target + ": " + data;
 			list.addElement(data + "\n");
 			textArea.ensureIndexIsVisible(list.getSize() - 1);
+			client.sendPrivate(target, data);
 		} else {
 			client.sendPacket(txt);
 			typeArea.setText("");
