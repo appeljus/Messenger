@@ -3,6 +3,7 @@ package GUI;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -41,12 +42,15 @@ public class ChatWindow extends JFrame implements KeyListener, ActionListener,
 
 	JButton exit;
 	JButton send;
+	JButton sendFile;
 
 	JLabel title;
 	JLabel pusher;
 
 	BufferedImage iconBuff;
 	ImageIcon icon;
+	
+	ArrayList<File> sendingFiles = new ArrayList<File>();
 
 	public ArrayList<String> pNameList = new ArrayList<String>();
 	DefaultListModel<String> pList = new DefaultListModel<String>();
@@ -135,14 +139,20 @@ public class ChatWindow extends JFrame implements KeyListener, ActionListener,
 		c.anchor = GridBagConstraints.NORTH;
 		menuBar.add(pListScroller, c);
 
-		// options here
-
 		checkTabs = new JCheckBox(
 				"<html>Seperate<br>window for<br>personal<br>chat</html>");
 		c.gridy++;
 		c.weighty = -5000;
 		c.anchor = GridBagConstraints.SOUTH;
 		menuBar.add(checkTabs, c);
+		
+		sendFile = new JButton("<html>Send<br>File</html>");
+		sendFile.addActionListener(this);
+		sendFile.setPreferredSize(buttonDim);
+		sendFile.setMinimumSize(buttonDim);
+		sendFile.setMaximumSize(buttonDim);
+		c.gridy++;
+		menuBar.add(sendFile, c);
 
 		exit = new JButton("Exit");
 		exit.addActionListener(this);
@@ -194,6 +204,7 @@ public class ChatWindow extends JFrame implements KeyListener, ActionListener,
 			typeArea.setText("");
 		}
 	}
+
 
 	public void incoming(String txt) {
 		txt = txt.replace("8)", "😎");
@@ -252,7 +263,12 @@ public class ChatWindow extends JFrame implements KeyListener, ActionListener,
 		} else if (arg0.getSource() == this.send) {
 			String txt = typeArea.getText();
 			this.addText(generateLine(txt));
-			// also.. send the text
+		} else if (arg0.getSource() == sendFile) {
+			JFileChooser fc = new JFileChooser();
+			int returnVal = fc.showOpenDialog(this);
+			if (returnVal == JFileChooser.APPROVE_OPTION) {
+				sendingFiles.add(fc.getSelectedFile());
+			}
 		}
 	}
 
@@ -263,9 +279,9 @@ public class ChatWindow extends JFrame implements KeyListener, ActionListener,
 		if (arg0.getClickCount() == 2 && r != null
 				&& r.contains(arg0.getPoint())) {
 			String person = pNameList.get(list.getSelectedIndex());
-			if(checkTabs.isSelected()){
-			new PersonalChat(this, client, myName, person);}
-			else{
+			if (checkTabs.isSelected()) {
+				new PersonalChat(this, client, myName, person);
+			} else {
 				typeArea.setText("/w " + person + " ");
 			}
 		}
