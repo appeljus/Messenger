@@ -168,15 +168,10 @@ public class Client extends Thread {
 			}
 			else if(txt.startsWith("[PRIV_MSG]: ")){
 				String[] words = txt.split(" ");
-				System.out.println(words[1]);
 				if(words[1].equals(myName)){
-					//byte[] noZeros = removeZeros(receiveData);
-					//byte[] msg = removeFirst(noZeros,18);
-					//String data = new String(Encryption.decrypt(msg, keyPair.getPrivate()));
-					//String[] wordss = data.split(" ");
 					String data = "";
 					for(int i=3; i<words.length; i++){
-						data = data + words[i];
+						data = data + words[i] + " ";
 					}
 					chatwindow.privateIncoming(words[2], data);
 				}
