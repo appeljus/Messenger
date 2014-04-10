@@ -2,6 +2,12 @@ package client;
 
 import java.io.IOException;
 import java.net.*;
+import java.security.Key;
+import java.security.KeyFactory;
+import java.security.KeyPair;
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
+import java.security.spec.X509EncodedKeySpec;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -19,7 +25,8 @@ public class Client extends Thread {
 	InetAddress group;
 	String myName;
 	InetAddress myAddress;
-	List<String> pubKeys = new ArrayList<String>();
+	KeyPair keyPair;
+	List<Key> pubKeys = new ArrayList<Key>();
 	List<Boolean> stillAlive = new ArrayList<Boolean>();
 	
 	HashMap<Integer, List<Integer>> seqNrs = new HashMap<Integer, List<Integer>>();
@@ -44,13 +51,14 @@ public class Client extends Thread {
 		}
 
 		chatwindow = c;
-		pubKeys.add("THISISMYPUBKEY");
+		keyPair = Encryption.generateKey();
+		pubKeys.add(keyPair.getPublic());
 		stillAlive.add(true);
 		try {
 			group = InetAddress.getByName("228.5.6.7");
 			s = new MulticastSocket(port);
 			s.joinGroup(group);
-			this.sendPacket("[BROADCAST]: " + myName + " " + pubKeys.get(0));
+			this.sendPacket(myName, pubKeys.get(0));
 			Thread t = new Thread(this);
 			t.start();
 			Timer timer = new Timer();
@@ -64,7 +72,7 @@ public class Client extends Thread {
 		return myName;
 	}
 
-	public String getPubKey() {
+	public Key getPubKey() {
 		return pubKeys.get(0);
 	}
 
@@ -83,27 +91,75 @@ public class Client extends Thread {
 		}
 		return result;
 	}
-
+	
+	public byte[] removeZeros(byte[] data){
+		int count = 0;
+		for(int i=data.length-1; i>0; i--){
+			if(data[i] == 0){
+				count++;
+			}
+			else break;
+		}
+		byte[] returnData = new byte[data.length-count-1];
+		for(int i=0; i<returnData.length; i++){
+			returnData[i] = data[i];
+		}
+		return returnData;
+	}
+	
+	public Key extractKey(byte[] data) {
+		byte[] betterData = removeZeros(data);
+		byte[] keyData = new byte[162];
+		
+		for(int i=0; i<betterData.length-162; i++){
+			data[i] = betterData[i];
+		}
+		for(int i=13; i<175; i++){
+			keyData[i - 13] = betterData[i];
+		}
+		
+		Key k2 = null;
+		byte[] bytes = keyData;
+		try {
+			k2 = KeyFactory.getInstance("RSA").generatePublic(new X509EncodedKeySpec(bytes));
+		} catch (InvalidKeySpecException | NoSuchAlgorithmException e) { 
+			e.printStackTrace();
+		}
+		return k2;
+	}
+	
+	public byte[] removeFirst(byte[] data, int num){
+		byte[] returnByte = new byte[data.length-num];
+		for(int i=num; i<data.length; i++){
+			returnByte[i-num] = data[i];
+		}
+		return returnByte;
+	}
+	
 	public void receivePacket() {
 		try {
 			byte[] buf = new byte[1024];
-			DatagramPacket packet = new DatagramPacket(buf, buf.length);
+			DatagramPacket packet = new DatagramPacket(buf, buf.length); //[BC]: KEY NAME
 
 			s.receive(packet);
+			
 			byte[] receiveData = packet.getData();
+						
 			String txt = new String(receiveData, "UTF-8");
+			
 			if (txt.startsWith("[BROADCAST]:") && !packet.getAddress().equals(myAddress)) {
 				String[] words = txt.split(" ");
-				if (words[1].equals(myName)) {
-					this.sendPacket("[NAME_IN_USE]: " + words[1] + " STUFF");
+				if (words[2].equals(myName)) {
+					this.sendPacket("[NAME_IN_USE]: " + words[2] + " STUFF");
 				}
-				chatwindow.updateNames(words[1]);
-				if(chatwindow.pNameList.contains(words[1])){
-					stillAlive.set(chatwindow.pNameList.indexOf(words[1]),true);
+				chatwindow.updateNames(words[2]);
+				if(chatwindow.pNameList.contains(words[2])){
+					stillAlive.set(chatwindow.pNameList.indexOf(words[2]),true);
 				}
 				else {
 					stillAlive.add(true);
-					pubKeys.add(words[2]);
+					Key k = extractKey(receiveData);
+					pubKeys.add(k);
 				}
 			} else if (txt.startsWith("[NAME_IN_USE]: ") && !packet.getAddress().equals(myAddress)) {
 				String[] words = txt.split(" ");
@@ -112,6 +168,15 @@ public class Client extends Thread {
 					new LoginWindow();
 				}
 			}
+			else if(txt.startsWith("[PRIV_MSG]: ")){
+				String[] words = txt.split(" ");
+				if(words[1].equals(myName)){
+					byte[] noZeros = removeZeros(receiveData);
+					byte[] msg = removeFirst(noZeros,18);
+					chatwindow.incoming(new String(Encryption.decrypt(msg, keyPair.getPrivate())));
+				}
+			}
+			
 			else if(!packet.getAddress().equals(myAddress)){
 				chatwindow.incoming(txt);
 			}
@@ -132,8 +197,6 @@ public class Client extends Thread {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
-		
 	}
 
 	public void sendPacket(String message) {
@@ -149,9 +212,44 @@ public class Client extends Thread {
 		current_sqn++;
 	}
 	
+	public void sendPacket(String message, Key k) {
+		byte[] bCast = "[BROADCAST]: ".getBytes();
+		message = " " + message;
+		byte[] data = message.getBytes();
+		byte[] key = k.getEncoded();
+		byte[] filler = { new Byte((byte) 255) } ;
+		byte[] destination = new byte[bCast.length + data.length + key.length + filler.length];
+		System.arraycopy(bCast, 0, destination, 0, bCast.length);
+		System.arraycopy(key, 0, destination, bCast.length, key.length);
+		System.arraycopy(data, 0, destination, bCast.length + key.length, data.length);
+		System.arraycopy(filler, 0, destination, bCast.length + key.length + data.length, filler.length);
+		DatagramPacket packetToSend = new DatagramPacket(destination, destination.length, group, port);
+		try {
+			s.send(packetToSend);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	public void sendPrivate(String target, String message) {
 		byte[] data = message.getBytes();
-		//byte[] encryptedData = Encryption.encrypt(data, pubKeys.get(index));
+		
+		System.out.println(new String(Encryption.decrypt(Encryption.encrypt(data, keyPair.getPublic()), keyPair.getPrivate())));
+		
+		int index = chatwindow.pNameList.indexOf(target);
+		byte[] encryptedData = Encryption.encrypt(data, pubKeys.get(index));
+		byte[] fill = ("[PRIV_MSG]: " + target + " ").getBytes();
+		byte[] filler = { new Byte((byte) 255) } ;
+		byte[] returnBytes = new byte[encryptedData.length + fill.length + filler.length];
+		System.arraycopy(fill, 0, returnBytes, 0, fill.length);
+		System.arraycopy(encryptedData, 0, returnBytes, fill.length, encryptedData.length);
+		System.arraycopy(filler, 0, returnBytes, fill.length + encryptedData.length, filler.length);
+		DatagramPacket packetToSend = new DatagramPacket(returnBytes, returnBytes.length, group, port);
+		try {
+			s.send(packetToSend);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public void checkConnections(){
