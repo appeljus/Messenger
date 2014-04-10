@@ -139,7 +139,7 @@ public class Client extends Thread {
 	public void receivePacket() {
 		try {
 			byte[] buf = new byte[1024];
-			DatagramPacket packet = new DatagramPacket(buf, buf.length); //[BC]: KEY NAME
+			DatagramPacket packet = new DatagramPacket(buf, buf.length); //[BC]: NAME
 
 			s.receive(packet);
 			byte[] receiveData = packet.getData();
@@ -147,17 +147,17 @@ public class Client extends Thread {
 			
 			if (txt.startsWith("[BROADCAST]:") && !packet.getAddress().equals(myAddress)) {
 				String[] words = txt.split(" ");
-				if (words[2].equals(myName)) {
-					this.sendPacket("[NAME_IN_USE]: " + words[2] + " STUFF");
+				if (words[1].equals(myName)) {
+					this.sendPacket("[NAME_IN_USE]: " + words[1] + " STUFF");
 				}
-				if(chatwindow.pNameList.contains(words[2])){
-					stillAlive.set(chatwindow.pNameList.indexOf(words[2]),true);
+				if(chatwindow.pNameList.contains(words[1])){
+					stillAlive.set(chatwindow.pNameList.indexOf(words[1]),true);
 				}
-				else if(words[2].length() <= 24){
-					chatwindow.updateNames(words[2]);
+				else {
+					chatwindow.updateNames(words[1]);
 					stillAlive.add(true);
-					Key k = extractKey(receiveData);
-					pubKeys.add(k);
+					//Key k = extractKey(receiveData);
+					//pubKeys.add(k);
 				}
 			} else if (txt.startsWith("[NAME_IN_USE]: ") && !packet.getAddress().equals(myAddress)) {
 				String[] words = txt.split(" ");
@@ -213,7 +213,7 @@ public class Client extends Thread {
 	}
 	
 	public void sendPacket(String message, Key k) {
-		byte[] bCast = "[BROADCAST]: ".getBytes();
+		/*byte[] bCast = "[BROADCAST]: ".getBytes();
 		message = " " + message + " ";
 		byte[] data = message.getBytes();
 		byte[] key = k.getEncoded();
@@ -222,7 +222,9 @@ public class Client extends Thread {
 		System.arraycopy(bCast, 0, destination, 0, bCast.length);
 		System.arraycopy(key, 0, destination, bCast.length, key.length);
 		System.arraycopy(data, 0, destination, bCast.length + key.length, data.length);
-		System.arraycopy(filler, 0, destination, bCast.length + key.length + data.length, filler.length);
+		System.arraycopy(filler, 0, destination, bCast.length + key.length + data.length, filler.length);*/
+		
+		byte[] destination = ("[BROADCAST]: " + message).getBytes();
 		DatagramPacket packetToSend = new DatagramPacket(destination, destination.length, group, port);
 		try {
 			s.send(packetToSend);
