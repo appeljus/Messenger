@@ -85,6 +85,7 @@ public class PersonalChat extends JFrame implements KeyListener, ActionListener 
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		cont.add(mainFrame);
 		setVisible(true);
+		
 	}
 
 	private void addText(String txt) {
