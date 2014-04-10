@@ -142,9 +142,7 @@ public class Client extends Thread {
 			DatagramPacket packet = new DatagramPacket(buf, buf.length); //[BC]: KEY NAME
 
 			s.receive(packet);
-			
 			byte[] receiveData = packet.getData();
-						
 			String txt = new String(receiveData, "UTF-8");
 			
 			if (txt.startsWith("[BROADCAST]:") && !packet.getAddress().equals(myAddress)) {
@@ -171,15 +169,15 @@ public class Client extends Thread {
 			else if(txt.startsWith("[PRIV_MSG]: ")){
 				String[] words = txt.split(" ");
 				if(words[1].equals(myName)){
-					byte[] noZeros = removeZeros(receiveData);
-					byte[] msg = removeFirst(noZeros,18);
-					String data = new String(Encryption.decrypt(msg, keyPair.getPrivate()));
-					String[] wordss = data.split(" ");
-					data = "";
-					for(int i=1; i<wordss.length; i++){
-						data = data + wordss[i];
+					//byte[] noZeros = removeZeros(receiveData);
+					//byte[] msg = removeFirst(noZeros,18);
+					//String data = new String(Encryption.decrypt(msg, keyPair.getPrivate()));
+					//String[] wordss = data.split(" ");
+					String data = "";
+					for(int i=3; i<words.length; i++){
+						data = data + words[i];
 					}
-					chatwindow.privateIncoming(wordss[0], data);
+					chatwindow.privateIncoming(words[2], data);
 				}
 			}
 			
@@ -238,18 +236,7 @@ public class Client extends Thread {
 	}
 	
 	public void sendPrivate(String target, String message) {
-		byte[] data = message.getBytes();
-		
-		System.out.println(new String(Encryption.decrypt(Encryption.encrypt(data, keyPair.getPublic()), keyPair.getPrivate())));
-		
-		int index = chatwindow.pNameList.indexOf(target);
-		byte[] encryptedData = Encryption.encrypt(data, pubKeys.get(index));
-		byte[] fill = ("[PRIV_MSG]: " + target + " ").getBytes();
-		byte[] filler = { new Byte((byte) 255) } ;
-		byte[] returnBytes = new byte[encryptedData.length + fill.length + filler.length];
-		System.arraycopy(fill, 0, returnBytes, 0, fill.length);
-		System.arraycopy(encryptedData, 0, returnBytes, fill.length, encryptedData.length);
-		System.arraycopy(filler, 0, returnBytes, fill.length + encryptedData.length, filler.length);
+		byte[] returnBytes = ("[PRIV_MSG]: " + target + message).getBytes();
 		DatagramPacket packetToSend = new DatagramPacket(returnBytes, returnBytes.length, group, port);
 		try {
 			s.send(packetToSend);
