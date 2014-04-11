@@ -127,6 +127,10 @@ public class Client extends Thread {
         InetAddress source = sourceAddress;
         InetAddress destination = destinationAddress;
 
+        if(txt.contains("PNG")){
+        	System.out.println(txt);
+        }
+        
         if (txt.startsWith("[BROADCAST]") && !sourceAddress.equals(myAddress)) {
             String[] words = txt.split(" ");
             if (words[1].equals(myName)) {
@@ -198,11 +202,18 @@ public class Client extends Thread {
         else if(txt.startsWith("[EOF]")) {
             //SEQHOPSOUDES[EOF][EXT]{file}
             // 1  1  4  4   5    6    x    = 21 + x = 1024 ==> x = 1003
-            byte[] fileBytes = new byte[1003];
             byte[] extBytes = new byte[6];
-            System.arraycopy(message, 21, fileBytes, 0, 1003);
+            int count = 0;
+            for(int i=message.length; i>20; i--){
+            	if(message[i] == 0){
+            		count++;
+            	}
+            	else break;
+            }
+            byte[] file = new byte[1003-count-1];
+            System.arraycopy(message, 21, file, 0, file.length);
             System.arraycopy(message, 15, extBytes, 0, 6);
-            receiveFileInstance.receiveFile(fileBytes, true, new String(extBytes));
+            receiveFileInstance.receiveFile(file, true, new String(extBytes));
         }
 
         else if(!sourceAddress.equals(myAddress)){

@@ -57,19 +57,23 @@ public class SendFile implements Runnable {
 			System.arraycopy(tagData, 0, data3, 0, tagData.length);
 			System.arraycopy(data, 0, data3, tagData.length, data.length);
 			System.out.println(new String(data3));
-			byte[] data4 = PacketUtils.getData(data, c.getCurrentSeq(),
+			byte[] data4 = PacketUtils.getData(data3, c.getCurrentSeq(),
 					c.getHopCount(), c.getMyAddress(), c.getGroup());
 			DatagramPacket packetToSend = new DatagramPacket(data4,
 					data4.length, target, port);
 			c.resendPacket(packetToSend);
 			c.incrementSeqNr();
 		}
-		tagData = ("[EOF][" + ext + "]").getBytes();
+		if(ext.length() == 3) tagData = ("[EOF][" + ext + "] ").getBytes();
+		else tagData = ("[EOF][" + ext + "]").getBytes();
+		System.out.println(tagData.length);
 		byte[] data3 = new byte[1014];
+		byte[] filler = { (byte)255 };
 		System.arraycopy(tagData, 0, data3, 0, tagData.length);
 		System.arraycopy(data, 0, data3, tagData.length, data.length);
+		System.arraycopy(filler, 0, data3, tagData.length + data.length, filler.length);
 		System.out.println(new String(data3));
-		byte[] data4 = PacketUtils.getData(data, c.getCurrentSeq(),
+		byte[] data4 = PacketUtils.getData(data3, c.getCurrentSeq(),
 				c.getHopCount(), c.getMyAddress(), c.getGroup());
 		DatagramPacket packetToSend = new DatagramPacket(data4,
 				data4.length, target, port);
