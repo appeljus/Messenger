@@ -3,7 +3,7 @@
 \usepackage[dutch]{babel}
 
 \title{Integration Project}
-\author{Kimberly Hengst \\ Tim Sonderen \\ Kevin Hetterscheid \\ Martijn de Bijl}
+\author{Kimberly Hengst \emph{1305093}\\ Tim Sonderen \emph{1465252}\\ Kevin Hetterscheid \emph{1490443}\\ Martijn de Bijl \emph{1470108}}
 \date{\today}
 
 \begin{document}
@@ -26,7 +26,7 @@ De gebruiker kan in een user interface berichten typen en versturen. Deze berich
 
 \subsection{Pakketjes}
 Voor het versturen van de pakketjes gebruikt multicast socket een Datagram packet. Deze gebruiken wij ook voor het versturen van data. Een datagram packet heeft een byte array met data, een IP adres van de ontvanger, en een poort van de ontvanger. In mulitcast wordt een pakketje dus naar iedereen verstuurd, het IP adres is dan ook het adres van een multicast network, een IP van de IP-klasse D. De poort is een standaard poort waar wij voor hebben gekozen. In de data van de datagram packet worden nog enkele andere velden aangewezen. %Welke velden staan waar voor?
-Packets die voor utility worden gebruikt, beginnen met hun naam (BROADCAST, NAME_IN_USE, etc) tussen blokhaken. Namen mogen geen [ of ] bevatten, dus kan er zo geen error in komen.
+Packets die voor utility worden gebruikt, beginnen met hun naam (BROADCAST, NAME\_IN\_USE, etc) tussen blokhaken. Namen mogen geen [ of ] bevatten, dus kan er zo geen error in komen.
 
 
 \subsection{Bestanden verzenden}
@@ -38,13 +38,20 @@ Packets die voor utility worden gebruikt, beginnen met hun naam (BROADCAST, NAME
 %We gebruiken geen ACK's, maar NACK's. Hierdoor ontstaat er geen congestion als je met veel mensen gaat chatten, door de vele ACK's die gestuurd worden.
 
 \subsection{User interface}
-
+De gebruiker kan via de user interface met het programma communiceren. De interface bestaat uit een aantal elementen:
+\begin{itemize}
+\item Tekstveld
+\item Typveld
+\item Een knop voor het verzenden van tekst en bestanden
+\item Een knop voor privé chat
+\item Een knop voor het afsluiten van het applicatie
+\end{itemize}
 
 \section{Beveiling}
 Om te zorgen dat niet iedereen de inhoudt van de pakketten kan lezen, gebruiken we encryptie. 
 
 \subsection{Encryptie}
-
+Voor het encryptie gebruiken we symetrische sleutel encryptie. Dit betekent dat de clients een sleutel delen, waarmee ze hun berichten kunnen coderen en decoderen.  
 
 \section{Test plan}
 

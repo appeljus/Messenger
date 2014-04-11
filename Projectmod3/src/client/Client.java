@@ -5,6 +5,8 @@ import java.net.*;
 import java.security.*;
 import java.util.*;
 
+import javax.crypto.KeyGenerator;
+import javax.crypto.spec.SecretKeySpec;
 import javax.xml.bind.DatatypeConverter;
 
 import GUI.ChatWindow;
@@ -23,7 +25,9 @@ public class Client extends Thread {
 	Timer timer;
     PacketLog packetLog;
     ReceiveFile receiveFileInstance;
-	
+    private static final String string = "string";
+    private static final Key key = new SecretKeySpec(string.getBytes(), "AES");
+
 	private static final int BUFFER_SIZE = 16;
 	ArrayList<DatagramPacket> lastMsgs = new ArrayList<DatagramPacket>();
 	HashMap<Integer, Integer> seqNrs = new HashMap<Integer, Integer>();
@@ -55,7 +59,6 @@ public class Client extends Thread {
 
 		chatwindow = c;
 		receiveFileInstance = new ReceiveFile(this);
-		keyPair = Encryption.generateKey();
 		pubKeys.add(keyPair.getPublic());
 		stillAlive.add(true);
 		try {
@@ -228,10 +231,11 @@ public class Client extends Thread {
 		
 		byte[] data = PacketUtils.getData(message.getBytes(), currentSeq, hopCount, myAddress, group);
 
-        DatagramPacket packetToSend = new DatagramPacket(data, data.length,
-				group, port);
+        DatagramPacket packetToSend = new DatagramPacket(data, data.length, group, port);
 
-		try {
+        packetLog.addSendPacket(packetToSend);
+
+        try {
 			s.send(packetToSend);
 		} catch (IOException e) {
 			e.printStackTrace();

@@ -4,7 +4,8 @@
 \contentsline {subsection}{\numberline {2.1}Pakketjes}{3}
 \contentsline {subsection}{\numberline {2.2}Bestanden verzenden}{3}
 \contentsline {subsection}{\numberline {2.3}Pakket verlies}{3}
+\contentsline {subsection}{\numberline {2.4}User interface}{3}
 \contentsline {section}{\numberline {3}Beveiling}{3}
 \contentsline {subsection}{\numberline {3.1}Encryptie}{3}
-\contentsline {section}{\numberline {4}Testing}{3}
-\contentsline {subsection}{\numberline {4.1}Test methodes}{3}
+\contentsline {section}{\numberline {4}Test plan}{3}
+\contentsline {subsection}{\numberline {4.1}Test cases}{3}
