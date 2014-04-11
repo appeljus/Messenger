@@ -298,17 +298,17 @@ public class Client extends Thread {
             if (!destinationAddress.equals(myAddress)){
                 if(sourceAddress.equals(myAddress)){
                     //Drop packet
-                    System.out.println("Packet droppped");
+                    //System.out.println("Packet droppped");
                 }
                 if (sequence > 0){
-                    System.out.println("Packet forwarded");
+                    //System.out.println("Packet forwarded");
                     byte[] dataToSend = PacketUtils.getData(message, sequence, hop - 1, sourceAddress, destinationAddress);
                     resendPacket(new DatagramPacket(dataToSend, dataToSend.length, sourceAddress, port));
 
                 }
                 else{
                     //Drop packet
-                    System.out.println("Packet dropped");
+                    //System.out.println("Packet dropped");
                 }
 
             }
@@ -319,7 +319,7 @@ public class Client extends Thread {
                 }
                 else{
                     //Drop packet
-                    System.out.println("Packet dropped");
+                    //System.out.println("Packet dropped");
                 }
             }
         } catch (   IOException e) {
