@@ -130,6 +130,10 @@ public class Client extends Thread {
         InetAddress source = sourceAddress;
         InetAddress destination = destinationAddress;
 
+        if(txt.contains("PNG")){
+        	System.out.println(txt);
+        }
+        
         if (txt.startsWith("[BROADCAST]") && !sourceAddress.equals(myAddress)) {
             String[] words = txt.split(" ");
             if (words[1].equals(myName)) {
@@ -171,6 +175,7 @@ public class Client extends Thread {
 
         else if(txt.startsWith("[NACK]: ")){
             String[] words = txt.split(" ");
+            System.out.println("|"+words[1]+"|");
             int missedI = Integer.parseInt(words[1]);
             if(missedI < currentSeq-BUFFER_SIZE){
                 byte[] data = "[TOO_LATE]".getBytes();
@@ -178,13 +183,14 @@ public class Client extends Thread {
                         group, port);
                 resendPacket(rePacket);
             }else{
-            int iOfList = BUFFER_SIZE-(currentSeq-missedI)-1;
+            	System.out.println("|" + BUFFER_SIZE + "|" + currentSeq + "|" + missedI + "|");
+            int iOfList = lastMsgs.size()-(currentSeq-missedI)-1;
             resendPacket(lastMsgs.get(iOfList));
             }
         }
 
         else if(txt.startsWith("[TOO_LATE]")){
-            //TODO
+        	System.out.println("msg too late");
             // ?????
         }
 
@@ -199,11 +205,18 @@ public class Client extends Thread {
         else if(txt.startsWith("[EOF]")) {
             //SEQHOPSOUDES[EOF][EXT]{file}
             // 1  1  4  4   5    6    x    = 21 + x = 1024 ==> x = 1003
-            byte[] fileBytes = new byte[1003];
             byte[] extBytes = new byte[6];
-            System.arraycopy(message, 21, fileBytes, 0, 1003);
+            int count = 0;
+            for(int i=message.length-1; i>20; i--){
+            	if(message[i] == 0){
+            		count++;
+            	}
+            	else break;
+            }
+            byte[] file = new byte[1003-count-1];
+            System.arraycopy(message, 21, file, 0, file.length);
             System.arraycopy(message, 15, extBytes, 0, 6);
-            receiveFileInstance.receiveFile(fileBytes, true, new String(extBytes));
+            receiveFileInstance.receiveFile(file, true, new String(extBytes));
         }
 
         else if(!sourceAddress.equals(myAddress)){
@@ -219,7 +232,8 @@ public class Client extends Thread {
         } else {
             if(seqNrs.get(deviceNr)+1 < thisSeq){
                 for(int i = seqNrs.get(deviceNr)+1; i < thisSeq; i++){
-                    String msg = "[NACK]: " + i;
+                    String msg = "[NACK]: " + i + " DUMMY_WORD ";
+                    sendPacket(msg);
                 }
             }
             seqNrs.put(deviceNr, thisSeq);
@@ -232,6 +246,9 @@ public class Client extends Thread {
 		byte[] data = PacketUtils.getData(message.getBytes(), currentSeq, hopCount, myAddress, group);
 
         DatagramPacket packetToSend = new DatagramPacket(data, data.length, group, port);
+
+        lastMsgs.add(packetToSend);
+
 
         packetLog.addSendPacket(packetToSend);
 

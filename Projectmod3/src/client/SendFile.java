@@ -41,30 +41,44 @@ public class SendFile implements Runnable {
 
 	@Override
 	public void run() {
+		byte[] data = new byte[1003];
+		byte[] tagData = new byte[11];
 		while (currentStartI < fileParts.length) {
-			byte[] data = new byte[1003];
 			int i;
 			for (i = 0; i < 1003 && currentStartI + i < fileParts.length; i++) {
 				data[i] = fileParts[currentStartI + i];
 			}
-			byte[] tagData = new byte[11];
-			if (currentStartI >= fileParts.length) {
-				tagData = ("[EOF][" + ext + "]").getBytes();
-			} else {
+			if (currentStartI < fileParts.length) {
 				tagData = "[FILE]".getBytes();
 			}
 
 			currentStartI += i;
 			byte[] data3 = new byte[1014];
-			System.arraycopy(data, 0, data3, 11, data.length);
 			System.arraycopy(tagData, 0, data3, 0, tagData.length);
-			byte[] data4 = PacketUtils.getData(data, c.getCurrentSeq(),
+			System.arraycopy(data, 0, data3, tagData.length, data.length);
+			System.out.println(new String(data3));
+			byte[] data4 = PacketUtils.getData(data3, c.getCurrentSeq(),
 					c.getHopCount(), c.getMyAddress(), c.getGroup());
 			DatagramPacket packetToSend = new DatagramPacket(data4,
 					data4.length, target, port);
 			c.resendPacket(packetToSend);
 			c.incrementSeqNr();
 		}
+		if(ext.length() == 3) tagData = ("[EOF][" + ext + "] ").getBytes();
+		else tagData = ("[EOF][" + ext + "]").getBytes();
+		System.out.println(tagData.length);
+		byte[] data3 = new byte[1014];
+		byte[] filler = { (byte)255 };
+		System.arraycopy(tagData, 0, data3, 0, tagData.length);
+		System.arraycopy(data, 0, data3, tagData.length, data.length);
+		System.arraycopy(filler, 0, data3, tagData.length + data.length, filler.length);
+		System.out.println(new String(data3));
+		byte[] data4 = PacketUtils.getData(data3, c.getCurrentSeq(),
+				c.getHopCount(), c.getMyAddress(), c.getGroup());
+		DatagramPacket packetToSend = new DatagramPacket(data4,
+				data4.length, target, port);
+		c.resendPacket(packetToSend);
+		c.incrementSeqNr();
 	}
 
 }
