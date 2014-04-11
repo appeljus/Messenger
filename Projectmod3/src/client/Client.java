@@ -41,6 +41,7 @@ public class Client extends Thread {
 	
 	public Client(ChatWindow c, String name) {
 		myName = name;
+        packetLog = new PacketLog();
 		try {
 			Enumeration e = NetworkInterface.getNetworkInterfaces();
 			while (e.hasMoreElements()) {
@@ -110,6 +111,7 @@ public class Client extends Thread {
 
 			s.receive(packet);
 			byte[] receiveData = packet.getData();
+            packetLog.addPacket(packet);
 
             byte[] message = new byte[receiveData.length - 10];
             String txt = new String(message);
@@ -122,7 +124,9 @@ public class Client extends Thread {
             byte[] dst = {receiveData[6], receiveData[7], receiveData[8], receiveData[9]};
 			InetAddress source = InetAddress.getByAddress(src);
 			InetAddress destination = InetAddress.getByAddress(dst);
-			
+
+
+
 			if (txt.startsWith("[BROADCAST]:") && !packet.getAddress().equals(myAddress)) {
 				String[] words = txt.split(" ");
 				if (words[1].equals(myName)) {
@@ -225,6 +229,7 @@ public class Client extends Thread {
 		if(lastMsgs.size() > BUFFER_SIZE){
 			lastMsgs.remove(0);
 		}
+
 		try {
 			s.send(packetToSend);
 		} catch (IOException e) {
