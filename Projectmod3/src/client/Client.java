@@ -239,7 +239,7 @@ public class Client extends Thread {
 	}
 	
 	public void sendFile(File f){
-		SendFile sender = new SendFile(f, group, port);
+		SendFile sender = new SendFile(this, f, group, port);
 		Thread t = new Thread(sender);
 		t.start();
 	}
