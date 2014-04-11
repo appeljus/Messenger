@@ -279,7 +279,7 @@ public class ChatWindow extends JFrame implements KeyListener, ActionListener,
 	public void keyTyped(KeyEvent arg0) {
 		// TODO Auto-generated method stub
 		typeArea.requestFocus();
-	}
+	}//dfsdlg
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
