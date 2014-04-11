@@ -51,8 +51,6 @@ public class ChatWindow extends JFrame implements KeyListener, ActionListener,
 	BufferedImage iconBuff;
 	ImageIcon icon;
 
-	ArrayList<File> sendingFiles = new ArrayList<File>();
-
 	public ArrayList<String> pNameList = new ArrayList<String>();
 	DefaultListModel<String> pList = new DefaultListModel<String>();
 	JList<String> pArea = new JList<String>(pList);
