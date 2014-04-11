@@ -27,23 +27,26 @@ public class ReceiveFile {
 		System.arraycopy(e, 0, temp, file.length, e.length);
 	}
 	
-	public void createFile(String ext){
+	private void createFile(String ext){
 		FileOutputStream fOutS;
 		JFileChooser fc = new JFileChooser();
-		fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 		fc.setDialogType(JFileChooser.SAVE_DIALOG);
 		int returnVal = fc.showOpenDialog(client.chatwindow);
 		String path = "C:";
 		
 		if (returnVal == JFileChooser.APPROVE_OPTION) {
 			path = fc.getSelectedFile().getPath();
-			client.chatwindow.incoming("Receiving file at: " + path);
+			client.chatwindow.incoming("Saved file at: " + path + "." + ext);
 		}
 		try {
-			fOutS = new FileOutputStream(path + "/" + fileTitle + "." + ext);
+			fOutS = new FileOutputStream(path + "." + ext);
 			fOutS.write(file);
 		    fOutS.close();
 		} catch (IOException e) { e.printStackTrace(); } 
 	}
 }
+
+
+
+
 
