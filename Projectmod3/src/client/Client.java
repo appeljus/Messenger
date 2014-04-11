@@ -291,4 +291,35 @@ public class Client extends Thread {
 		}
 		stillAlive.set(0, true);
 	}
-}
+
+    public void forwardPacket(DatagramPacket packet){
+        byte[] data = packet.getData();
+        byte[] sourceAddress = {data[], data[], data[], data[]};
+        byte[] destinationAddress = {data[], data[], data[], data[]};
+        try {
+            if (!InetAddress.getByAddress(destinationAddress).equals(myAddress)){
+                if(InetAddress.getByAddress(sourceAddress).equals(myAddress)){
+                    //Drop packet
+                }
+                if (data[] > 0){
+                    data[] --;
+                    //Send packet
+                }
+                else{
+                    //Drop packet
+                }
+
+            }
+            else {
+                if (!PacketLog.containsSeq){
+                    //Accept packet
+                }
+                else{
+                    //Drop packet
+                }
+            }
+        } catch (UnknownHostException e) {
+            e.printStackTrace();
+        }
+
+    }

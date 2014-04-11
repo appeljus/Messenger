@@ -12,6 +12,22 @@ import java.security.*;
  */
 public class Encryption {
 
+    public static byte[] getEncryption(byte[] data){
+        StringBuilder strng = new StringBuilder();
+        for (byte d : data){
+            strng.append((char)((int)d + 4));
+        }
+        return strng.toString().getBytes();
+    }
+
+    public static byte[] getDecryption(byte[] data){
+        StringBuilder strng = new StringBuilder();
+        for (byte d : data){
+            strng.append((char)((int)d - 4));
+        }
+        return strng.toString().getBytes();
+    }
+
     public static KeyPair generateKey(){
         KeyPairGenerator keyGen = null;
         try {
@@ -116,11 +132,14 @@ public class Encryption {
 
     public static void main(String[] agrs){
         String hallo = "hallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallo";
+
+
         KeyPair keys = generateKey();
         String result = "";
-        result = new String(Encryption.encrypt(hallo.getBytes(), keys.getPublic()));
+        result = new String(getEncryption(hallo.getBytes()));
+
         System.out.println(result);
-        result = new String(Encryption.decrypt(result.getBytes(), keys.getPrivate()));
+        result = new String(getDecryption(result.getBytes()));
         System.out.println(result);
     }
 
