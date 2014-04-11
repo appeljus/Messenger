@@ -35,6 +35,8 @@ public class Client extends Thread {
 	HashMap<Integer, List<Integer>> seqNrs = new HashMap<Integer, List<Integer>>();
 	int currentSeq = 0;
 	
+	int hopCount = 0; // dummy .. temp... dinges..
+	
 	public Client(ChatWindow c, String name) {
 		myName = name;
 		try {
@@ -61,7 +63,7 @@ public class Client extends Thread {
 			group = InetAddress.getByName("228.5.6.7");
 			s = new MulticastSocket(port);
 			s.joinGroup(group);
-			this.sendPacket(myName, pubKeys.get(0));
+			this.sendPacket("[BROADCAST]: " + myName);
 			Thread t = new Thread(this);
 			t.start();
 			timer = new Timer();
@@ -148,8 +150,18 @@ public class Client extends Thread {
 			byte[] receiveData = packet.getData();
 			String txt = new String(receiveData, "UTF-8");
 			
-			// gooi dat seq nummer in de goed lijst! ff samen met kevin doen..
+			// gooi dat seq nummer in de goede lijst! ff samen met kevin doen..
 			//########################################################################
+			
+			String[] words1 = txt.split(" ");
+			txt = "";
+			for(int i = 2; i < words1.length; i++){
+				txt = words1[i] + " ";
+			}
+			
+			int thisSeq = Integer.parseInt(words1[0]);
+			int thisHop = Integer.parseInt(words1[1]);
+			int nextHop = thisHop - 1;
 			
 			if (txt.startsWith("[BROADCAST]:") && !packet.getAddress().equals(myAddress)) {
 				String[] words = txt.split(" ");
@@ -214,13 +226,11 @@ public class Client extends Thread {
 			int deviceNr = ((int)(addrB[3])) & 0xFF;
 			deviceNr--;
 			
-			if(seqNrs.containsKey(deviceNr)){
-				seqNrs.get(deviceNr).add(3);//#########################
-			}
-			else{
+			if(!seqNrs.containsKey(deviceNr)){
 				seqNrs.put(deviceNr, new ArrayList<Integer>());
-				seqNrs.get(deviceNr).add(3);//#########################
 			}
+			
+			seqNrs.get(deviceNr).add(thisSeq);//#########################
 			
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -235,10 +245,11 @@ public class Client extends Thread {
 		}
 	}
 
-	public void sendPacket(String message) {
-		
-		
+	public void sendPacket(String message) {		
 		if(!message.startsWith("[")) chatwindow.incoming(message);
+		
+		message = currentSeq + " " + hopCount + " " + message;
+		
 		byte[] data = message.getBytes();
 		DatagramPacket packetToSend = new DatagramPacket(data, data.length,
 				group, port);
@@ -256,26 +267,7 @@ public class Client extends Thread {
 		currentSeq++;
 	}
 	
-	public void sendPacket(String message, Key k) {
-		/*byte[] bCast = "[BROADCAST]: ".getBytes();
-		message = " " + message + " ";
-		byte[] data = message.getBytes();
-		byte[] key = k.getEncoded();
-		byte[] filler = { new Byte((byte) 255) } ;
-		byte[] destination = new byte[bCast.length + data.length + key.length + filler.length];
-		System.arraycopy(bCast, 0, destination, 0, bCast.length);
-		System.arraycopy(key, 0, destination, bCast.length, key.length);
-		System.arraycopy(data, 0, destination, bCast.length + key.length, data.length);
-		System.arraycopy(filler, 0, destination, bCast.length + key.length + data.length, filler.length);*/
-		
-		byte[] destination = ("[BROADCAST]: " + message + " STUFF").getBytes();
-		DatagramPacket packetToSend = new DatagramPacket(destination, destination.length, group, port);
-		try {
-			s.send(packetToSend);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
+
 	
 	public void sendPrivate(String target, String message) {
 		byte[] returnBytes = ("[PRIV_MSG]: " + target + " " + message).getBytes();

@@ -18,6 +18,6 @@ public class SecondTimer extends TimerTask {
 			client.checkConnections();
 			secCount = 0;
 		}
-		client.sendPacket(client.getClientName(), client.getPubKey());
+		client.sendPacket("[BROADCAST]: " + client.getClientName());
 	}
 }
