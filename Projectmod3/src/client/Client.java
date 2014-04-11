@@ -110,7 +110,7 @@ public class Client extends Thread {
 		return result;
 	}
 	
-	private synchronized void incrementSeqNr(){
+	public synchronized void incrementSeqNr(){
 		currentSeq++;
 	}
 	
