@@ -32,7 +32,7 @@ public class Client extends Thread {
 	
 	private static final int BUFFER_SIZE = 16;
 	ArrayList<DatagramPacket> lastMsgs = new ArrayList<DatagramPacket>();
-	HashMap<Integer, List<Integer>> seqNrs = new HashMap<Integer, List<Integer>>();
+	HashMap<Integer, Integer> seqNrs = new HashMap<Integer, Integer>();
 	int currentSeq = 0;
 	
 	int hopCount = 0; // dummy .. temp... dinges..
@@ -155,13 +155,15 @@ public class Client extends Thread {
 			
 			String[] words1 = txt.split(" ");
 			txt = "";
-			for(int i = 2; i < words1.length; i++){
+			for(int i = 5; i < words1.length; i++){
 				txt = words1[i] + " ";
 			}
 			
 			int thisSeq = Integer.parseInt(words1[0]);
 			int thisHop = Integer.parseInt(words1[1]);
 			int nextHop = thisHop - 1;
+			InetAddress source = InetAddress.getByName(words1[2]);
+			InetAddress destination = InetAddress.getByName(words1[3]);
 			
 			if (txt.startsWith("[BROADCAST]:") && !packet.getAddress().equals(myAddress)) {
 				String[] words = txt.split(" ");
@@ -227,10 +229,18 @@ public class Client extends Thread {
 			deviceNr--;
 			
 			if(!seqNrs.containsKey(deviceNr)){
-				seqNrs.put(deviceNr, new ArrayList<Integer>());
+				seqNrs.put(deviceNr, thisSeq);
+			} else {
+				if(seqNrs.get(deviceNr)+1 < thisSeq){
+					for(int i = seqNrs.get(deviceNr)+1; i < thisSeq; i++){
+						String msg = "[NACK]: " + i;
+					}
+				}
+				seqNrs.put(deviceNr, thisSeq);
 			}
 			
-			seqNrs.get(deviceNr).add(thisSeq);//#########################
+			
+			
 			
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -248,7 +258,7 @@ public class Client extends Thread {
 	public void sendPacket(String message) {		
 		if(!message.startsWith("[")) chatwindow.incoming(message);
 		
-		message = currentSeq + " " + hopCount + " " + message;
+		message = currentSeq + " " + hopCount + " " + myAddress + " " + group + " " + message;
 		
 		byte[] data = message.getBytes();
 		DatagramPacket packetToSend = new DatagramPacket(data, data.length,
