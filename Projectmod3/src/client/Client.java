@@ -171,10 +171,10 @@ public class Client extends Thread {
                 byte[] data = "[TOO_LATE]".getBytes();
                 DatagramPacket rePacket = new DatagramPacket(data, data.length,
                         group, port);
-                retransmit(rePacket);
+                resendPacket(rePacket);
             }else{
             int iOfList = BUFFER_SIZE-(currentSeq-missedI)-1;
-            retransmit(lastMsgs.get(iOfList));
+            resendPacket(lastMsgs.get(iOfList));
             }
         }
 
@@ -186,17 +186,17 @@ public class Client extends Thread {
         else if(txt.startsWith("[FILE]")) {
             //SEQHOPSOUDES[FILE]{file}
             // 1  1  4  4   6      x   = 16 + x = 1024 ==> x = 1008
-            byte[] fileBytes = new byte[1008];
-            System.arraycopy(message, 16, fileBytes, 0, 1008);
+            byte[] fileBytes = new byte[1003];
+            System.arraycopy(message, 6, fileBytes, 0, 1003);
             receiveFileInstance.receiveFile(fileBytes, false, "");
         }
 
         else if(txt.startsWith("[EOF]")) {
             //SEQHOPSOUDES[EOF][EXT]{file}
             // 1  1  4  4   5    6    x    = 21 + x = 1024 ==> x = 1003
-            byte[] fileBytes = new byte[1008];
+            byte[] fileBytes = new byte[1003];
             byte[] extBytes = new byte[6];
-            System.arraycopy(message, 15, fileBytes, 0, 1008);
+            System.arraycopy(message, 21, fileBytes, 0, 1003);
             System.arraycopy(message, 15, extBytes, 0, 6);
             receiveFileInstance.receiveFile(fileBytes, true, new String(extBytes));
         }
@@ -219,14 +219,6 @@ public class Client extends Thread {
             }
             seqNrs.put(deviceNr, thisSeq);
         }
-	}
-	
-	public void retransmit(DatagramPacket packet){
-		try {
-			s.send(packet);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
 	}
 
 	public void sendPacket(String message) {		
