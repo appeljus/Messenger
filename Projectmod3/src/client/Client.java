@@ -204,7 +204,7 @@ public class Client extends Thread {
             // 1  1  4  4   5    6    x    = 21 + x = 1024 ==> x = 1003
             byte[] extBytes = new byte[6];
             int count = 0;
-            for(int i=message.length; i>20; i--){
+            for(int i=message.length-1; i>20; i--){
             	if(message[i] == 0){
             		count++;
             	}
