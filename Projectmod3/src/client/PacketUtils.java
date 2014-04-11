@@ -18,7 +18,7 @@ public class PacketUtils {
         byte[] src = source.getAddress();
         byte[] dst = destination.getAddress();
 
-        header = new byte[message.length + src.length + dst.length + 2];
+        header = new byte[10];
         header[0] = seq;
         header[1] = hop;
         header[2] = src[0];

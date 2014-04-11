@@ -5,6 +5,8 @@ import java.net.*;
 import java.security.*;
 import java.util.*;
 
+import javax.xml.bind.DatatypeConverter;
+
 import GUI.ChatWindow;
 import GUI.LoginWindow;
 
@@ -115,8 +117,9 @@ public class Client extends Thread {
 	}
 	
 	public void receivePacket(byte[] message, int sequenceNr, int hopCount, InetAddress sourceAddress, InetAddress destinationAddress) {
-
-        String txt = new String(message);
+		String txt = new String(message);
+		System.out.println(DatatypeConverter.printHexBinary(message));
+		chatwindow.incoming(txt.charAt(1) + " |");
         byte[] DataToSave = PacketUtils.getData(message, sequenceNr, hopCount, sourceAddress, destinationAddress);
         packetLog.addReceivedPacket(new DatagramPacket(DataToSave, DataToSave.length, sourceAddress, port));
 
@@ -126,7 +129,7 @@ public class Client extends Thread {
         InetAddress source = sourceAddress;
         InetAddress destination = destinationAddress;
 
-        if (txt.startsWith("[BROADCAST]:") && !sourceAddress.equals(myAddress)) {
+        if (txt.startsWith("[BROADCAST]") && !sourceAddress.equals(myAddress)) {
             String[] words = txt.split(" ");
             if (words[1].equals(myName)) {
                 this.sendPacket("[NAME_IN_USE]: " + words[1] + " STUFF");
@@ -229,11 +232,6 @@ public class Client extends Thread {
 
         DatagramPacket packetToSend = new DatagramPacket(data, data.length,
 				group, port);
-		
-		lastMsgs.add(packetToSend);
-		if(lastMsgs.size() > BUFFER_SIZE){
-			lastMsgs.remove(0);
-		}
 
 		try {
 			s.send(packetToSend);
