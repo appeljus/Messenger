@@ -256,13 +256,8 @@ public class Client extends Thread {
 	}
 	
 	public void sendPrivate(String target, String message) {
-		byte[] returnBytes = ("[PRIV_MSG]: " + target + " " + message).getBytes();
-		DatagramPacket packetToSend = new DatagramPacket(returnBytes, returnBytes.length, group, port);
-		try {
-			s.send(packetToSend);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		String returnString = "[PRIV_MSG]: " + target + " " + message;
+		sendPacket(returnString);
 	}
 	
 	public void checkConnections(){
