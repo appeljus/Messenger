@@ -113,7 +113,7 @@ public class Client extends Thread {
 
 			s.receive(packet);
 			byte[] receiveData = packet.getData();
-            packetLog.addPacket(packet);
+            packetLog.addReceivedPacket(packet);
 
             byte[] message = new byte[receiveData.length - 10];
             System.arraycopy(receiveData, 10, message, 0, receiveData.length - 10);
@@ -306,12 +306,12 @@ public class Client extends Thread {
 
             }
             else {
-                if (!packetLog.containsSeq(data[0])){
+                //if (!packetLog.containsSeq(data[0])){
                     //Accept packet
-                }
-                else{
+                //}
+                //else{
                     //Drop packet
-                }
+               // }
             }
         } catch (UnknownHostException e) {
             e.printStackTrace();

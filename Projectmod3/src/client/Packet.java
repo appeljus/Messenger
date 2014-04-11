@@ -31,7 +31,7 @@ public class Packet {
 
         data = new byte[header.length + message.length];
         System.arraycopy(header, 0, data, 0, header.length);
-        System.arraycopy(message, 0, data, header.length, header.length + message.length);
+        System.arraycopy(message, 0, data, header.length, message.length);
         return data;
     }
 }
