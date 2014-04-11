@@ -62,7 +62,7 @@ public class Client extends Thread {
 			group = InetAddress.getByName("228.5.6.7");
 			s = new MulticastSocket(port);
 			s.joinGroup(group);
-			this.sendPacket("[BROADCAST]: " + myName);
+			this.sendPacket("[BROADCAST]: " + myName + " DUMMY_WORD");
 			Thread t = new Thread(this);
 			t.start();
 			timer = new Timer();
