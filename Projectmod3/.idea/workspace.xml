@@ -15,18 +15,18 @@
     <loadPerTestData>true</loadPerTestData>
     <filteredHighlight>-4144960</filteredHighlight>
     <relativeInitString>false</relativeInitString>
-    <lastProjectConfigTabSelected>0</lastProjectConfigTabSelected>
     <buildWithClover>true</buildWithClover>
+    <lastProjectConfigTabSelected>0</lastProjectConfigTabSelected>
     <periodicRefresh>false</periodicRefresh>
     <notCoveredStripe>-65536</notCoveredStripe>
     <projectRebuild class="com.atlassian.clover.idea.config.ProjectRebuild">ASK</projectRebuild>
     <flushPolicy>0</flushPolicy>
-    <alwaysExpandTestClasses>false</alwaysExpandTestClasses>
     <viewIncludeAnnotation>true</viewIncludeAnnotation>
+    <alwaysExpandTestClasses>false</alwaysExpandTestClasses>
     <languageLevel>1.8 - lambda functions, virtual extension methods.</languageLevel>
     <manualInitString null="true" />
-    <autoRefreshInterval>2000</autoRefreshInterval>
     <showInline>true</showInline>
+    <autoRefreshInterval>2000</autoRefreshInterval>
     <flushInterval>5000</flushInterval>
     <showSummaryInToolwindow>true</showSummaryInToolwindow>
     <autoRefresh>true</autoRefresh>
@@ -34,10 +34,10 @@
     <enabled>false</enabled>
     <modelScope class="com.atlassian.clover.idea.util.ModelScope">APP_CLASSES_ONLY</modelScope>
     <alwaysCollapseTestClasses>false</alwaysCollapseTestClasses>
-    <excludes null="true" />
     <filteredStripe>-12566464</filteredStripe>
-    <calculateTestCoverage>true</calculateTestCoverage>
+    <excludes null="true" />
     <instrumentTests>true</instrumentTests>
+    <calculateTestCoverage>true</calculateTestCoverage>
     <outOfDateHighlight>-32</outOfDateHighlight>
     <notCoveredHighlight>-341816</notCoveredHighlight>
     <hideFullyCovered>false</hideFullyCovered>
@@ -47,17 +47,17 @@
     <viewCoverage>true</viewCoverage>
     <contextFilterSpec />
     <coveredStripe>-16711936</coveredStripe>
-    <autoViewInCloudReport>true</autoViewInCloudReport>
     <autoScroll>true</autoScroll>
-    <useGeneratedInitString>true</useGeneratedInitString>
+    <autoViewInCloudReport>true</autoViewInCloudReport>
     <showGutter>true</showGutter>
-    <dumpInstrumentedSources>false</dumpInstrumentedSources>
+    <useGeneratedInitString>true</useGeneratedInitString>
     <testCaseLayout class="com.atlassian.clover.idea.config.TestCaseLayout">TEST_CASES</testCaseLayout>
+    <dumpInstrumentedSources>false</dumpInstrumentedSources>
     <failedCoveredStripe>-14336</failedCoveredStripe>
     <regexpContexts class="java.util.ArrayList" />
+    <autoScrollFromSource>false</autoScrollFromSource>
     <flattenPackages>false</flattenPackages>
     <showErrorMarks>true</showErrorMarks>
-    <autoScrollFromSource>false</autoScrollFromSource>
     <showTooltips>true</showTooltips>
     <showSummaryInToolbar>true</showSummaryInToolbar>
     <span>0</span>
@@ -124,12 +124,9 @@
       <file leaf-file-name="Client.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/client/Client.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="300" column="22" selection-start="8661" selection-end="8661" vertical-scroll-proportion="0.30605564" vertical-offset="4743" max-vertical-offset="5525">
+            <state line="305" column="29" selection-start="9216" selection-end="9216" vertical-scroll-proportion="0.61047465" vertical-offset="4642" max-vertical-offset="5253">
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#415#424#0" expanded="true" />
-                <element signature="e#601#617#0" expanded="true" />
-                <element signature="e#668#686#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -353,19 +350,6 @@
       <option name="PORT" value="5005" />
       <method />
     </configuration>
-    <configuration default="true" type="Applet" factoryName="Applet">
-      <module name="" />
-      <option name="MAIN_CLASS_NAME" />
-      <option name="HTML_FILE_NAME" />
-      <option name="HTML_USED" value="false" />
-      <option name="WIDTH" value="400" />
-      <option name="HEIGHT" value="300" />
-      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
-      <option name="VM_PARAMETERS" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <method />
-    </configuration>
     <configuration default="true" type="TestNG" factoryName="TestNG">
       <module name="" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
@@ -391,6 +375,19 @@
       <envs />
       <properties />
       <listeners />
+      <method />
+    </configuration>
+    <configuration default="true" type="Applet" factoryName="Applet">
+      <module name="" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="HTML_FILE_NAME" />
+      <option name="HTML_USED" value="false" />
+      <option name="WIDTH" value="400" />
+      <option name="HEIGHT" value="300" />
+      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
+      <option name="VM_PARAMETERS" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
       <method />
     </configuration>
     <configuration default="true" type="Application" factoryName="Application">
@@ -503,8 +500,8 @@
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32967034" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout>
     <layout-to-restore>
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -516,8 +513,8 @@
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.1727672" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32810047" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Test Runs" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -530,8 +527,8 @@
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32967034" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
       <window_info id="Metrics" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout-to-restore>
   </component>
@@ -563,12 +560,18 @@
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/src/client/Client.java">
       <provider selected="true" editor-type-id="text-editor">
+        <state line="300" column="22" selection-start="8661" selection-end="8661" vertical-scroll-proportion="0.0" vertical-offset="102" max-vertical-offset="5525">
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/client/Client.java">
+      <provider selected="true" editor-type-id="text-editor">
         <state line="336" column="1" selection-start="8802" selection-end="8802" vertical-scroll-proportion="0.0" vertical-offset="272" max-vertical-offset="5797">
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#415#424#0" expanded="true" />
-            <element signature="e#601#617#0" expanded="true" />
-            <element signature="e#668#686#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -578,9 +581,6 @@
         <state line="15" column="13" selection-start="441" selection-end="441" vertical-scroll-proportion="0.0" vertical-offset="255" max-vertical-offset="4641">
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#415#424#0" expanded="true" />
-            <element signature="e#601#617#0" expanded="true" />
-            <element signature="e#668#686#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -589,7 +589,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state line="100" column="17" selection-start="3110" selection-end="3110" vertical-scroll-proportion="0.0" vertical-offset="1700" max-vertical-offset="2261">
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="imports" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -606,9 +606,6 @@
         <state line="15" column="13" selection-start="441" selection-end="441" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="4641">
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#415#424#0" expanded="true" />
-            <element signature="e#601#617#0" expanded="true" />
-            <element signature="e#668#686#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -617,7 +614,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state line="79" column="33" selection-start="2259" selection-end="2259" vertical-scroll-proportion="0.0" vertical-offset="1343" max-vertical-offset="1870">
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="imports" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -634,9 +631,6 @@
         <state line="13" column="13" selection-start="259" selection-end="259" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2261">
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#415#424#0" expanded="true" />
-            <element signature="e#601#617#0" expanded="true" />
-            <element signature="e#668#686#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -645,7 +639,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state line="25" column="20" selection-start="702" selection-end="702" vertical-scroll-proportion="0.0" vertical-offset="221" max-vertical-offset="816">
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="imports" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -662,9 +656,6 @@
         <state line="13" column="13" selection-start="259" selection-end="259" vertical-scroll-proportion="0.0" vertical-offset="221" max-vertical-offset="2261">
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#415#424#0" expanded="true" />
-            <element signature="e#601#617#0" expanded="true" />
-            <element signature="e#668#686#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -673,7 +664,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state line="34" column="9" selection-start="1301" selection-end="1301" vertical-scroll-proportion="0.0" vertical-offset="184" max-vertical-offset="782">
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="imports" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -690,9 +681,6 @@
         <state line="11" column="23" selection-start="244" selection-end="244" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2261">
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#415#424#0" expanded="true" />
-            <element signature="e#601#617#0" expanded="true" />
-            <element signature="e#668#686#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -709,9 +697,6 @@
         <state line="11" column="26" selection-start="202" selection-end="202" vertical-scroll-proportion="0.0" vertical-offset="187" max-vertical-offset="1445">
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#415#424#0" expanded="true" />
-            <element signature="e#601#617#0" expanded="true" />
-            <element signature="e#668#686#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -728,9 +713,6 @@
         <state line="9" column="26" selection-start="177" selection-end="177" vertical-scroll-proportion="0.0" vertical-offset="153" max-vertical-offset="1530">
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#415#424#0" expanded="true" />
-            <element signature="e#601#617#0" expanded="true" />
-            <element signature="e#668#686#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -747,9 +729,6 @@
         <state line="9" column="26" selection-start="162" selection-end="162" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1479">
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#415#424#0" expanded="true" />
-            <element signature="e#601#617#0" expanded="true" />
-            <element signature="e#668#686#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -766,9 +745,6 @@
         <state line="72" column="21" selection-start="1567" selection-end="1567" vertical-scroll-proportion="0.0" vertical-offset="1224" max-vertical-offset="1496">
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#415#424#0" expanded="true" />
-            <element signature="e#601#617#0" expanded="true" />
-            <element signature="e#668#686#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -778,9 +754,6 @@
         <state line="19" column="5" selection-start="396" selection-end="396" vertical-scroll-proportion="0.0" vertical-offset="323" max-vertical-offset="884">
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#415#424#0" expanded="true" />
-            <element signature="e#601#617#0" expanded="true" />
-            <element signature="e#668#686#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -790,9 +763,6 @@
         <state line="27" column="9" selection-start="553" selection-end="553" vertical-scroll-proportion="0.0" vertical-offset="459" max-vertical-offset="884">
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#415#424#0" expanded="true" />
-            <element signature="e#601#617#0" expanded="true" />
-            <element signature="e#668#686#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -832,7 +802,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state line="142" column="35" selection-start="4588" selection-end="4588" vertical-scroll-proportion="6.0049753" vertical-offset="0" max-vertical-offset="2584">
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="imports" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -855,19 +825,16 @@
       <provider selected="true" editor-type-id="text-editor">
         <state line="73" column="32" selection-start="2362" selection-end="2362" vertical-scroll-proportion="0.7217676" vertical-offset="800" max-vertical-offset="1411">
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="imports" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/client/Client.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="300" column="22" selection-start="8661" selection-end="8661" vertical-scroll-proportion="0.30605564" vertical-offset="4743" max-vertical-offset="5525">
+        <state line="305" column="29" selection-start="9216" selection-end="9216" vertical-scroll-proportion="0.61047465" vertical-offset="4642" max-vertical-offset="5253">
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#415#424#0" expanded="true" />
-            <element signature="e#601#617#0" expanded="true" />
-            <element signature="e#668#686#0" expanded="true" />
           </folding>
         </state>
       </provider>

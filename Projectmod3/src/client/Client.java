@@ -117,7 +117,8 @@ public class Client extends Thread {
 	public void receivePacket(byte[] message, int sequenceNr, int hopCount, InetAddress sourceAddress, InetAddress destinationAddress) {
 
         String txt = new String(message);
-
+        byte[] DataToSave = PacketUtils.getData(message, sequenceNr, hopCount, sourceAddress, destinationAddress);
+        packetLog.addReceivedPacket(new DatagramPacket(DataToSave, DataToSave.length, sourceAddress, port));
 
         int thisSeq = sequenceNr;
         int thisHop = hopCount;
@@ -287,7 +288,6 @@ public class Client extends Thread {
 
         try {
             s.receive(packet);
-            packetLog.addReceivedPacket(packet);
 
             byte[] message = PacketUtils.getMessage(packet);
             int sequence = PacketUtils.getSequenceNr(packet);
@@ -295,33 +295,17 @@ public class Client extends Thread {
             InetAddress sourceAddress = PacketUtils.getSourceAddress(packet);
             InetAddress destinationAddress = PacketUtils.getDistinationAddress(packet);
 
-            if (!destinationAddress.equals(myAddress) && !destinationAddress.equals(group)){
-                if(sourceAddress.equals(myAddress)){
-                    //Drop packet
-                    //System.out.println("Packet droppped");
-                }
-                if (sequence > 0){
-                    //System.out.println("Packet forwarded");
-                    byte[] dataToSend = PacketUtils.getData(message, sequence, hop - 1, sourceAddress, destinationAddress);
-                    resendPacket(new DatagramPacket(dataToSend, dataToSend.length, sourceAddress, port));
-
-                }
-                else{
-                    //Drop packet
-                    //System.out.println("Packet dropped");
-                }
-
+            if (!sourceAddress.equals(myAddress) && !packetLog.containsReceivedSeq(sequence)){
+                receivePacket(message, sequence, hop, sourceAddress, destinationAddress);
+            }
+            else if (packetLog.containsReceivedSeq(sequence)){
+                byte[] dataToSend = PacketUtils.getData(message, sequence, hop - 1, sourceAddress, destinationAddress);
+                resendPacket(new DatagramPacket(dataToSend, dataToSend.length, sourceAddress, port));
             }
             else {
-                if (!packetLog.containsReceivedSeq(sequence)){
-                    System.out.println("Packet received and processed");
-                    receivePacket(message, sequence, hop, sourceAddress, destinationAddress);
-                }
-                else{
-                    //Drop packet
-                    //System.out.println("Packet dropped");
-                }
+                //Drop packet
             }
+
         } catch (   IOException e) {
             e.printStackTrace();
         }
