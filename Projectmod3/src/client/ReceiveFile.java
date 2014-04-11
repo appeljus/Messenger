@@ -37,12 +37,12 @@ public class ReceiveFile {
 		if (returnVal == JFileChooser.APPROVE_OPTION) {
 			path = fc.getSelectedFile().getPath();
 			client.chatwindow.incoming("Saved file at: " + path + "." + ext);
+			try {
+				fOutS = new FileOutputStream(path + "." + ext);
+				fOutS.write(file);
+				fOutS.close();
+			} catch (IOException e) { e.printStackTrace(); } 
 		}
-		try {
-			fOutS = new FileOutputStream(path + "." + ext);
-			fOutS.write(file);
-		    fOutS.close();
-		} catch (IOException e) { e.printStackTrace(); } 
 	}
 }
 
