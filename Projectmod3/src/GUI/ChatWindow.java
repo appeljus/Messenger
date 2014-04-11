@@ -288,6 +288,7 @@ public class ChatWindow extends JFrame implements KeyListener, ActionListener,
 		} else if (arg0.getSource() == this.send) {
 			String txt = typeArea.getText();
 			this.addText(generateLine(txt));
+			
 		} else if (arg0.getSource() == sendFile) {
 			JFileChooser fc = new JFileChooser();
 			int returnVal = fc.showOpenDialog(this);
