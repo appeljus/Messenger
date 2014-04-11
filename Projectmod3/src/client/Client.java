@@ -110,22 +110,18 @@ public class Client extends Thread {
 
 			s.receive(packet);
 			byte[] receiveData = packet.getData();
-			String txt = new String(receiveData, "UTF-8");
-			
-			// gooi dat seq nummer in de goede lijst! ff samen met kevin doen..
-			//########################################################################
-			
-			String[] words1 = txt.split(" ");
-			txt = "";
-			for(int i = 5; i < words1.length; i++){
-				txt = words1[i] + " ";
-			}
-			
-			int thisSeq = Integer.parseInt(words1[0]);
-			int thisHop = Integer.parseInt(words1[1]);
+
+            byte[] message = new byte[receiveData.length - 10];
+            String txt = new String(message);
+            System.arraycopy(receiveData, 10, message, 0, receiveData.length - 10);
+
+			int thisSeq = receiveData[0];
+			int thisHop = receiveData[1];
 			int nextHop = thisHop - 1;
-			InetAddress source = InetAddress.getByName(words1[2]);
-			InetAddress destination = InetAddress.getByName(words1[3]);
+            byte[] src = {receiveData[2], receiveData[3], receiveData[4], receiveData[5]};
+            byte[] dst = {receiveData[6], receiveData[7], receiveData[8], receiveData[9]};
+			InetAddress source = InetAddress.getByAddress(src);
+			InetAddress destination = InetAddress.getByAddress(dst);
 			
 			if (txt.startsWith("[BROADCAST]:") && !packet.getAddress().equals(myAddress)) {
 				String[] words = txt.split(" ");
