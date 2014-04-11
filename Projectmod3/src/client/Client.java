@@ -168,6 +168,7 @@ public class Client extends Thread {
 
         else if(txt.startsWith("[NACK]: ")){
             String[] words = txt.split(" ");
+            System.out.println("|"+words[1]+"|");
             int missedI = Integer.parseInt(words[1]);
             if(missedI < currentSeq-BUFFER_SIZE){
                 byte[] data = "[TOO_LATE]".getBytes();
@@ -216,7 +217,8 @@ public class Client extends Thread {
         } else {
             if(seqNrs.get(deviceNr)+1 < thisSeq){
                 for(int i = seqNrs.get(deviceNr)+1; i < thisSeq; i++){
-                    String msg = "[NACK]: " + i;
+                    String msg = "[NACK]: " + i + " DUMMY_WORD ";
+                    sendPacket(msg);
                 }
             }
             seqNrs.put(deviceNr, thisSeq);
@@ -230,6 +232,8 @@ public class Client extends Thread {
 
         DatagramPacket packetToSend = new DatagramPacket(data, data.length,
 				group, port);
+        
+        lastMsgs.add(packetToSend);
 
 		try {
 			s.send(packetToSend);
