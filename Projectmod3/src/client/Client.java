@@ -1,5 +1,6 @@
 package client;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.*;
 import java.security.Key;
@@ -97,48 +98,8 @@ public class Client extends Thread {
 		return result;
 	}
 	
-	public byte[] removeZeros(byte[] data){
-		int count = 0;
-		for(int i=data.length-1; i>0; i--){
-			if(data[i] == 0){
-				count++;
-			}
-			else break;
-		}
-		byte[] returnData = new byte[data.length-count-1];
-		for(int i=0; i<returnData.length; i++){
-			returnData[i] = data[i];
-		}
-		return returnData;
-	}
-	
-	public Key extractKey(byte[] data) {
-		byte[] betterData = removeZeros(data);
-		byte[] keyData = new byte[162];
-		
-		for(int i=0; i<betterData.length-162; i++){
-			data[i] = betterData[i];
-		}
-		for(int i=13; i<175; i++){
-			keyData[i - 13] = betterData[i];
-		}
-		
-		Key k2 = null;
-		byte[] bytes = keyData;
-		try {
-			k2 = KeyFactory.getInstance("RSA").generatePublic(new X509EncodedKeySpec(bytes));
-		} catch (InvalidKeySpecException | NoSuchAlgorithmException e) { 
-			e.printStackTrace();
-		}
-		return k2;
-	}
-	
-	public byte[] removeFirst(byte[] data, int num){
-		byte[] returnByte = new byte[data.length-num];
-		for(int i=num; i<data.length; i++){
-			returnByte[i-num] = data[i];
-		}
-		return returnByte;
+	private synchronized void incrementSeqNr(){
+		currentSeq++;
 	}
 	
 	public void receivePacket() {
@@ -274,10 +235,14 @@ public class Client extends Thread {
 			e.printStackTrace();
 		}
 		
-		currentSeq++;
+		incrementSeqNr();
 	}
 	
-
+	public void sendFile(File f){
+		SendFile sender = new SendFile(f, group, port);
+		Thread t = new Thread(sender);
+		t.start();
+	}
 	
 	public void sendPrivate(String target, String message) {
 		byte[] returnBytes = ("[PRIV_MSG]: " + target + " " + message).getBytes();
@@ -288,6 +253,8 @@ public class Client extends Thread {
 			e.printStackTrace();
 		}
 	}
+	
+	
 	
 	public void checkConnections(){
 		for(int i=0; i<chatwindow.pNameList.size(); i++){
