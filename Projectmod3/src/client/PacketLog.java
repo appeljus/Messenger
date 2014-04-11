@@ -33,4 +33,12 @@ public class PacketLog {
         logSend.put((int)packet.getData()[0], packet);
     }
 
+    public boolean containsReceivedSeq(int sqc){
+        return logReceived.containsKey(sqc);
+    }
+
+    public boolean containsSendSeq(int sqc){
+        return logSend.containsKey(sqc);
+    }
+
 }
