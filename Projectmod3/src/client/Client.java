@@ -295,7 +295,7 @@ public class Client extends Thread {
             InetAddress sourceAddress = PacketUtils.getSourceAddress(packet);
             InetAddress destinationAddress = PacketUtils.getDistinationAddress(packet);
 
-            if (!destinationAddress.equals(myAddress)){
+            if (!destinationAddress.equals(myAddress) && !destinationAddress.equals(group)){
                 if(sourceAddress.equals(myAddress)){
                     //Drop packet
                     //System.out.println("Packet droppped");
