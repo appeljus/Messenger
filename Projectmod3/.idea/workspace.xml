@@ -15,8 +15,8 @@
     <loadPerTestData>true</loadPerTestData>
     <filteredHighlight>-4144960</filteredHighlight>
     <relativeInitString>false</relativeInitString>
-    <buildWithClover>true</buildWithClover>
     <lastProjectConfigTabSelected>0</lastProjectConfigTabSelected>
+    <buildWithClover>true</buildWithClover>
     <periodicRefresh>false</periodicRefresh>
     <notCoveredStripe>-65536</notCoveredStripe>
     <projectRebuild class="com.atlassian.clover.idea.config.ProjectRebuild">ASK</projectRebuild>
@@ -25,8 +25,8 @@
     <viewIncludeAnnotation>true</viewIncludeAnnotation>
     <languageLevel>1.8 - lambda functions, virtual extension methods.</languageLevel>
     <manualInitString null="true" />
-    <autoRefreshInterval>2000</autoRefreshInterval>
     <showInline>true</showInline>
+    <autoRefreshInterval>2000</autoRefreshInterval>
     <flushInterval>5000</flushInterval>
     <showSummaryInToolwindow>true</showSummaryInToolwindow>
     <autoRefresh>true</autoRefresh>
@@ -36,8 +36,8 @@
     <alwaysCollapseTestClasses>false</alwaysCollapseTestClasses>
     <excludes null="true" />
     <filteredStripe>-12566464</filteredStripe>
-    <calculateTestCoverage>true</calculateTestCoverage>
     <instrumentTests>true</instrumentTests>
+    <calculateTestCoverage>true</calculateTestCoverage>
     <outOfDateHighlight>-32</outOfDateHighlight>
     <notCoveredHighlight>-341816</notCoveredHighlight>
     <hideFullyCovered>false</hideFullyCovered>
@@ -49,15 +49,15 @@
     <coveredStripe>-16711936</coveredStripe>
     <autoScroll>true</autoScroll>
     <autoViewInCloudReport>true</autoViewInCloudReport>
-    <useGeneratedInitString>true</useGeneratedInitString>
     <showGutter>true</showGutter>
+    <useGeneratedInitString>true</useGeneratedInitString>
     <testCaseLayout class="com.atlassian.clover.idea.config.TestCaseLayout">TEST_CASES</testCaseLayout>
     <dumpInstrumentedSources>false</dumpInstrumentedSources>
     <failedCoveredStripe>-14336</failedCoveredStripe>
     <regexpContexts class="java.util.ArrayList" />
     <showTooltips>true</showTooltips>
-    <autoScrollFromSource>false</autoScrollFromSource>
     <showErrorMarks>true</showErrorMarks>
+    <autoScrollFromSource>false</autoScrollFromSource>
     <flattenPackages>false</flattenPackages>
     <showSummaryInToolbar>true</showSummaryInToolbar>
     <span>0</span>
@@ -124,7 +124,39 @@
       <file leaf-file-name="Client.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/client/Client.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="256" column="33" selection-start="7776" selection-end="7776" vertical-scroll-proportion="0.5286416" vertical-offset="3859" max-vertical-offset="5423">
+            <state line="205" column="35" selection-start="6506" selection-end="6506" vertical-scroll-proportion="0.46381578" vertical-offset="2829" max-vertical-offset="4913">
+              <folding>
+                <element signature="method#incrementSeqNr#0;class#Client#0" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="messageUtils.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Utils/messageUtils.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="7" column="0" selection-start="87" selection-end="87" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="255">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="PacketLog.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/client/PacketLog.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="58" column="25" selection-start="1540" selection-end="1540" vertical-scroll-proportion="0.0" vertical-offset="599" max-vertical-offset="1207">
+              <folding>
+                <element signature="e#1542#1543#0" expanded="true" />
+                <element signature="e#1572#1573#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Encryption.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/client/Encryption.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="68" column="55" selection-start="1776" selection-end="1776" vertical-scroll-proportion="0.0" vertical-offset="663" max-vertical-offset="1768">
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -143,10 +175,12 @@
     <option name="changedFiles">
       <list>
         <option value="$PROJECT_DIR$/src/protocol/Packet.java" />
-        <option value="$PROJECT_DIR$/src/client/PacketLog.java" />
         <option value="$PROJECT_DIR$/src/client/Packet.java" />
         <option value="$PROJECT_DIR$/src/client/PacketUtils.java" />
+        <option value="$PROJECT_DIR$/src/client/Test.java" />
         <option value="$PROJECT_DIR$/src/client/Encryption.java" />
+        <option value="$PROJECT_DIR$/src/client/PacketLog.java" />
+        <option value="$PROJECT_DIR$/src/Utils/messageUtils.java" />
         <option value="$PROJECT_DIR$/src/client/Client.java" />
       </list>
     </option>
@@ -154,8 +188,8 @@
   <component name="ProjectFrameBounds">
     <option name="x" value="-8" />
     <option name="y" value="-8" />
-    <option name="width" value="1382" />
-    <option name="height" value="744" />
+    <option name="width" value="1936" />
+    <option name="height" value="1056" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
     <OptionsSetting value="true" id="Add" />
@@ -183,7 +217,6 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -213,6 +246,10 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.cenqua.clover.idea.projectview.PsiDirectoryNodeWrapper" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Utils" />
               <option name="myItemType" value="com.cenqua.clover.idea.projectview.PsiDirectoryNodeWrapper" />
             </PATH_ELEMENT>
           </PATH>
@@ -255,6 +292,7 @@
         </subPane>
       </pane>
       <pane id="Scope" />
+      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -265,17 +303,11 @@
     <property name="MemberChooser.showClasses" value="true" />
     <property name="MemberChooser.copyJavadoc" value="false" />
     <property name="recentsLimit" value="5" />
-    <property name="options.lastSelected" value="com.cenqua.clover.idea.ProjectPlugin" />
-    <property name="options.splitter.main.proportions" value="0.3" />
-    <property name="options.splitter.details.proportions" value="0.2" />
-    <property name="options.searchVisible" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/commons-io-2.4.jar!/" />
-    <property name="project.structure.last.edited" value="Libraries" />
+    <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
-    <property name="dynamic.classpath" value="false" />
     <property name="FullScreen" value="false" />
-    <property name="SearchEverywhereHistory" value="" />
+    <property name="dynamic.classpath" value="false" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
@@ -302,6 +334,28 @@
     </configuration>
     <configuration default="false" name="Encryption" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="client.Encryption" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="ENABLE_SWING_INSPECTOR" value="false" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="Projectmod3" />
+      <envs />
+      <RunnerSettings RunnerId="Debug">
+        <option name="DEBUG_PORT" value="" />
+        <option name="TRANSPORT" value="0" />
+        <option name="LOCAL" value="true" />
+      </RunnerSettings>
+      <RunnerSettings RunnerId="Run" />
+      <ConfigurationWrapper RunnerId="Debug" />
+      <ConfigurationWrapper RunnerId="Run" />
+      <method />
+    </configuration>
+    <configuration default="false" name="Test" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="client.Test" />
       <option name="VM_PARAMETERS" />
       <option name="PROGRAM_PARAMETERS" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
@@ -350,6 +404,19 @@
       <option name="PORT" value="5005" />
       <method />
     </configuration>
+    <configuration default="true" type="Applet" factoryName="Applet">
+      <module name="" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="HTML_FILE_NAME" />
+      <option name="HTML_USED" value="false" />
+      <option name="WIDTH" value="400" />
+      <option name="HEIGHT" value="300" />
+      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
+      <option name="VM_PARAMETERS" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <method />
+    </configuration>
     <configuration default="true" type="TestNG" factoryName="TestNG">
       <module name="" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
@@ -375,19 +442,6 @@
       <envs />
       <properties />
       <listeners />
-      <method />
-    </configuration>
-    <configuration default="true" type="Applet" factoryName="Applet">
-      <module name="" />
-      <option name="MAIN_CLASS_NAME" />
-      <option name="HTML_FILE_NAME" />
-      <option name="HTML_USED" value="false" />
-      <option name="WIDTH" value="400" />
-      <option name="HEIGHT" value="300" />
-      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
-      <option name="VM_PARAMETERS" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
       <method />
     </configuration>
     <configuration default="true" type="Application" factoryName="Application">
@@ -443,14 +497,16 @@
       <option name="SHOW_LOGCAT_AUTOMATICALLY" value="true" />
       <method />
     </configuration>
-    <list size="2">
+    <list size="3">
       <item index="0" class="java.lang.String" itemvalue="Application.LoginWindow" />
       <item index="1" class="java.lang.String" itemvalue="Application.Encryption" />
+      <item index="2" class="java.lang.String" itemvalue="Application.Test" />
     </list>
     <recent_temporary>
-      <list size="2">
+      <list size="3">
         <item index="0" class="java.lang.String" itemvalue="Application.Encryption" />
-        <item index="1" class="java.lang.String" itemvalue="Application.LoginWindow" />
+        <item index="1" class="java.lang.String" itemvalue="Application.Test" />
+        <item index="2" class="java.lang.String" itemvalue="Application.LoginWindow" />
       </list>
     </recent_temporary>
     <configuration name="&lt;template&gt;" type="WebApp" default="true" selected="false">
@@ -473,8 +529,8 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
-    <editor active="true" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <editor active="false" />
     <layout>
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -482,25 +538,25 @@
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39936775" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32876712" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Cloverage" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Metrics" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.1727672" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33281004" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.1890625" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33192834" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Test Runs" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32967034" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Metrics" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout>
     <layout-to-restore>
@@ -513,8 +569,8 @@
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.1727672" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32810047" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32810047" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Test Runs" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -527,13 +583,13 @@
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32967034" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
       <window_info id="Metrics" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout-to-restore>
   </component>
   <component name="Vcs.Log.UiProperties">
-    <option name="RECENTLY_FILTERED_USERS">
+    <option name="RECENTLY_FILTERED_USER_GROUPS">
       <collection />
     </option>
   </component>
@@ -560,7 +616,16 @@
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/src/client/Client.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="27" column="4" selection-start="624" selection-end="750" vertical-scroll-proportion="0.0" vertical-offset="170" max-vertical-offset="5134">
+        <state line="24" column="36" selection-start="566" selection-end="566" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="5525">
+          <folding>
+            <element signature="method#incrementSeqNr#0;class#Client#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/client/Encryption.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="22" column="19" selection-start="541" selection-end="541" vertical-scroll-proportion="0.0" vertical-offset="544" max-vertical-offset="1972">
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -569,9 +634,27 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/client/Client.java">
       <provider selected="true" editor-type-id="text-editor">
+        <state line="256" column="33" selection-start="7776" selection-end="7776" vertical-scroll-proportion="0.0" vertical-offset="170" max-vertical-offset="5423">
+          <folding>
+            <element signature="method#incrementSeqNr#0;class#Client#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/client/Client.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="27" column="4" selection-start="624" selection-end="750" vertical-scroll-proportion="0.0" vertical-offset="170" max-vertical-offset="5134">
+          <folding>
+            <element signature="method#incrementSeqNr#0;class#Client#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/client/Client.java">
+      <provider selected="true" editor-type-id="text-editor">
         <state line="230" column="76" selection-start="6940" selection-end="6940" vertical-scroll-proportion="0.0" vertical-offset="136" max-vertical-offset="5083">
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="method#incrementSeqNr#0;class#Client#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -594,7 +677,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state line="300" column="22" selection-start="8661" selection-end="8661" vertical-scroll-proportion="0.0" vertical-offset="102" max-vertical-offset="5525">
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="method#incrementSeqNr#0;class#Client#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -603,7 +686,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state line="336" column="1" selection-start="8802" selection-end="8802" vertical-scroll-proportion="0.0" vertical-offset="272" max-vertical-offset="5797">
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="method#incrementSeqNr#0;class#Client#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -612,7 +695,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state line="15" column="13" selection-start="441" selection-end="441" vertical-scroll-proportion="0.0" vertical-offset="255" max-vertical-offset="4641">
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="method#incrementSeqNr#0;class#Client#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -637,7 +720,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state line="15" column="13" selection-start="441" selection-end="441" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="4641">
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="method#incrementSeqNr#0;class#Client#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -662,7 +745,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state line="13" column="13" selection-start="259" selection-end="259" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2261">
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="method#incrementSeqNr#0;class#Client#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -687,7 +770,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state line="13" column="13" selection-start="259" selection-end="259" vertical-scroll-proportion="0.0" vertical-offset="221" max-vertical-offset="2261">
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="method#incrementSeqNr#0;class#Client#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -712,7 +795,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state line="11" column="23" selection-start="244" selection-end="244" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2261">
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="method#incrementSeqNr#0;class#Client#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -728,7 +811,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state line="11" column="26" selection-start="202" selection-end="202" vertical-scroll-proportion="0.0" vertical-offset="187" max-vertical-offset="1445">
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="method#incrementSeqNr#0;class#Client#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -744,7 +827,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state line="9" column="26" selection-start="177" selection-end="177" vertical-scroll-proportion="0.0" vertical-offset="153" max-vertical-offset="1530">
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="method#incrementSeqNr#0;class#Client#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -760,7 +843,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state line="9" column="26" selection-start="162" selection-end="162" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1479">
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="method#incrementSeqNr#0;class#Client#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -776,7 +859,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state line="72" column="21" selection-start="1567" selection-end="1567" vertical-scroll-proportion="0.0" vertical-offset="1224" max-vertical-offset="1496">
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="method#incrementSeqNr#0;class#Client#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -785,7 +868,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state line="19" column="5" selection-start="396" selection-end="396" vertical-scroll-proportion="0.0" vertical-offset="323" max-vertical-offset="884">
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="method#incrementSeqNr#0;class#Client#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -794,7 +877,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state line="27" column="9" selection-start="553" selection-end="553" vertical-scroll-proportion="0.0" vertical-offset="459" max-vertical-offset="884">
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="method#incrementSeqNr#0;class#Client#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -806,26 +889,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="jar://C:/Program Files/Java/jdk1.7.0_45/jre/lib/ext/sunjce_provider.jar!/com/sun/crypto/provider/DESCipher.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="42" column="0" selection-start="2682" selection-end="2682" vertical-scroll-proportion="0.0" vertical-offset="411" max-vertical-offset="799" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/client/SecondTimer.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="6" column="13" selection-start="117" selection-end="117" vertical-scroll-proportion="0.0" vertical-offset="102" max-vertical-offset="493">
           <folding />
         </state>
-      </provider>
-    </entry>
-    <entry file="jar://C:/Program Files/Java/jdk1.7.0_45/jre/lib/rt.jar!/java/net/InetAddress.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-2.804196" vertical-offset="1604" max-vertical-offset="3026" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/client/PacketLog.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="40" column="40" selection-start="1033" selection-end="1033" vertical-scroll-proportion="0.7217676" vertical-offset="239" max-vertical-offset="850" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/client/PacketUtils.java">
@@ -842,30 +910,37 @@
         </state>
       </provider>
     </entry>
-    <entry file="jar://C:/Program Files/Java/jdk1.7.0_45/jre/lib/jce.jar!/javax/crypto/Cipher.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="170" column="0" selection-start="11585" selection-end="11585" vertical-scroll-proportion="0.0" vertical-offset="2589" max-vertical-offset="2975" />
-      </provider>
-    </entry>
-    <entry file="jar://C:/Program Files/Java/jdk1.7.0_45/jre/lib/ext/sunjce_provider.jar!/com/sun/crypto/provider/AESCipher.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="42" column="0" selection-start="2682" selection-end="2682" vertical-scroll-proportion="0.7357513" vertical-offset="413" max-vertical-offset="799" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/client/Encryption.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="22" column="19" selection-start="541" selection-end="541" vertical-scroll-proportion="0.66062176" vertical-offset="119" max-vertical-offset="1972">
+        <state line="68" column="55" selection-start="1776" selection-end="1776" vertical-scroll-proportion="0.0" vertical-offset="663" max-vertical-offset="1768">
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/client/PacketLog.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="58" column="25" selection-start="1540" selection-end="1540" vertical-scroll-proportion="0.0" vertical-offset="599" max-vertical-offset="1207">
+          <folding>
+            <element signature="e#1542#1543#0" expanded="true" />
+            <element signature="e#1572#1573#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Utils/messageUtils.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="7" column="0" selection-start="87" selection-end="87" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="255">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/client/Client.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="256" column="33" selection-start="7776" selection-end="7776" vertical-scroll-proportion="0.5286416" vertical-offset="3859" max-vertical-offset="5423">
+        <state line="205" column="35" selection-start="6506" selection-end="6506" vertical-scroll-proportion="0.46381578" vertical-offset="2829" max-vertical-offset="4913">
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="method#incrementSeqNr#0;class#Client#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -947,7 +1022,7 @@
       </state>
       <state key="ProjectLibrariesConfigurable.UI">
         <settings>
-          <last-edited>commons-io-2.4</last-edited>
+          <last-edited>Projectmod3</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>

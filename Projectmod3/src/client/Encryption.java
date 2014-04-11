@@ -2,26 +2,14 @@ package client;
 
 
 import javax.crypto.*;
-import javax.crypto.spec.DESKeySpec;
-import javax.crypto.spec.IvParameterSpec;
-import javax.crypto.spec.SecretKeySpec;
-
-import java.security.*;
+import java.security.InvalidKeyException;
+import java.security.Key;
+import java.security.NoSuchAlgorithmException;
 
 /**
  * Created by Martijn on 9-4-14.
  */
 public class Encryption {
-
-    private static final String string = "stringstringstringstringstringstringstringstringstringst";
-    private static final Key key;
-    private static final DESKeySpec spec;
-
-
-    public static final void getKey(){
-        spec = new DESKeySpec(string.getBytes());
-        key = spec;
-    }
 
     public static byte[] getEncryption(byte[] data){
         StringBuilder strng = new StringBuilder();
@@ -40,28 +28,28 @@ public class Encryption {
     }
 
     public static Key generateKey(){
+        Key key = null;
+        try {
+            KeyGenerator keyGen = KeyGenerator.getInstance("AES");
+            key = keyGen.generateKey();
 
-
-
-
-
-        return null;
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        return key;
     }
 
     public static byte[] encrypt(byte[] data, Key key){
         byte[] encryptedData = null;
-        SecureRandom rnd = new SecureRandom();
-        IvParameterSpec iv = new IvParameterSpec(rnd.generateSeed(16));
 
         try {
-            Cipher cipher = Cipher.getInstance("DES/ECB/PKCS5Padding");
-            cipher.init(Cipher.ENCRYPT_MODE, key, iv);
+            Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
+            cipher.init(Cipher.ENCRYPT_MODE,key);
             encryptedData = cipher.doFinal(data);
 
         }
         catch (     NoSuchPaddingException |
                     InvalidKeyException |
-                    InvalidAlgorithmParameterException |
                     IllegalBlockSizeException |
                     BadPaddingException |
                     NoSuchAlgorithmException e)
@@ -78,8 +66,8 @@ public class Encryption {
         byte[] decryptedData = null;
 
         try {
-            Cipher cipher = Cipher.getInstance("DES/CBC/PKCS5Padding");
-            cipher.init(Cipher.ENCRYPT_MODE, key);
+            Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
+            cipher.init(Cipher.DECRYPT_MODE, key);
             decryptedData = cipher.doFinal(data);
 
         }
@@ -98,13 +86,13 @@ public class Encryption {
 
 
     public static void main(String[] agrs){
+        Key key = Encryption.generateKey();
+        byte[] message = "stringstringstringstringstringstringstringstringstringstringstringstringstringstringstringstringstringstringstringstringstringstringstringstringstringstringstringstringstringstringstringstringstringstringstringstringstringstringstringstring".getBytes();
         String result = "";
-        String hallo = "hallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallo";
-        result = new String(Encryption.encrypt(hallo.getBytes(), key));
-        System.out.println(new String(result));
+        result = new String(Encryption.encrypt(message, key));
+        System.out.println(result + "\n");
         result = new String(Encryption.decrypt(result.getBytes(), key));
         System.out.println(result);
-
     }
 
 }

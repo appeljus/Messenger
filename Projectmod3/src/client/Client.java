@@ -1,45 +1,45 @@
 package client;
 
-import java.io.*;
-import java.net.*;
-import java.security.*;
-import java.util.*;
-
-import javax.crypto.KeyGenerator;
-import javax.crypto.spec.SecretKeySpec;
-import javax.xml.bind.DatatypeConverter;
-
 import GUI.ChatWindow;
 import GUI.LoginWindow;
 
-public class Client extends Thread {
-	ChatWindow chatwindow;
-	static int port = 4242;
-	MulticastSocket s;
-	InetAddress group;
-	String myName;
-	InetAddress myAddress;
-	KeyPair keyPair;
-	List<Key> pubKeys = new ArrayList<Key>();
-	List<Boolean> stillAlive = new ArrayList<Boolean>();
-	Timer timer;
-    PacketLog packetLog;
-    ReceiveFile receiveFileInstance;
-    private static final String string = "string";
-    private static final Key key = new SecretKeySpec(string.getBytes(), "AES");
+import java.io.File;
+import java.io.IOException;
+import java.net.DatagramPacket;
+import java.net.InetAddress;
+import java.net.MulticastSocket;
+import java.net.NetworkInterface;
+import java.security.Key;
+import java.util.*;
 
+public class Client extends Thread {
+
+
+	private ChatWindow chatwindow;
+	private static final int port = 4242;
+	private MulticastSocket s;
+    private InetAddress myAddress;
+	private InetAddress group;
+	private String myName;
+	private List<Boolean> stillAlive = new ArrayList<Boolean>();
+	private Timer timer;
+    private PacketLog packetLog;
+    private ReceiveFile receiveFileInstance;
+    private static final Key key = Encryption.generateKey();
 	private static final int BUFFER_SIZE = 16;
-	ArrayList<DatagramPacket> lastMsgs = new ArrayList<DatagramPacket>();
-	HashMap<Integer, Integer> seqNrs = new HashMap<Integer, Integer>();
-	int currentSeq;
-	
-	int hopCount;
+	private ArrayList<DatagramPacket> lastMsgs = new ArrayList<DatagramPacket>();
+	private HashMap<Integer, Integer> seqNrs = new HashMap<Integer, Integer>();
+	private int currentSeq;
+	private int hopCount;
 	
 	public Client(ChatWindow c, String name) {
 		myName = name;
         packetLog = new PacketLog();
         currentSeq = 0;
         hopCount = 4;
+        chatwindow = c;
+        receiveFileInstance = new ReceiveFile(this);
+        stillAlive.add(true);
 
 		try {
 			Enumeration e = NetworkInterface.getNetworkInterfaces();
@@ -53,25 +53,18 @@ public class Client extends Thread {
 					}
 				}
 			}
-		} catch (SocketException e1) {
-			e1.printStackTrace();
-		}
 
-		chatwindow = c;
-		receiveFileInstance = new ReceiveFile(this);
-		pubKeys.add(keyPair.getPublic());
-		stillAlive.add(true);
-		try {
-			group = InetAddress.getByName("228.5.6.7");
-			s = new MulticastSocket(port);
-			s.joinGroup(group);
-			this.sendPacket("[BROADCAST]: " + myName + " DUMMY_WORD");
-			Thread t = new Thread(this);
-			t.start();
-			timer = new Timer();
-			timer.scheduleAtFixedRate(new SecondTimer(this), 1000, 1000);
-		} catch (IOException e2) {
-			e2.printStackTrace();
+            group = InetAddress.getByName("228.5.6.7");
+            s = new MulticastSocket(port);
+            s.joinGroup(group);
+            this.sendPacket("[BROADCAST]: " + myName + " DUMMY_WORD");
+            Thread t = new Thread(this);
+            t.start();
+            timer = new Timer();
+            timer.scheduleAtFixedRate(new SecondTimer(this), 1000, 1000);
+
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 	}
 
@@ -94,41 +87,16 @@ public class Client extends Thread {
 	public String getClientName() {
 		return myName;
 	}
-
-	public Key getPubKey() {
-		return pubKeys.get(0);
-	}
-
-	public void run() {
-		while (!s.isClosed()) {
-			forwardPacket();
-		}
-	}
-
-	public String getIP() {
-		String result = null;
-		try {
-			result = InetAddress.getLocalHost().getHostName();
-		} catch (UnknownHostException e) {
-			e.printStackTrace();
-		}
-		return result;
-	}
 	
 	public synchronized void incrementSeqNr(){
 		currentSeq++;
 	}
 	
 	public void receivePacket(byte[] message, int sequenceNr, int hopCount, InetAddress sourceAddress, InetAddress destinationAddress) {
+
 		String txt = new String(message);
         byte[] DataToSave = PacketUtils.getData(message, sequenceNr, hopCount, sourceAddress, destinationAddress);
         packetLog.addReceivedPacket(new DatagramPacket(DataToSave, DataToSave.length, sourceAddress, port));
-
-        int thisSeq = sequenceNr;
-        int thisHop = hopCount;
-        int nextHop = hopCount;
-        InetAddress source = sourceAddress;
-        InetAddress destination = destinationAddress;
 
         if(txt.contains("PNG")){
         	System.out.println(txt);
@@ -145,8 +113,6 @@ public class Client extends Thread {
             else {
                 chatwindow.updateNames(words[1]);
                 stillAlive.add(true);
-                //Key k = extractKey(receiveData);
-                //pubKeys.add(k);
             }
 
         } else if (txt.startsWith("[NAME_IN_USE]: ") && !sourceAddress.equals(myAddress)) {
@@ -168,7 +134,6 @@ public class Client extends Thread {
                 for(int i=3; i<words.length; i++){
                     data = data + words[i] + " ";
                 }
-                //data = data.substring(0, data.length()-1);
                 chatwindow.privateIncoming(words[2], data);
             }
         }
@@ -177,6 +142,18 @@ public class Client extends Thread {
             String[] words = txt.split(" ");
             System.out.println("|"+words[1]+"|");
             int missedI = Integer.parseInt(words[1]);
+
+            if (missedI < packetLog.getSizeLog()){
+                byte[] data = "[TOO_LATE]".getBytes();
+                DatagramPacket rePacket = new DatagramPacket(data, data.length, group, port);
+                resendPacket(rePacket);
+            }
+            else {
+                resendPacket(packetLog.getPacketSend(missedI));
+            }
+
+            //Volgens mij werkt het zo ook ;) TODO
+            /*
             if(missedI < currentSeq-BUFFER_SIZE){
                 byte[] data = "[TOO_LATE]".getBytes();
                 DatagramPacket rePacket = new DatagramPacket(data, data.length,
@@ -187,24 +164,23 @@ public class Client extends Thread {
             int iOfList = lastMsgs.size()-(currentSeq-missedI)-1;
             resendPacket(lastMsgs.get(iOfList));
             }
+           */
         }
+
 
         else if(txt.startsWith("[TOO_LATE]")){
         	System.out.println("msg too late");
+            //TODO
             // ?????
         }
 
         else if(txt.startsWith("[FILE]")) {
-            //SEQHOPSOUDES[FILE]{file}
-            // 1  1  4  4   6      x   = 16 + x = 1024 ==> x = 1008
             byte[] fileBytes = new byte[1003];
             System.arraycopy(message, 6, fileBytes, 0, 1003);
             receiveFileInstance.receiveFile(fileBytes, false, "");
         }
 
         else if(txt.startsWith("[EOF]")) {
-            //SEQHOPSOUDES[EOF][EXT]{file}
-            // 1  1  4  4   5    6    x    = 21 + x = 1024 ==> x = 1003
             byte[] extBytes = new byte[6];
             int count = 0;
             for(int i=message.length-1; i>20; i--){
@@ -228,27 +204,28 @@ public class Client extends Thread {
         deviceNr--;
 
         if(!seqNrs.containsKey(deviceNr)){
-            seqNrs.put(deviceNr, thisSeq);
+            seqNrs.put(deviceNr, sequenceNr);
         } else {
-            if(seqNrs.get(deviceNr)+1 < thisSeq){
-                for(int i = seqNrs.get(deviceNr)+1; i < thisSeq; i++){
+            if(seqNrs.get(deviceNr)+1 < sequenceNr){
+                for(int i = seqNrs.get(deviceNr)+1; i < sequenceNr; i++){
                     String msg = "[NACK]: " + i + " DUMMY_WORD ";
                     sendPacket(msg);
                 }
             }
-            seqNrs.put(deviceNr, thisSeq);
+            seqNrs.put(deviceNr, sequenceNr);
         }
 	}
 
 	public void sendPacket(String message) {		
-		if(!message.startsWith("[")) chatwindow.incoming(message);
+		if(!message.startsWith("[")) {
+            chatwindow.incoming(message);
+        }
 		
 		byte[] data = PacketUtils.getData(message.getBytes(), currentSeq, hopCount, myAddress, group);
 
         DatagramPacket packetToSend = new DatagramPacket(data, data.length, group, port);
 
-        lastMsgs.add(packetToSend);
-
+        //lastMsgs.add(packetToSend);
 
         packetLog.addSendPacket(packetToSend);
 
@@ -257,7 +234,6 @@ public class Client extends Thread {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
 		incrementSeqNr();
 	}
 
@@ -286,7 +262,6 @@ public class Client extends Thread {
 			if(!stillAlive.get(i)){
 				chatwindow.incoming(chatwindow.pNameList.get(i) + " has left!");
 				chatwindow.disconnect(chatwindow.pNameList.get(i));
-				//pubKeys.remove(i);
 				stillAlive.remove(i);
 			}
 			else stillAlive.set(i, false);
@@ -320,4 +295,11 @@ public class Client extends Thread {
             e.printStackTrace();
         }
     }
+
+    public void run() {
+        while (!s.isClosed()) {
+            forwardPacket();
+        }
+    }
+
 }
