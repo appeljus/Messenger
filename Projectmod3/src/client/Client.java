@@ -176,13 +176,14 @@ public class Client extends Thread {
                         group, port);
                 resendPacket(rePacket);
             }else{
-            int iOfList = BUFFER_SIZE-(currentSeq-missedI)-1;
+            	System.out.println("|" + BUFFER_SIZE + "|" + currentSeq + "|" + missedI + "|");
+            int iOfList = lastMsgs.size()-(currentSeq-missedI)-1;
             resendPacket(lastMsgs.get(iOfList));
             }
         }
 
         else if(txt.startsWith("[TOO_LATE]")){
-            //TODO
+        	System.out.println("msg too late");
             // ?????
         }
 
