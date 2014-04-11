@@ -32,7 +32,7 @@ public class Client extends Thread {
 	
 	private static final int BUFFER_SIZE = 16;
 	ArrayList<DatagramPacket> lastMsgs = new ArrayList<DatagramPacket>();
-	HashMap<Integer, List<Integer>> seqNrs = new HashMap<Integer, List<Integer>>();
+	HashMap<Integer, Integer> seqNrs = new HashMap<Integer, Integer>();
 	int currentSeq = 0;
 	
 	int hopCount = 0; // dummy .. temp... dinges..
@@ -227,10 +227,18 @@ public class Client extends Thread {
 			deviceNr--;
 			
 			if(!seqNrs.containsKey(deviceNr)){
-				seqNrs.put(deviceNr, new ArrayList<Integer>());
+				seqNrs.put(deviceNr, thisSeq);
+			} else {
+				if(seqNrs.get(deviceNr)+1 < thisSeq){
+					for(int i = seqNrs.get(deviceNr)+1; i < thisSeq; i++){
+						String msg = "[NACK]: " + i;
+					}
+				}
+				seqNrs.put(deviceNr, thisSeq);
 			}
 			
-			seqNrs.get(deviceNr).add(thisSeq);//#########################
+			
+			
 			
 		} catch (IOException e) {
 			e.printStackTrace();
