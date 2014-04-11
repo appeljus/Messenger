@@ -28,7 +28,7 @@ public class ReceiveFile {
 	}
 	
 	public void createFile(String ext){
-		FileOutputStream fileOuputStream;
+		FileOutputStream fOutS;
 		JFileChooser fc = new JFileChooser();
 		fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 		fc.setDialogType(JFileChooser.SAVE_DIALOG);
@@ -40,9 +40,9 @@ public class ReceiveFile {
 			client.chatwindow.incoming("Receiving file at: " + path);
 		}
 		try {
-			fileOuputStream = new FileOutputStream(path + "/" + fileTitle + "." + ext);
-			fileOuputStream.write(file);
-		    fileOuputStream.close();
+			fOutS = new FileOutputStream(path + "/" + fileTitle + "." + ext);
+			fOutS.write(file);
+		    fOutS.close();
 		} catch (IOException e) { e.printStackTrace(); } 
 	}
 }
