@@ -118,8 +118,6 @@ public class Client extends Thread {
 	
 	public void receivePacket(byte[] message, int sequenceNr, int hopCount, InetAddress sourceAddress, InetAddress destinationAddress) {
 		String txt = new String(message);
-		System.out.println(DatatypeConverter.printHexBinary(message));
-		chatwindow.incoming(txt.charAt(1) + " |");
         byte[] DataToSave = PacketUtils.getData(message, sequenceNr, hopCount, sourceAddress, destinationAddress);
         packetLog.addReceivedPacket(new DatagramPacket(DataToSave, DataToSave.length, sourceAddress, port));
 
