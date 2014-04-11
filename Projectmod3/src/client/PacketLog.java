@@ -8,23 +8,29 @@ import java.util.HashMap;
  */
 public class PacketLog {
 
-    private HashMap<Integer, DatagramPacket> log;
+    private HashMap<Integer, DatagramPacket> logSend;
+    private HashMap<Integer, DatagramPacket> logReceived;
 
     public PacketLog(){
-        log = new HashMap<Integer, DatagramPacket>();
+        logSend = new HashMap<Integer, DatagramPacket>();
+        logReceived = new HashMap<Integer, DatagramPacket>();
 
     }
 
-    public void addPacket(DatagramPacket packet){
-        int sequenceNr = (int)packet.getData()[0];
-        log.put(sequenceNr, packet);
+    public DatagramPacket getPacketSend(int sqc) {
+        return logSend.get(sqc);
     }
 
-    public DatagramPacket getPacket(int sequencenr){
-        return log.get(sequencenr);
+    public DatagramPacket getPacketReceived(int sqc) {
+        return logReceived.get(sqc);
     }
 
-    public boolean containsSeq(int sequencenr){
-        return log.containsKey(sequencenr);
+    public void addReceivedPacket(DatagramPacket packet){
+        logReceived.put((int)packet.getData()[0], packet);
     }
+
+    public void addSendPacket(DatagramPacket packet){
+        logSend.put((int)packet.getData()[0], packet);
+    }
+
 }
