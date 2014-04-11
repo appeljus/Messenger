@@ -289,12 +289,10 @@ public class Client extends Thread {
             if (!sourceAddress.equals(myAddress) && !packetLog.containsReceivedSeq(sequence)){
                 receivePacket(message, sequence, hop, sourceAddress, destinationAddress);
             }
-            else if (packetLog.containsReceivedSeq(sequence)){
-                byte[] dataToSend = PacketUtils.getData(message, sequence, hop - 1, sourceAddress, destinationAddress);
+            else if (!sourceAddress.equals(myAddress) && packetLog.containsReceivedSeq(sequence)){
+                hop = hop - 1;
+                byte[] dataToSend = PacketUtils.getData(message, sequence, hop, sourceAddress, destinationAddress);
                 resendPacket(new DatagramPacket(dataToSend, dataToSend.length, sourceAddress, port));
-            }
-            else {
-                //Drop packet
             }
 
         } catch (   IOException e) {

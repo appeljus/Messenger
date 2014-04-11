@@ -124,7 +124,7 @@
       <file leaf-file-name="Client.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/client/Client.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="305" column="29" selection-start="9216" selection-end="9216" vertical-scroll-proportion="0.61047465" vertical-offset="4642" max-vertical-offset="5253">
+            <state line="292" column="30" selection-start="8780" selection-end="8780" vertical-scroll-proportion="0.5826514" vertical-offset="4438" max-vertical-offset="5066">
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -832,7 +832,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/client/Client.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="305" column="29" selection-start="9216" selection-end="9216" vertical-scroll-proportion="0.61047465" vertical-offset="4642" max-vertical-offset="5253">
+        <state line="292" column="30" selection-start="8780" selection-end="8780" vertical-scroll-proportion="0.5826514" vertical-offset="4438" max-vertical-offset="5066">
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
