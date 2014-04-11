@@ -31,6 +31,7 @@ public class Client extends Thread {
 	List<Boolean> stillAlive = new ArrayList<Boolean>();
 	Timer timer;
     PacketLog packetLog;
+    ReceiveFile receiveFileInstance;
 	
 	private static final int BUFFER_SIZE = 16;
 	ArrayList<DatagramPacket> lastMsgs = new ArrayList<DatagramPacket>();
@@ -58,6 +59,7 @@ public class Client extends Thread {
 		}
 
 		chatwindow = c;
+		receiveFileInstance = new ReceiveFile(this);
 		keyPair = Encryption.generateKey();
 		pubKeys.add(keyPair.getPublic());
 		stillAlive.add(true);
@@ -112,8 +114,8 @@ public class Client extends Thread {
 			byte[] receiveData = packet.getData();
 
             byte[] message = new byte[receiveData.length - 10];
-            String txt = new String(message);
             System.arraycopy(receiveData, 10, message, 0, receiveData.length - 10);
+            String txt = new String(message);
 
 			int thisSeq = receiveData[0];
 			int thisHop = receiveData[1];
@@ -176,7 +178,22 @@ public class Client extends Thread {
 			else if(txt.startsWith("[TOO_LATE]")){
 				
 			}
-			
+			else if(txt.startsWith("[FILE]")) {
+				//SEQHOPSOUDES[FILE]{file}
+				// 1  1  4  4   6      x   = 16 + x = 1024 ==> x = 1008
+				byte[] fileBytes = new byte[1008];
+				System.arraycopy(receiveData, 16, fileBytes, 0, 1008);
+				receiveFileInstance.receiveFile(fileBytes, false, "");
+			}
+			else if(txt.startsWith("[EOF]")) {
+				//SEQHOPSOUDES[EOF][EXT]{file}
+				// 1  1  4  4   5    6    x    = 21 + x = 1024 ==> x = 1003
+				byte[] fileBytes = new byte[1008];
+				byte[] extBytes = new byte[6];
+				System.arraycopy(receiveData, 15, fileBytes, 0, 1008);
+				System.arraycopy(receiveData, 15, extBytes, 0, 6);
+				receiveFileInstance.receiveFile(fileBytes, true, new String(extBytes));
+			}
 			else if(!packet.getAddress().equals(myAddress)){
 				chatwindow.incoming(txt);
 			}
