@@ -29,6 +29,7 @@ public class Client extends Thread {
 	List<Key> pubKeys = new ArrayList<Key>();
 	List<Boolean> stillAlive = new ArrayList<Boolean>();
 	Timer timer;
+    PacketLog packetLog;
 	
 	private static final int BUFFER_SIZE = 16;
 	ArrayList<DatagramPacket> lastMsgs = new ArrayList<DatagramPacket>();
@@ -258,10 +259,9 @@ public class Client extends Thread {
 	public void sendPacket(String message) {		
 		if(!message.startsWith("[")) chatwindow.incoming(message);
 		
-		message = currentSeq + " " + hopCount + " " + myAddress + " " + group + " " + message;
-		
-		byte[] data = message.getBytes();
-		DatagramPacket packetToSend = new DatagramPacket(data, data.length,
+		byte[] data = Packet.getData(message.getBytes(), currentSeq, hopCount, myAddress, group);
+
+        DatagramPacket packetToSend = new DatagramPacket(data, data.length,
 				group, port);
 		
 		lastMsgs.add(packetToSend);
@@ -304,15 +304,15 @@ public class Client extends Thread {
 
     public void forwardPacket(DatagramPacket packet){
         byte[] data = packet.getData();
-        byte[] sourceAddress = {data[], data[], data[], data[]};
-        byte[] destinationAddress = {data[], data[], data[], data[]};
+        byte[] sourceAddress = {data[2], data[3], data[4], data[5]};
+        byte[] destinationAddress = {data[6], data[7], data[8], data[9]};
         try {
             if (!InetAddress.getByAddress(destinationAddress).equals(myAddress)){
                 if(InetAddress.getByAddress(sourceAddress).equals(myAddress)){
                     //Drop packet
                 }
-                if (data[] > 0){
-                    data[] --;
+                if (data[0] > 0){
+                    data[0] = (byte)((int)data[0] - 1);
                     //Send packet
                 }
                 else{
@@ -321,7 +321,7 @@ public class Client extends Thread {
 
             }
             else {
-                if (!PacketLog.containsSeq){
+                if (!packetLog.containsSeq(data[0])){
                     //Accept packet
                 }
                 else{
@@ -333,3 +333,5 @@ public class Client extends Thread {
         }
 
     }
+
+}

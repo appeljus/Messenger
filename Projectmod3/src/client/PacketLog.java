@@ -16,7 +16,7 @@ public class PacketLog {
     }
 
     public void addPacket(DatagramPacket packet){
-        int sequenceNr = (int)packet.getData()[];
+        int sequenceNr = (int)packet.getData()[0];
         log.put(sequenceNr, packet);
     }
 
