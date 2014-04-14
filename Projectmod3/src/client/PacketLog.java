@@ -11,31 +11,25 @@ import java.util.Set;
 public class PacketLog {
 
     private HashMap<Integer, DatagramPacket> logSend;
-    private HashMap<Integer, DatagramPacket> logReceived;
+    private HashMap<Integer, Integer> sequenceReceived;
     private static final int sizeLog = 128;
 
     public PacketLog(){
         logSend = new HashMap<Integer, DatagramPacket>();
-        logReceived = new HashMap<Integer, DatagramPacket>();
+        sequenceReceived = new HashMap<Integer, Integer>();
+    }
 
+    public int getLatestSeq(int deviceNr){
+        Integer nr = new Integer(deviceNr);
+        return sequenceReceived.get(nr);
+    }
+
+    public void addSequenceNr(int devicenr, int sequencenr){
+        sequenceReceived.put(devicenr, sequencenr);
     }
 
     public DatagramPacket getPacketSend(int sqc) {
         return logSend.get(sqc);
-    }
-
-    public DatagramPacket getPacketReceived(int sqc) {
-        return logReceived.get(sqc);
-    }
-
-    public void addReceivedPacket(DatagramPacket packet){
-        if (logReceived.size() < sizeLog){
-            logReceived.put((int)packet.getData()[0], packet);
-        }
-        else {
-            logReceived.remove(lowestSqc(logReceived));
-            logReceived.put((int)packet.getData()[0], packet);
-        }
     }
 
     public void addSendPacket(DatagramPacket packet){
@@ -46,10 +40,6 @@ public class PacketLog {
             logSend.remove(lowestSqc(logSend));
             logSend.put((int)packet.getData()[0], packet);
         }
-    }
-
-    public boolean containsReceivedSeq(int sqc){
-        return logReceived.containsKey(sqc);
     }
 
     public boolean containsSendSeq(int sqc){
