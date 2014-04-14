@@ -35,6 +35,7 @@ public class SendFile implements Runnable {
 		}
 
 		ext = FilenameUtils.getExtension(pathString);
+		System.out.println(ext.toString() + " | " + ext);
 
 	}
 

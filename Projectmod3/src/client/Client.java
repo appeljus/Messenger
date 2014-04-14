@@ -237,7 +237,9 @@ public class Client extends Thread {
         try {
 			s.send(packetToSend);
 		} catch (IOException e) {
-			e.printStackTrace();
+            System.out.println("WE HAVE A PROBLEM AT THE RESEND METHOD!!");
+            System.out.println("ERMAGHERD!! D:");
+			recreateSocket();
 		}
 		incrementSeqNr();
 	}
@@ -249,7 +251,17 @@ public class Client extends Thread {
         catch (IOException e){
             System.out.println("WE HAVE A PROBLEM AT THE RESEND METHOD!!");
             System.out.println("ERMAGHERD!! D:");
+           recreateSocket();
         }
+    }
+    
+    private void recreateSocket(){
+    	 try {
+				s = new MulticastSocket(port);
+				s.joinGroup(group);
+			} catch (IOException e1) {
+				System.out.println("Double Nope!");
+			}
     }
 	
 	public void sendFile(File f){
