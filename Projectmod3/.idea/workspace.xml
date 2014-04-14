@@ -124,7 +124,7 @@
       <file leaf-file-name="Client.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/client/Client.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="43" column="39" selection-start="1313" selection-end="1313" vertical-scroll-proportion="-1.785" vertical-offset="1275" max-vertical-offset="5015">
+            <state line="46" column="34" selection-start="1392" selection-end="1392" vertical-scroll-proportion="0.51" vertical-offset="374" max-vertical-offset="5015">
               <folding />
             </state>
           </provider>
@@ -517,7 +517,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1382" height="744" extended-state="7" />
+    <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -958,7 +958,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/client/Client.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="43" column="39" selection-start="1313" selection-end="1313" vertical-scroll-proportion="-1.785" vertical-offset="1275" max-vertical-offset="5015">
+        <state line="46" column="34" selection-start="1392" selection-end="1392" vertical-scroll-proportion="0.51" vertical-offset="374" max-vertical-offset="5015">
           <folding />
         </state>
       </provider>

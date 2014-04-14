@@ -43,7 +43,8 @@ public class Client extends Thread {
         chatwindow = c;
         receiveFileInstance = new ReceiveFile(this);
         stillAlive.add(true);
-        encryption.setPassword("doif");
+        encryption = new Encryption();
+        encryption.setPassword("Doif");
 
 		try {
 			Enumeration e = NetworkInterface.getNetworkInterfaces();
