@@ -300,21 +300,22 @@ public class Client extends Thread {
             int hop = PacketUtils.getHopCount(packet);
             InetAddress sourceAddress = PacketUtils.getSourceAddress(packet);
             InetAddress destinationAddress = PacketUtils.getDistinationAddress(packet);
+            
             if(!sourceAddress.getHostAddress().startsWith("192.168.5.")) { }
-            else if (!sourceAddress.equals(myAddress) && packetLog.getLatestSeq((int)sourceAddress.getAddress()[3]) == (sequence - 1)){
+            else if (!sourceAddress.equals(myAddress) && packetLog.getLatestSeq((int)sourceAddress.getAddress()[3], sequence) == (sequence - 1)){
             	receivePacket(message, sequence, hop, sourceAddress, destinationAddress);
             }
-            else if (!sourceAddress.equals(myAddress) && packetLog.getLatestSeq((int)sourceAddress.getAddress()[3]) <= sequence){
+            else if (!sourceAddress.equals(myAddress) && packetLog.getLatestSeq((int)sourceAddress.getAddress()[3], sequence) <= sequence){
                 hop = hop - 1;
                 byte[] dataToSend = PacketUtils.getData(message, sequence, hop, sourceAddress, destinationAddress);
                 resendPacket(new DatagramPacket(dataToSend, dataToSend.length, sourceAddress, port));
             }
-            else if (!sourceAddress.equals(myAddress) && packetLog.getLatestSeq((int)sourceAddress.getAddress()[3]) > sequence){
+            else if (!sourceAddress.equals(myAddress) && packetLog.getLatestSeq((int)sourceAddress.getAddress()[3], sequence) > sequence){
                 hop = hop - 1;
                 byte[] dataToSend = PacketUtils.getData(message, sequence, hop, sourceAddress, destinationAddress);
                 resendPacket(new DatagramPacket(dataToSend, dataToSend.length, sourceAddress, port));
 
-                for (int i = packetLog.getLatestSeq((int)sourceAddress.getAddress()[3]); i < sequence; i++){
+                for (int i = packetLog.getLatestSeq((int)sourceAddress.getAddress()[3], sequence); i < sequence; i++){
                     String msg = "[NACK]: " + i + " DUMMY_WORD ";
                     sendPacket(msg);
                 }
