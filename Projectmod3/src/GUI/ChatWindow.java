@@ -82,7 +82,6 @@ public class ChatWindow extends JFrame implements KeyListener, ActionListener,
 		sendBar.setBackground(Color.DARK_GRAY);
 
 		typeArea.setEditable(true);
-
 		typeArea.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY, 3));
 
 		typeArea.addKeyListener(this);
@@ -140,6 +139,7 @@ public class ChatWindow extends JFrame implements KeyListener, ActionListener,
 
 		checkTabs = new JCheckBox(
 				"<html>Seperate<br>window for<br>personal<br>chat</html>");
+		checkTabs.setSelected(true);
 		c.gridy++;
 		c.weighty = -5000;
 		c.anchor = GridBagConstraints.SOUTH;

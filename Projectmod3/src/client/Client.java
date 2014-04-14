@@ -12,6 +12,8 @@ import java.net.NetworkInterface;
 import java.security.Key;
 import java.util.*;
 
+import org.apache.commons.codec.binary.Hex;
+
 public class Client extends Thread {
 
 
@@ -95,13 +97,13 @@ public class Client extends Thread {
 	}
 	
 	public void receivePacket(byte[] message, int sequenceNr, int hopCount, InetAddress sourceAddress, InetAddress destinationAddress) {
-
 		String txt = new String(message);
         byte[] DataToSave = PacketUtils.getData(message, sequenceNr, hopCount, sourceAddress, destinationAddress);
         packetLog.addReceivedPacket(new DatagramPacket(DataToSave, DataToSave.length, sourceAddress, port));
-
-        if(txt.contains("PNG")){
-        	System.out.println(txt);
+        
+        if(txt.contains("FILE") || txt.contains("EOF")) {
+        	chatwindow.incoming(new String(Hex.encodeHex(message)));
+        	chatwindow.incoming(new String(Hex.encodeHex("[FILE]".getBytes())) + " | " + new String(Hex.encodeHex("[EOF]".getBytes())));
         }
         
         if (txt.startsWith("[BROADCAST]") && !sourceAddress.equals(myAddress)) {
@@ -307,5 +309,4 @@ public class Client extends Thread {
     public ChatWindow getChatWindow() {
     	return chatwindow;
     }
-
 }
