@@ -24,8 +24,7 @@ public class PacketLog {
     }
 
     public int getLatestSeq(int deviceNr){
-        Integer nr = new Integer(deviceNr);
-        return sequenceReceived.get(nr);
+        return sequenceReceived.get(deviceNr);
     }
 
     public void addSequenceNr(int devicenr, int sequencenr){
