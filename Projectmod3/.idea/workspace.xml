@@ -124,8 +124,10 @@
       <file leaf-file-name="Client.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/client/Client.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="46" column="34" selection-start="1392" selection-end="1392" vertical-scroll-proportion="0.51" vertical-offset="374" max-vertical-offset="5015">
-              <folding />
+            <state line="2" column="7" selection-start="24" selection-end="24" vertical-scroll-proportion="-11.4525" vertical-offset="4615" max-vertical-offset="5015">
+              <folding>
+                <element signature="method#incrementSeqNr#0;class#Client#0" expanded="false" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -633,7 +635,9 @@
     <entry file="file://$PROJECT_DIR$/src/client/Client.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="205" column="35" selection-start="6113" selection-end="6113" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="5219">
-          <folding />
+          <folding>
+            <element signature="method#incrementSeqNr#0;class#Client#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -661,7 +665,9 @@
     <entry file="file://$PROJECT_DIR$/src/client/Client.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="24" column="36" selection-start="566" selection-end="566" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="5525">
-          <folding />
+          <folding>
+            <element signature="method#incrementSeqNr#0;class#Client#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -675,21 +681,27 @@
     <entry file="file://$PROJECT_DIR$/src/client/Client.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="256" column="33" selection-start="7776" selection-end="7776" vertical-scroll-proportion="0.0" vertical-offset="170" max-vertical-offset="5423">
-          <folding />
+          <folding>
+            <element signature="method#incrementSeqNr#0;class#Client#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/client/Client.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="27" column="4" selection-start="624" selection-end="750" vertical-scroll-proportion="0.0" vertical-offset="170" max-vertical-offset="5134">
-          <folding />
+          <folding>
+            <element signature="method#incrementSeqNr#0;class#Client#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/client/Client.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="230" column="76" selection-start="6940" selection-end="6940" vertical-scroll-proportion="0.0" vertical-offset="136" max-vertical-offset="5083">
-          <folding />
+          <folding>
+            <element signature="method#incrementSeqNr#0;class#Client#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -710,21 +722,27 @@
     <entry file="file://$PROJECT_DIR$/src/client/Client.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="300" column="22" selection-start="8661" selection-end="8661" vertical-scroll-proportion="0.0" vertical-offset="102" max-vertical-offset="5525">
-          <folding />
+          <folding>
+            <element signature="method#incrementSeqNr#0;class#Client#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/client/Client.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="336" column="1" selection-start="8802" selection-end="8802" vertical-scroll-proportion="0.0" vertical-offset="272" max-vertical-offset="5797">
-          <folding />
+          <folding>
+            <element signature="method#incrementSeqNr#0;class#Client#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/client/Client.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="15" column="13" selection-start="441" selection-end="441" vertical-scroll-proportion="0.0" vertical-offset="255" max-vertical-offset="4641">
-          <folding />
+          <folding>
+            <element signature="method#incrementSeqNr#0;class#Client#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -745,7 +763,9 @@
     <entry file="file://$PROJECT_DIR$/src/client/Client.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="15" column="13" selection-start="441" selection-end="441" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="4641">
-          <folding />
+          <folding>
+            <element signature="method#incrementSeqNr#0;class#Client#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -766,7 +786,9 @@
     <entry file="file://$PROJECT_DIR$/src/client/Client.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="13" column="13" selection-start="259" selection-end="259" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2261">
-          <folding />
+          <folding>
+            <element signature="method#incrementSeqNr#0;class#Client#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -787,7 +809,9 @@
     <entry file="file://$PROJECT_DIR$/src/client/Client.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="13" column="13" selection-start="259" selection-end="259" vertical-scroll-proportion="0.0" vertical-offset="221" max-vertical-offset="2261">
-          <folding />
+          <folding>
+            <element signature="method#incrementSeqNr#0;class#Client#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -808,7 +832,9 @@
     <entry file="file://$PROJECT_DIR$/src/client/Client.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="11" column="23" selection-start="244" selection-end="244" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2261">
-          <folding />
+          <folding>
+            <element signature="method#incrementSeqNr#0;class#Client#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -822,7 +848,9 @@
     <entry file="file://$PROJECT_DIR$/src/client/Client.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="11" column="26" selection-start="202" selection-end="202" vertical-scroll-proportion="0.0" vertical-offset="187" max-vertical-offset="1445">
-          <folding />
+          <folding>
+            <element signature="method#incrementSeqNr#0;class#Client#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -836,7 +864,9 @@
     <entry file="file://$PROJECT_DIR$/src/client/Client.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="9" column="26" selection-start="177" selection-end="177" vertical-scroll-proportion="0.0" vertical-offset="153" max-vertical-offset="1530">
-          <folding />
+          <folding>
+            <element signature="method#incrementSeqNr#0;class#Client#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -850,7 +880,9 @@
     <entry file="file://$PROJECT_DIR$/src/client/Client.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="9" column="26" selection-start="162" selection-end="162" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1479">
-          <folding />
+          <folding>
+            <element signature="method#incrementSeqNr#0;class#Client#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -864,21 +896,27 @@
     <entry file="file://$PROJECT_DIR$/src/client/Client.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="72" column="21" selection-start="1567" selection-end="1567" vertical-scroll-proportion="0.0" vertical-offset="1224" max-vertical-offset="1496">
-          <folding />
+          <folding>
+            <element signature="method#incrementSeqNr#0;class#Client#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/client/Client.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="19" column="5" selection-start="396" selection-end="396" vertical-scroll-proportion="0.0" vertical-offset="323" max-vertical-offset="884">
-          <folding />
+          <folding>
+            <element signature="method#incrementSeqNr#0;class#Client#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/client/Client.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="27" column="9" selection-start="553" selection-end="553" vertical-scroll-proportion="0.0" vertical-offset="459" max-vertical-offset="884">
-          <folding />
+          <folding>
+            <element signature="method#incrementSeqNr#0;class#Client#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -958,8 +996,10 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/client/Client.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="46" column="34" selection-start="1392" selection-end="1392" vertical-scroll-proportion="0.51" vertical-offset="374" max-vertical-offset="5015">
-          <folding />
+        <state line="2" column="7" selection-start="24" selection-end="24" vertical-scroll-proportion="-11.4525" vertical-offset="4615" max-vertical-offset="5015">
+          <folding>
+            <element signature="method#incrementSeqNr#0;class#Client#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>

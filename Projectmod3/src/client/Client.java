@@ -98,14 +98,10 @@ public class Client extends Thread {
 	}
 	
 	public void receivePacket(byte[] message, int sequenceNr, int hopCount, InetAddress sourceAddress, InetAddress destinationAddress) {
-		String txt = new String(message);
+
+		String txt = new String(encryption.decryptData(message));
         byte[] DataToSave = PacketUtils.getData(message, sequenceNr, hopCount, sourceAddress, destinationAddress);
         packetLog.addReceivedPacket(new DatagramPacket(DataToSave, DataToSave.length, sourceAddress, port));
-        
-        if(txt.contains("FILE") || txt.contains("EOF")) {
-        	chatwindow.incoming(new String(Hex.encodeHex(message)));
-        	chatwindow.incoming(new String(Hex.encodeHex("[FILE]".getBytes())) + " | " + new String(Hex.encodeHex("[EOF]".getBytes())));
-        }
         
         if (txt.startsWith("[BROADCAST]") && !sourceAddress.equals(myAddress)) {
             String[] words = txt.split(" ");
@@ -186,7 +182,7 @@ public class Client extends Thread {
         }
 
         else if(txt.startsWith("[EOF]")) {
-            byte[] extBytes = new byte[6];
+            byte[] extBytes = new byte[3];
             int count = 0;
             for(int i=message.length-1; i>20; i--){
             	if(message[i] == 0){
@@ -195,8 +191,8 @@ public class Client extends Thread {
             	else break;
             }
             byte[] file = new byte[1003-count-1];
-            System.arraycopy(message, 21, file, 0, file.length);
-            System.arraycopy(message, 15, extBytes, 0, 6);
+            System.arraycopy(message, 12, file, 0, file.length);
+            System.arraycopy(message, 6, extBytes, 0, 3);
             receiveFileInstance.receiveFile(file, true, new String(extBytes));
         }
 
@@ -226,7 +222,7 @@ public class Client extends Thread {
             chatwindow.incoming(message);
         }
 		
-		byte[] data = PacketUtils.getData(message.getBytes(), currentSeq, hopCount, myAddress, group);
+		byte[] data = PacketUtils.getData(encryption.encryptData(message.getBytes()), currentSeq, hopCount, myAddress, group);
 
         DatagramPacket packetToSend = new DatagramPacket(data, data.length, group, port);
 
