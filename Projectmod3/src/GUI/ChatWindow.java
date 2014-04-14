@@ -83,7 +83,6 @@ public class ChatWindow extends JFrame implements KeyListener, ActionListener,
 
 		typeArea.setEditable(true);
 		typeArea.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY, 3));
-
 		typeArea.addKeyListener(this);
 		sendBar.setLayout(new GridBagLayout());
 
@@ -170,6 +169,7 @@ public class ChatWindow extends JFrame implements KeyListener, ActionListener,
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		cont.add(mainFrame);
 		setVisible(true);
+		typeArea.requestFocusInWindow();
 	}
 
 	protected void addText(String txt) {
@@ -286,6 +286,7 @@ public class ChatWindow extends JFrame implements KeyListener, ActionListener,
 		} else if (arg0.getSource() == this.send) {
 			String txt = typeArea.getText();
 			this.addText(generateLine(txt));
+			typeArea.requestFocusInWindow();
 			
 		} else if (arg0.getSource() == sendFile) {
 			JFileChooser fc = new JFileChooser();
