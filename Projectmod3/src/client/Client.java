@@ -104,7 +104,7 @@ public class Client extends Thread {
 	
 	public void receivePacket(byte[] message, int sequenceNr, int hopCount, InetAddress sourceAddress, InetAddress destinationAddress) {
 		String txt = new String((message));
-        packetLog.addSequenceNr(sourceAddress.getAddress()[4], sequenceNr);
+        packetLog.addSequenceNr(sourceAddress.getAddress()[3], sequenceNr);
         
         if (txt.startsWith("[BROADCAST]") && !sourceAddress.equals(myAddress)) {
             String[] words = txt.split(" ");
@@ -304,11 +304,11 @@ public class Client extends Thread {
             int hop = PacketUtils.getHopCount(packet);
             InetAddress sourceAddress = PacketUtils.getSourceAddress(packet);
             InetAddress destinationAddress = PacketUtils.getDistinationAddress(packet);
-
-            if (!sourceAddress.equals(myAddress) && packetLog.getLatestSeq((int)sourceAddress.getAddress()[3]) == (sequence + 1)){
-                receivePacket(message, sequence, hop, sourceAddress, destinationAddress);
-            }
-            else if (!sourceAddress.equals(myAddress) && packetLog.getLatestSeq((int)sourceAddress.getAddress()[3]) <= sequence){
+            //if (!sourceAddress.equals(myAddress) && packetLog.getLatestSeq((int)sourceAddress.getAddress()[3]) == (sequence - 1)){
+            //    chatwindow.incoming("RECEIVED");
+            	receivePacket(message, sequence, hop, sourceAddress, destinationAddress);
+            //}
+             if (!sourceAddress.equals(myAddress) && packetLog.getLatestSeq((int)sourceAddress.getAddress()[3]) <= sequence){
                 hop = hop - 1;
                 byte[] dataToSend = PacketUtils.getData(message, sequence, hop, sourceAddress, destinationAddress);
                 resendPacket(new DatagramPacket(dataToSend, dataToSend.length, sourceAddress, port));
