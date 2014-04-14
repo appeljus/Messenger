@@ -1,5 +1,7 @@
 package client;
 
+import java.awt.Desktop;
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
@@ -52,6 +54,7 @@ public class ReceiveFile extends Thread{
 				fOutS = new FileOutputStream(path + "." + ext);
 				fOutS.write(file);
 				fOutS.close();
+				Desktop.getDesktop().open(new File(path + "." + ext));
 			} catch (IOException e) { e.printStackTrace(); } 
 		}
 	}

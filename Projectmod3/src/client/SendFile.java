@@ -7,7 +7,7 @@ import java.net.InetAddress;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import org.apache.commons.io.FilenameUtils;
+import org.apache.commons.io.*;
 
 public class SendFile implements Runnable {
 	Client c;
