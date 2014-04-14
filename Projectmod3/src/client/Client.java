@@ -99,7 +99,7 @@ public class Client extends Thread {
 	
 	public void receivePacket(byte[] message, int sequenceNr, int hopCount, InetAddress sourceAddress, InetAddress destinationAddress) {
 
-		String txt = new String(encryption.decryptData(message));
+		String txt = new String((message));
         byte[] DataToSave = PacketUtils.getData(message, sequenceNr, hopCount, sourceAddress, destinationAddress);
         packetLog.addReceivedPacket(new DatagramPacket(DataToSave, DataToSave.length, sourceAddress, port));
         
@@ -222,7 +222,7 @@ public class Client extends Thread {
             chatwindow.incoming(message);
         }
 		
-		byte[] data = PacketUtils.getData(encryption.encryptData(message.getBytes()), currentSeq, hopCount, myAddress, group);
+		byte[] data = PacketUtils.getData((message.getBytes()), currentSeq, hopCount, myAddress, group);
 
         DatagramPacket packetToSend = new DatagramPacket(data, data.length, group, port);
 
@@ -284,13 +284,14 @@ public class Client extends Thread {
 	}
 
     public void forwardPacket(){
-        byte[] data = new byte[1024];
+        byte[] data = new byte[1034];
         DatagramPacket packet = new DatagramPacket(data, data.length);
 
         try {
             s.receive(packet);
 
             byte[] message = PacketUtils.getMessage(packet);
+            System.out.println(message.length);
             int sequence = PacketUtils.getSequenceNr(packet);
             int hop = PacketUtils.getHopCount(packet);
             InetAddress sourceAddress = PacketUtils.getSourceAddress(packet);
