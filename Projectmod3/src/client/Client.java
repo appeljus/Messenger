@@ -105,7 +105,7 @@ public class Client extends Thread {
 	public void receivePacket(byte[] message, int sequenceNr, int hopCount, InetAddress sourceAddress, InetAddress destinationAddress) {
 		String txt = new String((message));
         byte[] DataToSave = PacketUtils.getData(message, sequenceNr, hopCount, sourceAddress, destinationAddress);
-        packetLog.addReceivedPacket(new DatagramPacket(DataToSave, DataToSave.length, sourceAddress, port));
+        packetLog.addSequenceNr(sourceAddress.getAddress()[4], sequenceNr);
         
         if (txt.startsWith("[BROADCAST]") && !sourceAddress.equals(myAddress)) {
             String[] words = txt.split(" ");
@@ -306,16 +306,22 @@ public class Client extends Thread {
             InetAddress sourceAddress = PacketUtils.getSourceAddress(packet);
             InetAddress destinationAddress = PacketUtils.getDistinationAddress(packet);
 
-            if (!sourceAddress.equals(myAddress) && !packetLog.containsReceivedSeq(sequence)){
+            if (!sourceAddress.equals(myAddress) && packetLog.getLatestSeq((int)sourceAddress.getAddress()[4]) == (sequence + 1)){
                 receivePacket(message, sequence, hop, sourceAddress, destinationAddress);
             }
-            else if (!sourceAddress.equals(myAddress) && packetLog.containsReceivedSeq(sequence)){
+            else if (!sourceAddress.equals(myAddress) && packetLog.getLatestSeq((int)sourceAddress.getAddress()[4]) <= sequence){
                 hop = hop - 1;
                 byte[] dataToSend = PacketUtils.getData(message, sequence, hop, sourceAddress, destinationAddress);
                 resendPacket(new DatagramPacket(dataToSend, dataToSend.length, sourceAddress, port));
             }
+            else if (!sourceAddress.equals(myAddress) && packetLog.getLatestSeq((int)sourceAddress.getAddress()[4]) > sequence){
+                for (int i = packetLog.getLatestSeq((int)sourceAddress.getAddress()[4]); i < sequence; i++){
+                    String msg = "[NACK]: " + i + " DUMMY_WORD ";
+                    sendPacket(msg);
+                }
+            }
 
-        } catch (   IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
