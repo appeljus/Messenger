@@ -140,6 +140,7 @@ public class ChatWindow extends JFrame implements KeyListener, ActionListener,
 
 		checkTabs = new JCheckBox(
 				"<html>Seperate<br>window for<br>personal<br>chat</html>");
+		checkTabs.setSelected(true);
 		c.gridy++;
 		c.weighty = -5000;
 		c.anchor = GridBagConstraints.SOUTH;
