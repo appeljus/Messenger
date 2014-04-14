@@ -24,6 +24,9 @@ public class PacketLog {
     }
 
     public int getLatestSeq(int deviceNr){
+    	if(!sequenceReceived.containsKey(deviceNr)){
+    		addSequenceNr(deviceNr,0);
+    	}
         return sequenceReceived.get(deviceNr);
     }
 
