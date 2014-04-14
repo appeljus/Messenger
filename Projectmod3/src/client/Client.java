@@ -98,7 +98,8 @@ public class Client extends Thread {
 	}
 	
 	public void receivePacket(byte[] message, int sequenceNr, int hopCount, InetAddress sourceAddress, InetAddress destinationAddress) {
-		String txt = new String(message);
+
+		String txt = new String(encryption.decryptData(message));
         byte[] DataToSave = PacketUtils.getData(message, sequenceNr, hopCount, sourceAddress, destinationAddress);
         packetLog.addReceivedPacket(new DatagramPacket(DataToSave, DataToSave.length, sourceAddress, port));
         
@@ -226,7 +227,7 @@ public class Client extends Thread {
             chatwindow.incoming(message);
         }
 		
-		byte[] data = PacketUtils.getData(message.getBytes(), currentSeq, hopCount, myAddress, group);
+		byte[] data = PacketUtils.getData(encryption.encryptData(message.getBytes()), currentSeq, hopCount, myAddress, group);
 
         DatagramPacket packetToSend = new DatagramPacket(data, data.length, group, port);
 
