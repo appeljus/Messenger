@@ -287,7 +287,7 @@ public class Client extends Thread {
 			else if (!sourceAddress.equals(myAddress)) {
 				hop--;
 				if (!destinationAddress.equals(myAddress) && hop != 0) {
-					byte[] dataToSend = PacketUtils.getData(message, sequence, hop, group, destinationAddress);
+					byte[] dataToSend = PacketUtils.getData(message, sequence, hop, myAddress, destinationAddress);
 					resendPacket(new DatagramPacket(dataToSend, dataToSend.length, group, port));
 				}
 				
