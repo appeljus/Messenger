@@ -103,7 +103,6 @@ public class Client extends Thread {
     }
 	
 	public void receivePacket(byte[] message, int sequenceNr, int hopCount, InetAddress sourceAddress, InetAddress destinationAddress) {
-
 		String txt = new String((message));
         byte[] DataToSave = PacketUtils.getData(message, sequenceNr, hopCount, sourceAddress, destinationAddress);
         packetLog.addReceivedPacket(new DatagramPacket(DataToSave, DataToSave.length, sourceAddress, port));
@@ -260,7 +259,12 @@ public class Client extends Thread {
         try {
             s.send(packet);
         }
-        catch (IOException e){
+        catch (IOException e) {
+        	try {
+				s.leaveGroup(group);
+				s.joinGroup(group);
+			} catch (IOException e1) { }
+        	e.printStackTrace();
             System.out.println("WE HAVE A PROBLEM AT THE RESEND METHOD!!");
             System.out.println("ERMAGHERD!! D:");
         }
