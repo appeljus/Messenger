@@ -301,5 +301,9 @@ public class Client extends Thread {
             forwardPacket();
         }
     }
+    
+    public ChatWindow getChatWindow() {
+    	return chatwindow;
+    }
 
 }

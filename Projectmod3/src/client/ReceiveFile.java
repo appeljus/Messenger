@@ -31,12 +31,12 @@ public class ReceiveFile {
 		FileOutputStream fOutS;
 		JFileChooser fc = new JFileChooser();
 		fc.setDialogType(JFileChooser.SAVE_DIALOG);
-		int returnVal = fc.showOpenDialog(client.chatwindow);
+		int returnVal = fc.showOpenDialog(client.getChatWindow());
 		String path = "C:";
 		
 		if (returnVal == JFileChooser.APPROVE_OPTION) {
 			path = fc.getSelectedFile().getPath();
-			client.chatwindow.incoming("Saved file at: " + path + "." + ext);
+			client.getChatWindow().incoming("Saved file at: " + path + "." + ext);
 			try {
 				fOutS = new FileOutputStream(path + "." + ext);
 				fOutS.write(file);
