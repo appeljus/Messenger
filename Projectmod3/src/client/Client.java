@@ -25,12 +25,13 @@ public class Client extends Thread {
 	private Timer timer;
     private PacketLog packetLog;
     private ReceiveFile receiveFileInstance;
-    private static final Key key = Encryption.generateKey();
+    private static final Key key = Encryption2.generateKey();
 	private static final int BUFFER_SIZE = 16;
 	private ArrayList<DatagramPacket> lastMsgs = new ArrayList<DatagramPacket>();
 	private HashMap<Integer, Integer> seqNrs = new HashMap<Integer, Integer>();
 	private int currentSeq;
 	private int hopCount;
+    private Encryption encryption;
 	
 	public Client(ChatWindow c, String name) {
 		myName = name;
@@ -40,6 +41,7 @@ public class Client extends Thread {
         chatwindow = c;
         receiveFileInstance = new ReceiveFile(this);
         stillAlive.add(true);
+        encryption.setPassword("doif");
 
 		try {
 			Enumeration e = NetworkInterface.getNetworkInterfaces();
