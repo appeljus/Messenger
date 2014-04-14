@@ -144,36 +144,7 @@ public class Client extends Thread {
         else if(txt.startsWith("[NACK]: ")){
             String[] words = txt.split(" ");
             int missedI = Integer.parseInt(words[1]);
-
-            if (missedI < packetLog.getSizeLog()){
-                byte[] data = "[TOO_LATE]".getBytes();
-                DatagramPacket rePacket = new DatagramPacket(data, data.length, group, port);
-                resendPacket(rePacket);
-            }
-            else {
-                resendPacket(packetLog.getPacketSend(missedI));
-            }
-
-            //Volgens mij werkt het zo ook ;) TODO
-            /*
-            if(missedI < currentSeq-BUFFER_SIZE){
-                byte[] data = "[TOO_LATE]".getBytes();
-                DatagramPacket rePacket = new DatagramPacket(data, data.length,
-                        group, port);
-                resendPacket(rePacket);
-            }else{
-            	System.out.println("|" + BUFFER_SIZE + "|" + currentSeq + "|" + missedI + "|");
-            int iOfList = lastMsgs.size()-(currentSeq-missedI)-1;
-            resendPacket(lastMsgs.get(iOfList));
-            }
-           */
-        }
-
-
-        else if(txt.startsWith("[TOO_LATE]")){
-        	System.out.println("msg too late");
-            //TODO
-            // ?????
+            resendPacket(packetLog.getPacketSend(missedI));
         }
 
         else if(txt.startsWith("[FILE]")) {
@@ -301,26 +272,31 @@ public class Client extends Thread {
             InetAddress sourceAddress = PacketUtils.getSourceAddress(packet);
             InetAddress destinationAddress = PacketUtils.getDistinationAddress(packet);
             
-            System.out.println(packetLog.getLatestSeq( ((int)sourceAddress.getAddress()[3]) & 0xFF, sequence) + " | " + sequence);
+            System.out.println(packetLog.getLatestSeq( ((int)sourceAddress.getAddress()[3]) & 0xFF, sequence) + " | " + sequence + " | " + sourceAddress.getHostAddress());
+            
+            int deviceNr = ((int)sourceAddress.getAddress()[3]) & 0xFF;
+            int latestSeq = packetLog.getLatestSeq(deviceNr, sequence);
             
             if(!sourceAddress.getHostAddress().startsWith("192.168.5.")) { }
-            else if (!sourceAddress.equals(myAddress) && packetLog.getLatestSeq(((int)sourceAddress.getAddress()[3]) & 0xFF, sequence+1) == (sequence )){
-            	receivePacket(message, sequence, hop, sourceAddress, destinationAddress);
-            }
-            else if (!sourceAddress.equals(myAddress) && packetLog.getLatestSeq(((int)sourceAddress.getAddress()[3]) & 0xFF, sequence +1) < (sequence)){
-            	hop = hop - 1;
-                byte[] dataToSend = PacketUtils.getData(message, sequence, hop, group, destinationAddress);
+            else if(!sourceAddress.equals(myAddress)) {
+            	hop--;
+            	byte[] dataToSend = PacketUtils.getData(message, sequence, hop, group, destinationAddress);
                 resendPacket(new DatagramPacket(dataToSend, dataToSend.length, group, port));
-
-                for (int i = packetLog.getLatestSeq(((int)sourceAddress.getAddress()[3]) & 0xFF, sequence); i < sequence; i++){
-                    String msg = "[NACK]: " + i + " DUMMY_WORD ";
-                    System.out.println("NACKER");
-                    DatagramPacket packetToSend = new DatagramPacket(msg.getBytes(), msg.getBytes().length, group, port);
-                    resendPacket(packetToSend);
-                }
-            }
-            else if (!sourceAddress.equals(myAddress) && packetLog.getLatestSeq(((int)sourceAddress.getAddress()[3]) & 0xFF, sequence) > sequence){
                 
+            	if (latestSeq+1 == sequence) {
+            		receivePacket(message, sequence, hop, sourceAddress, destinationAddress);
+            	}
+            	else if (latestSeq+1 < sequence) {
+            		for (int i = latestSeq+1; i < sequence; i++) {
+                        String msg = "[NACK]: " + i + " DUMMY_LORD";
+                        System.out.println("NACKER");
+                        DatagramPacket packetToSend = new DatagramPacket(msg.getBytes(), msg.getBytes().length, group, port);
+                        resendPacket(packetToSend);
+                    }
+            	}
+            	else if (latestSeq+1 > sequence){
+            		System.exit(0);
+            	}
             }
 
         } catch (IOException e) {
