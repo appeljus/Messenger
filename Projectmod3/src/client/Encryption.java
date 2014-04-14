@@ -1,98 +1,111 @@
 package client;
 
 
-import javax.crypto.*;
+import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
-import java.security.Key;
+import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
+import javax.crypto.BadPaddingException;
+import javax.crypto.Cipher;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
+import javax.crypto.spec.IvParameterSpec;
+import javax.crypto.spec.SecretKeySpec;
+
 /**
- * Created by Martijn on 9-4-14.
+ * Created by Martijn on 14-4-14.
  */
 public class Encryption {
 
-    public static byte[] getEncryption(byte[] data){
-        StringBuilder strng = new StringBuilder();
-        for (byte d : data){
-            strng.append((char)((int)d + 4));
-        }
-        return strng.toString().getBytes();
-    }
+        private Cipher cipher;
+        private SecretKeySpec key;
+        private IvParameterSpec ivspec;
 
-    public static byte[] getDecryption(byte[] data){
-        StringBuilder strng = new StringBuilder();
-        for (byte d : data){
-            strng.append((char)((int)d - 4));
-        }
-        return strng.toString().getBytes();
-    }
+        public Encryption(){
+            try {
+                this.cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
+            } catch (   NoSuchAlgorithmException |
+                        NoSuchPaddingException e)
+            {
+                e.printStackTrace();
+            }
 
-    public static Key generateKey(){
-        Key key = null;
-        try {
-            KeyGenerator keyGen = KeyGenerator.getInstance("AES");
-            key = keyGen.generateKey();
+            byte[] iv = new byte[0];
+            try {
+                iv = MessageDigest.getInstance("MD5").digest("SecurityIV".getBytes());
+            }
+            catch (NoSuchAlgorithmException e)
+            {
+                e.printStackTrace();
+            }
 
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        }
-        return key;
-    }
-
-    public static byte[] encrypt(byte[] data, Key key){
-        byte[] encryptedData = null;
-
-        try {
-            Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
-            cipher.init(Cipher.ENCRYPT_MODE,key);
-            encryptedData = cipher.doFinal(data);
+            this.ivspec = new IvParameterSpec(iv);
 
         }
-        catch (     NoSuchPaddingException |
-                    InvalidKeyException |
-                    IllegalBlockSizeException |
-                    BadPaddingException |
-                    NoSuchAlgorithmException e)
-        {
-            e.printStackTrace();
+
+        public void setPassword(String pw){
+            try {
+                byte[] digest = MessageDigest.getInstance("MD5").digest(pw.getBytes());
+
+                this.key = new SecretKeySpec(digest, "AES");
+
+            } catch (NoSuchAlgorithmException e) {
+                e.printStackTrace();
+            }
         }
 
+        public byte[] encryptData(byte[] msg){
+            try {
 
-        return encryptedData;
+                try {
+                    this.cipher.init(Cipher.ENCRYPT_MODE, this.key, this.ivspec);
+                } catch (InvalidAlgorithmParameterException e) {
+                    e.printStackTrace();
+                }
 
-    }
+                byte[] encryptedData = this.cipher.doFinal(msg);
+                return encryptedData;
+            } catch (   InvalidKeyException |
+                        IllegalBlockSizeException |
+                        BadPaddingException e) {
+                e.printStackTrace();
+            }
 
-    public static byte[] decrypt(byte[] data,Key key){
-        byte[] decryptedData = null;
-
-        try {
-            Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
-            cipher.init(Cipher.DECRYPT_MODE, key);
-            decryptedData = cipher.doFinal(data);
-
-        }
-        catch (     NoSuchPaddingException |
-                InvalidKeyException |
-                IllegalBlockSizeException |
-                BadPaddingException |
-                NoSuchAlgorithmException e)
-        {
-            e.printStackTrace();
+            return null;
         }
 
-        return decryptedData;
-    }
+        public byte[] decryptData(byte[] encryptedData){
+            try {
 
+                try {
+                    this.cipher.init(Cipher.DECRYPT_MODE, this.key, this.ivspec);
+                } catch (InvalidAlgorithmParameterException e) {
+                    e.printStackTrace();
+                }
+                byte[] decryptedData = this.cipher.doFinal(encryptedData);
+                return decryptedData;
+            } catch (   InvalidKeyException |
+                        BadPaddingException |
+                        IllegalBlockSizeException e)
+            {
+                e.printStackTrace();
+            }
+            return null;
+        }
 
-
-    public static void main(String[] agrs){
-        Key key = Encryption.generateKey();
-        byte[] message = "stringstringstringstringstringstringstringstringstringstringstringstringstringstringstringstringstringstringstringstringstringstringstringstringstringstringstringstringstringstringstringstringstringstringstringstringstringstringstringstring".getBytes();
+    public static void main(String[] args){
+        byte[] crypt = "hallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallohallo".getBytes();
+        Encryption kevin = new Encryption();
+        Encryption kvein2 = new Encryption();
+        kvein2.setPassword("string");
+        kevin.setPassword("string");
         String result = "";
-        result = new String(Encryption.encrypt(message, key));
-        System.out.println(result + "\n");
-        result = new String(Encryption.decrypt(result.getBytes(), key));
+        crypt = kevin.encryptData(crypt);
+        result = new String(crypt);
+        System.out.println(result);
+        crypt = kvein2.decryptData(crypt);
+        result = new String(crypt);
         System.out.println(result);
     }
-
 }
