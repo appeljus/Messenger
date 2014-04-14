@@ -106,14 +106,9 @@ public class Client extends Thread {
 	
 	public void receivePacket(byte[] message, int sequenceNr, int hopCount, InetAddress sourceAddress, InetAddress destinationAddress) {
 
-		String txt = new String(encryption.decryptData(message));
+		String txt = new String((message));
         byte[] DataToSave = PacketUtils.getData(message, sequenceNr, hopCount, sourceAddress, destinationAddress);
         packetLog.addReceivedPacket(new DatagramPacket(DataToSave, DataToSave.length, sourceAddress, port));
-        
-        if(txt.contains("FILE") || txt.contains("EOF")) {
-        	chatwindow.incoming(new String(Hex.encodeHex(message)));
-        	chatwindow.incoming(new String(Hex.encodeHex("[FILE]".getBytes())) + " | " + new String(Hex.encodeHex("[EOF]".getBytes())));
-        }
         
         if (txt.startsWith("[BROADCAST]") && !sourceAddress.equals(myAddress)) {
             String[] words = txt.split(" ");
@@ -129,7 +124,6 @@ public class Client extends Thread {
             }
 
         } else if (txt.startsWith("[NAME_IN_USE]: ") && !sourceAddress.equals(myAddress)) {
-            System.out.println(txt);
             String[] words = txt.split(" ");
             if (myName.equals(words[1])) {
                 chatwindow.dispose();
@@ -153,7 +147,6 @@ public class Client extends Thread {
 
         else if(txt.startsWith("[NACK]: ")){
             String[] words = txt.split(" ");
-            System.out.println("|"+words[1]+"|");
             int missedI = Integer.parseInt(words[1]);
 
             if (missedI < packetLog.getSizeLog()){
@@ -194,7 +187,7 @@ public class Client extends Thread {
         }
 
         else if(txt.startsWith("[EOF]")) {
-            byte[] extBytes = new byte[6];
+            byte[] extBytes = new byte[3];
             int count = 0;
             for(int i=message.length-1; i>20; i--){
             	if(message[i] == 0){
@@ -203,8 +196,8 @@ public class Client extends Thread {
             	else break;
             }
             byte[] file = new byte[1003-count-1];
-            System.arraycopy(message, 21, file, 0, file.length);
-            System.arraycopy(message, 15, extBytes, 0, 6);
+            System.arraycopy(message, 12, file, 0, file.length);
+            System.arraycopy(message, 6, extBytes, 0, 3);
             receiveFileInstance.receiveFile(file, true, new String(extBytes));
         }
 
@@ -234,7 +227,7 @@ public class Client extends Thread {
             chatwindow.incoming(message);
         }
 		
-		byte[] data = PacketUtils.getData(encryption.encryptData(message.getBytes()), currentSeq, hopCount, myAddress, group);
+		byte[] data = PacketUtils.getData((message.getBytes()), currentSeq, hopCount, myAddress, group);
 
         DatagramPacket packetToSend = new DatagramPacket(data, data.length, group, port);
 
@@ -245,7 +238,8 @@ public class Client extends Thread {
         try {
 			s.send(packetToSend);
 		} catch (IOException e) {
-			e.printStackTrace();
+            System.out.println("WE HAVE A PROBLEM AT THE SEND METHOD!!");
+            System.out.println("ERMAGHERD!! D:");
 		}
 		incrementSeqNr();
 	}
@@ -284,7 +278,7 @@ public class Client extends Thread {
 	}
 
     public void forwardPacket(){
-        byte[] data = new byte[1024];
+        byte[] data = new byte[1034];
         DatagramPacket packet = new DatagramPacket(data, data.length);
 
         try {
