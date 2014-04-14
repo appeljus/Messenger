@@ -117,7 +117,6 @@ public class Client extends Thread {
             }
 
         } else if (txt.startsWith("[NAME_IN_USE]: ") && !sourceAddress.equals(myAddress)) {
-            System.out.println(txt);
             String[] words = txt.split(" ");
             if (myName.equals(words[1])) {
                 chatwindow.dispose();
@@ -141,7 +140,6 @@ public class Client extends Thread {
 
         else if(txt.startsWith("[NACK]: ")){
             String[] words = txt.split(" ");
-            System.out.println("|"+words[1]+"|");
             int missedI = Integer.parseInt(words[1]);
 
             if (missedI < packetLog.getSizeLog()){
@@ -236,6 +234,7 @@ public class Client extends Thread {
             System.out.println("WE HAVE A PROBLEM AT THE RESEND METHOD!!");
             System.out.println("ERMAGHERD!! D:");
 			recreateSocket();
+			sendPacket(message);
 		}
 		incrementSeqNr();
 	}
@@ -248,6 +247,7 @@ public class Client extends Thread {
             System.out.println("WE HAVE A PROBLEM AT THE RESEND METHOD!!");
             System.out.println("ERMAGHERD!! D:");
            recreateSocket();
+           resendPacket(packet);
         }
     }
     
@@ -291,7 +291,6 @@ public class Client extends Thread {
             s.receive(packet);
 
             byte[] message = PacketUtils.getMessage(packet);
-            System.out.println(message.length);
             int sequence = PacketUtils.getSequenceNr(packet);
             int hop = PacketUtils.getHopCount(packet);
             InetAddress sourceAddress = PacketUtils.getSourceAddress(packet);
