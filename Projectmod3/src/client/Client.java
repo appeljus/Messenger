@@ -305,5 +305,4 @@ public class Client extends Thread {
     public ChatWindow getChatWindow() {
     	return chatwindow;
     }
-
 }
