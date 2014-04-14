@@ -17,6 +17,7 @@ public class ReceiveFile {
 	}
 	
 	public void receiveFile(byte[] e, boolean EOF, String ext) {
+		System.out.println("RECEIVED A FILE! | " + EOF + " | " + ext);
 		addToFile(e);
 		if(EOF) createFile(ext);
 	}
