@@ -7,18 +7,27 @@ import javax.swing.JFileChooser;
 
 import GUI.ChatWindow;
 
-public class ReceiveFile {
+public class ReceiveFile extends Thread{
 	Client client;
 	byte[] file = new byte[0];
 	String fileTitle;
+	String ext;
 	
 	public ReceiveFile(Client client) {
 		this.client = client;
 	}
 	
+	public void run(){
+		createFile(ext);
+	}
+	
 	public void receiveFile(byte[] e, boolean EOF, String ext) {
 		addToFile(e);
-		if(EOF) createFile(ext);
+		if(EOF){
+			this.ext = ext;
+			Thread t = new Thread(this);
+			t.start();
+		}
 	}
 	
 	private void addToFile(byte[] e){
@@ -38,6 +47,7 @@ public class ReceiveFile {
 		if (returnVal == JFileChooser.APPROVE_OPTION) {
 			path = fc.getSelectedFile().getPath();
 			client.getChatWindow().incoming("Saved file at: " + path + "." + ext);
+			System.out.println(new String(file));
 			try {
 				fOutS = new FileOutputStream(path + "." + ext);
 				fOutS.write(file);

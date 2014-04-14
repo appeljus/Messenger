@@ -12,8 +12,6 @@ import java.net.NetworkInterface;
 import java.security.Key;
 import java.util.*;
 
-import org.apache.commons.codec.binary.Hex;
-
 public class Client extends Thread {
 
 
@@ -188,8 +186,8 @@ public class Client extends Thread {
             	}
             	else break;
             }
-            byte[] file = new byte[1003-count-1];
-            System.arraycopy(message, 12, file, 0, file.length);
+            byte[] file = new byte[1003-(count-1)];
+            System.arraycopy(message, 11, file, 0, file.length);
             System.arraycopy(message, 6, extBytes, 0, 3);
             receiveFileInstance.receiveFile(file, true, new String(extBytes));
         }
@@ -226,6 +224,20 @@ public class Client extends Thread {
 
         //lastMsgs.add(packetToSend);
 
+        packetLog.addSendPacket(packetToSend);
+
+        try {
+			s.send(packetToSend);
+		} catch (IOException e) {
+            System.out.println("WE HAVE A PROBLEM AT THE SEND METHOD!!");
+            System.out.println("ERMAGHERD!! D:");
+		}
+		incrementSeqNr();
+	}
+	
+	public void sendPacket(byte[] message, boolean isFile) {		
+		byte[] data = PacketUtils.getData(message, currentSeq, hopCount, myAddress, group);
+        DatagramPacket packetToSend = new DatagramPacket(data, data.length, group, port);
         packetLog.addSendPacket(packetToSend);
 
         try {
