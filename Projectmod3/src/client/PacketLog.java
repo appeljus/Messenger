@@ -17,6 +17,10 @@ public class PacketLog {
     public PacketLog(){
         logSend = new HashMap<Integer, DatagramPacket>();
         sequenceReceived = new HashMap<Integer, Integer>();
+        sequenceReceived.put(1,0);
+        sequenceReceived.put(2,0);
+        sequenceReceived.put(3,0);
+        sequenceReceived.put(4,0);
     }
 
     public int getLatestSeq(int deviceNr){

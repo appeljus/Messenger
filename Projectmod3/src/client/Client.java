@@ -35,7 +35,7 @@ public class Client extends Thread {
 	public Client(ChatWindow c, String name) {
 		myName = name;
         packetLog = new PacketLog();
-        currentSeq = 0;
+        currentSeq = 1;
         hopCount = 4;
         chatwindow = c;
         receiveFileInstance = new ReceiveFile(this);
@@ -105,7 +105,6 @@ public class Client extends Thread {
 	public void receivePacket(byte[] message, int sequenceNr, int hopCount, InetAddress sourceAddress, InetAddress destinationAddress) {
 
 		String txt = new String((message));
-        byte[] DataToSave = PacketUtils.getData(message, sequenceNr, hopCount, sourceAddress, destinationAddress);
         packetLog.addSequenceNr(sourceAddress.getAddress()[4], sequenceNr);
         
         if (txt.startsWith("[BROADCAST]") && !sourceAddress.equals(myAddress)) {
@@ -302,16 +301,20 @@ public class Client extends Thread {
             InetAddress sourceAddress = PacketUtils.getSourceAddress(packet);
             InetAddress destinationAddress = PacketUtils.getDistinationAddress(packet);
 
-            if (!sourceAddress.equals(myAddress) && packetLog.getLatestSeq((int)sourceAddress.getAddress()[4]) == (sequence + 1)){
+            if (!sourceAddress.equals(myAddress) && packetLog.getLatestSeq((int)sourceAddress.getAddress()[3]) == (sequence + 1)){
                 receivePacket(message, sequence, hop, sourceAddress, destinationAddress);
             }
-            else if (!sourceAddress.equals(myAddress) && packetLog.getLatestSeq((int)sourceAddress.getAddress()[4]) <= sequence){
+            else if (!sourceAddress.equals(myAddress) && packetLog.getLatestSeq((int)sourceAddress.getAddress()[3]) <= sequence){
                 hop = hop - 1;
                 byte[] dataToSend = PacketUtils.getData(message, sequence, hop, sourceAddress, destinationAddress);
                 resendPacket(new DatagramPacket(dataToSend, dataToSend.length, sourceAddress, port));
             }
-            else if (!sourceAddress.equals(myAddress) && packetLog.getLatestSeq((int)sourceAddress.getAddress()[4]) > sequence){
-                for (int i = packetLog.getLatestSeq((int)sourceAddress.getAddress()[4]); i < sequence; i++){
+            else if (!sourceAddress.equals(myAddress) && packetLog.getLatestSeq((int)sourceAddress.getAddress()[3]) > sequence){
+                hop = hop - 1;
+                byte[] dataToSend = PacketUtils.getData(message, sequence, hop, sourceAddress, destinationAddress);
+                resendPacket(new DatagramPacket(dataToSend, dataToSend.length, sourceAddress, port));
+
+                for (int i = packetLog.getLatestSeq((int)sourceAddress.getAddress()[3]); i < sequence; i++){
                     String msg = "[NACK]: " + i + " DUMMY_WORD ";
                     sendPacket(msg);
                 }
