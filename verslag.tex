@@ -25,17 +25,52 @@ In het verslag zullen we het proces van het ontwerpen van de applicatie, en de k
 De gebruiker kan in een user interface berichten typen en versturen. Deze berichten worden dan in een pakket opgeslagen, en het pakket wordt verstuurd. Het versturen gebeurt via een multicast socket. Dit betekent dat het bericht naar iedereen verstuurd wordt. Als een socket een pakket ontvangt, wordt deze in de GUI weergeven. 
 
 \subsection{Pakketjes}
-Voor het versturen van de pakketjes gebruikt multicast socket een Datagram packet. Deze gebruiken wij ook voor het versturen van data. Een datagram packet heeft een byte array met data, een IP adres van de ontvanger, en een poort van de ontvanger. In mulitcast wordt een pakketje dus naar iedereen verstuurd, het IP adres is dan ook het adres van een multicast network, een IP van de IP-klasse D. De poort is een standaard poort waar wij voor hebben gekozen. In de data van de datagram packet worden nog enkele andere velden aangewezen. %Welke velden staan waar voor?
-Packets die voor utility worden gebruikt, beginnen met hun naam (BROADCAST, NAME\_IN\_USE, etc) tussen blokhaken. Namen mogen geen [ of ] bevatten, dus kan er zo geen error in komen.
+Voor het versturen van de pakketjes gebruikt multicast socket een Datagram packet. Deze gebruiken wij ook voor het versturen van data. Een datagram packet heeft een byte array met data, een IP adres van de ontvanger, en een poort van de ontvanger. In mulitcast wordt een pakketje dus naar iedereen verstuurd, het IP adres is dan ook het adres van een multicast network, een IP van de IP-klasse D. De poort is een standaard poort waar wij voor hebben gekozen. In de data van de datagram packet worden nog enkele andere velden aangewezen. De eerste byte bevat de sequencenummer, de tweede byte de teller voor het aantal hops, de derde tot zesde byte bestaan uit het IP-adres van de verzender, de zevende tot tiende byte bestaan uit het IP-adres van de ontvanger. We slaan de IP-adressen ook in de header op, omdat het IP-adres in een datagram packet veranderd volgens de context. Bij een ontvangen bericht is het IP-adres die van de verzender, bij een pakket wat verzonden wordt, is het IP-adres die van de ontvanger. \\
+
+
+\noindent Het pakket ziet er dan als volgt uit:
+\\
+\begin{tabular}{|c|c|c|c|}
+\hline
+Byte array data & lengte van data & IP-adres verzender of ontvanger & Poort nummer \\
+\hline
+\end{tabular}
+\\
+
+\noindent Het byte array van de data ziet er dan als volgt uit:
+\\
+\begin{tabular}{| c | c | c | c  c |}
+\hline
+\multicolumn{5}{|c|}{Byte array data}  \\
+\hline
+\multicolumn{4}{|c|}{Header} & Bericht \\
+\hline
+Sequence nummer & Hop teller & IP-adres verzender & IP-adres ontvanger & \phantom{bericht} \\
+\hline
+\end{tabular}
+\\
+
+\noindent We gebruiken pakketten niet alleen voor het verzenden van berichten uit de GUI, maar ook voor een aantal andere functionaliteiten. De functionaliteiten worden dan in het bericht van de data van het packet toegevoegd. Als het bericht dan met een bepaalde string begint, wordt hiermee een functionaliteit uitgevoerd. De volgende berichten gebruiken wij:
+\\
+
+\begin{tabular}{l  p{6cm}l }
+Bericht & Functionaliteit \\
+\hline
+$[FILE]$ & Geeft aan dat het bericht een byte array van een bestand is \\
+$[BROADCAST$] & Geeft aan dat het bericht een broadcast is, een bericht dat elke seconde verstuurd wordt om aan te geven dat een persoon er nog is \\
+$[NAME\_IN\_USE]$ & Geeft aan dat een naam al in gebruik is, en niet nog een keer gebruikt mag worden \\
+$[PRIV\_MESSAGE]$ & Geeft een priv\'{e} bericht aan. Het bericht zal dan alleen aan de ontvanger worden weergeven \\
+$[NACK]$ & Geeft aan dat het bericht een NACK is \\
+$[TOO\_LATE]$ & Geeft aan dat een bericht waarvoor een NACK is gestuurd niet meer in de buffer voorkomt \\
+$[EOF]$ & Geeft het einde van een bestand aan
+\end{tabular}
 
 
 \subsection{Bestanden verzenden}
 %TODO
 
 \subsection{Pakket verlies}
-%TODO
-%Hoe zorgen we ervoor dat als er pakket verlies optreedt, dat het pakket opnieuw verzonden wordt. 
-%We gebruiken geen ACK's, maar NACK's. Hierdoor ontstaat er geen congestion als je met veel mensen gaat chatten, door de vele ACK's die gestuurd worden.
+Doordat het network via Wi-Fi werkt, is de kans dat een pakket verloren gaat veel groter dan via de kabel. Om te zorgen dat deze pakketjes opnieuw worden verstuurd, gebruiken we sequence nummers en NACK's. Als een pakketje verloren gaat, ziet de applicatie dat pas als het volgende pakketje aankomt met een hoger sequence nummer dan verwacht. Als de applicatie een ander sequence nummer binnen krijgt dan verwacht, stuurt de applicatie een negative aknowledgement, een NACK. Omdat er een lange tijd tussen twee berichten kan zitten, zitten er in broadcast berichten ook een sequence nummer, waardoor elke seconde gekeken wordt naar het sequence nummer en het verwachte sequence nummer.
 
 \subsection{User interface}
 De gebruiker kan via de user interface met het programma communiceren. De interface bestaat uit een aantal elementen:
@@ -43,7 +78,7 @@ De gebruiker kan via de user interface met het programma communiceren. De interf
 \item Tekstveld
 \item Typveld
 \item Een knop voor het verzenden van tekst en bestanden
-\item Een knop voor privé chat
+\item Een knop voor priv\'{e} chat
 \item Een knop voor het afsluiten van het applicatie
 \end{itemize}
 

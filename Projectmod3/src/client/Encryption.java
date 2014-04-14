@@ -14,7 +14,7 @@ import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
 /**
- * Created by Martijn on 14-4-14.
+ * @author Martijn
  */
 public class Encryption {
 

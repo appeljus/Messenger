@@ -25,7 +25,6 @@ public class Client extends Thread {
 	private Timer timer;
     private PacketLog packetLog;
     private ReceiveFile receiveFileInstance;
-    private static final Key key = Encryption2.generateKey();
 	private static final int BUFFER_SIZE = 16;
 	private ArrayList<DatagramPacket> lastMsgs = new ArrayList<DatagramPacket>();
 	private HashMap<Integer, Integer> seqNrs = new HashMap<Integer, Integer>();
@@ -94,6 +93,14 @@ public class Client extends Thread {
 	public synchronized void incrementSeqNr(){
 		currentSeq++;
 	}
+
+    public ChatWindow getChatWindow() {
+        return chatwindow;
+    }
+
+    public Encryption getEncryption(){
+        return encryption;
+    }
 	
 	public void receivePacket(byte[] message, int sequenceNr, int hopCount, InetAddress sourceAddress, InetAddress destinationAddress) {
 
@@ -315,7 +322,5 @@ public class Client extends Thread {
         }
     }
     
-    public ChatWindow getChatWindow() {
-    	return chatwindow;
-    }
+
 }
