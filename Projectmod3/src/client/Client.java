@@ -259,10 +259,6 @@ public class Client extends Thread {
             s.send(packet);
         }
         catch (IOException e) {
-        	try {
-				s.leaveGroup(group);
-				s.joinGroup(group);
-			} catch (IOException e1) { }
         	e.printStackTrace();
             System.out.println("WE HAVE A PROBLEM AT THE RESEND METHOD!!");
             System.out.println("ERMAGHERD!! D:");
