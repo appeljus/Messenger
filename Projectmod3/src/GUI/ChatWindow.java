@@ -7,6 +7,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -84,6 +85,9 @@ public class ChatWindow extends JFrame implements KeyListener, ActionListener,
 		typeArea.setEditable(true);
 		typeArea.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY, 3));
 		typeArea.addKeyListener(this);
+
+		textArea.setCellRenderer(new MyListRenderer());
+
 		sendBar.setLayout(new GridBagLayout());
 
 		msgScroller = new JScrollPane(textArea);
@@ -211,11 +215,11 @@ public class ChatWindow extends JFrame implements KeyListener, ActionListener,
 
 	public void privateIncoming(String sender, String txt) {
 		if (checkTabs.isSelected()) {
-			if(doIHaveWindow(sender) == -1){
+			if (doIHaveWindow(sender) == -1) {
 				pChats.add(new PersonalChat(this, client, myName, sender));
 			}
 			pChats.get(doIHaveWindow(sender)).incoming(sender + ": " + txt);
-			
+
 		} else {
 			txt = txt.replace("8)", "😎");
 			txt = txt.replace(":)", "😉");
@@ -260,7 +264,8 @@ public class ChatWindow extends JFrame implements KeyListener, ActionListener,
 
 	@Override
 	public void keyPressed(KeyEvent arg0) {
-		if (arg0.getKeyCode() == 10 && !typeArea.getText().equals("")) {
+		String[] words = typeArea.getText().split(" ");
+		if (arg0.getKeyCode() == 10 && !typeArea.getText().equals("") && !(words.length == 2 && words[0].equals("/w"))) {
 			String txt = typeArea.getText();
 			txt = generateLine(txt);
 			this.addText(txt);
@@ -277,7 +282,7 @@ public class ChatWindow extends JFrame implements KeyListener, ActionListener,
 	public void keyTyped(KeyEvent arg0) {
 		// TODO Auto-generated method stub
 		typeArea.requestFocus();
-	}//dfsdlg
+	}// dfsdlg
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
@@ -287,7 +292,7 @@ public class ChatWindow extends JFrame implements KeyListener, ActionListener,
 			String txt = typeArea.getText();
 			this.addText(generateLine(txt));
 			typeArea.requestFocusInWindow();
-			
+
 		} else if (arg0.getSource() == sendFile) {
 			JFileChooser fc = new JFileChooser();
 			int returnVal = fc.showOpenDialog(this);
@@ -335,6 +340,33 @@ public class ChatWindow extends JFrame implements KeyListener, ActionListener,
 	public void mouseReleased(MouseEvent arg0) {
 		// TODO Auto-generated method stub
 
+	}
+
+	private class MyListRenderer extends DefaultListCellRenderer {
+		public Component getListCellRendererComponent(JList list, Object value,
+				int index, boolean isSelected, boolean cellHasFocus) {
+			super.getListCellRendererComponent(list, value, index, isSelected,
+					cellHasFocus);
+
+			setForeground(Color.BLACK);
+			if (index % 2 == 0) {
+				setBackground(Color.LIGHT_GRAY);
+			}
+
+			String txt = (String) value;
+			if (txt.startsWith("From")) {
+				setForeground(Color.GREEN);
+			} else if (txt.startsWith("To")) {
+				setForeground(Color.BLUE);
+			}
+
+			if (isSelected) {
+				setForeground(Color.WHITE);
+				setBackground(Color.DARK_GRAY);
+			}
+
+			return (this);
+		}
 	}
 
 }
