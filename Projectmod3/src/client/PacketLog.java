@@ -19,10 +19,11 @@ public class PacketLog {
         sequenceReceived = new HashMap<Integer, Integer>();
     }
 
-    public int getLatestSeq(int deviceNr, int seq){
-    	if(!sequenceReceived.containsKey(deviceNr)){
-    		addSequenceNr(deviceNr,seq);
-    	}
+    public boolean hasDevice(int deviceNr) {
+    	return sequenceReceived.containsKey(deviceNr);
+    }
+    
+    public int getLatestSeq(int deviceNr){
         return sequenceReceived.get(deviceNr);
     }
 

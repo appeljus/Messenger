@@ -104,7 +104,6 @@ public class Client extends Thread {
 	public void receivePacket(byte[] message, int sequenceNr, int hopCount,
 			InetAddress sourceAddress, InetAddress destinationAddress) {
 		String txt = new String((message));
-		packetLog.addSequenceNr(sourceAddress.getAddress()[3], sequenceNr);
 
 		if (txt.startsWith("[BROADCAST]") && !sourceAddress.equals(myAddress)) {
 			String[] words = txt.split(" ");
@@ -268,42 +267,41 @@ public class Client extends Thread {
 
 		try {
 			s.receive(packet);
-
+			
 			byte[] message = PacketUtils.getMessage(packet);
 			int sequence = PacketUtils.getSequenceNr(packet);
 			int hop = PacketUtils.getHopCount(packet);
 			InetAddress sourceAddress = PacketUtils.getSourceAddress(packet);
-			InetAddress destinationAddress = PacketUtils
-					.getDistinationAddress(packet);
-
-			System.out.println(packetLog.getLatestSeq(((int) sourceAddress.getAddress()[3]) & 0xFF,sequence)+ " | "+ sequence+ " | "+ sourceAddress.getHostAddress());
-
+			InetAddress destinationAddress = PacketUtils.getDistinationAddress(packet);
+			
 			int deviceNr = ((int) sourceAddress.getAddress()[3]) & 0xFF;
-			int latestSeq = packetLog.getLatestSeq(deviceNr, sequence);
+			if(!packetLog.hasDevice(deviceNr)) {
+				packetLog.addSequenceNr(deviceNr, sequence);
+			}
+			int latestSeq = packetLog.getLatestSeq(deviceNr);
+			
+			System.out.println(latestSeq + " | "+ sequence+ " | "+ sourceAddress.getHostAddress());
 
-			if (!sourceAddress.getHostAddress().startsWith("192.168.5.")
-					&& !sourceAddress.getHostAddress().startsWith("228.5.6.7")) {
-			} else if (!sourceAddress.equals(myAddress)) {
+			if (!sourceAddress.getHostAddress().startsWith("192.168.5.")) {
+			} 
+			else if (!sourceAddress.equals(myAddress)) {
 				hop--;
 				if (!destinationAddress.equals(myAddress) && hop != 0) {
 					byte[] dataToSend = PacketUtils.getData(message, sequence, hop, group, destinationAddress);
 					resendPacket(new DatagramPacket(dataToSend, dataToSend.length, group, port));
 				}
 				
-				if (destinationAddress.equals(myAddress) || destinationAddress.equals(group)) {
+				else if (destinationAddress.equals(myAddress) || destinationAddress.equals(group)) {
 					if (latestSeq + 1 == sequence) {
-						receivePacket(message, sequence, hop, sourceAddress,
-								destinationAddress);
+						System.out.println("RECEIVEd");
+						receivePacket(message, sequence, hop, sourceAddress, destinationAddress);
 					} else if (latestSeq + 1 < sequence) {
 						for (int i = latestSeq + 1; i < sequence; i++) {
 							String msg = "[NACK]: " + i + " DUMMY_LORD";
 							System.out.println("NACKER");
-							DatagramPacket packetToSend = new DatagramPacket(
-									msg.getBytes(), msg.getBytes().length,
-									sourceAddress, port);
+							DatagramPacket packetToSend = new DatagramPacket( msg.getBytes(), msg.getBytes().length, sourceAddress, port);
 							resendPacket(packetToSend);
 						}
-					} else if (latestSeq > sequence) {
 					}
 				}
 			}
