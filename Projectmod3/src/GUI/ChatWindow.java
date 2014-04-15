@@ -116,7 +116,7 @@ public class ChatWindow extends JFrame implements KeyListener, ActionListener,
 
 		c.gridx = 1;
 
-		send = new JButton("Send");
+		send = new JButton();
 		send.setPreferredSize(new Dimension(96, 32));
 		send.addActionListener(this);
 		sendBar.add(send);
@@ -174,7 +174,7 @@ public class ChatWindow extends JFrame implements KeyListener, ActionListener,
 		c.gridy++;
 		menuBar.add(sendFile, c);
 
-		exit = new JButton("Exit");
+		exit = new JButton();
 		exit.addActionListener(this);
 		exit.setPreferredSize(buttonDim);
 		exit.setMinimumSize(buttonDim);
