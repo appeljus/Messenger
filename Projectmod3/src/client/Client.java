@@ -118,7 +118,6 @@ public class Client extends Thread {
 
 	public void processPacket(byte[] message, int sequenceNr, int hopCount,
 			InetAddress sourceAddress, InetAddress destinationAddress, int lengte) {
-        System.out.println(new String(message));
         byte[] decrypted = encryption.decryptData(message);
 		//String txt = new String((message));
         //Of als encryption is toegevoegd:
@@ -168,6 +167,7 @@ public class Client extends Thread {
 			int missedI = Integer.parseInt(words[1]);
 			DatagramPacket p = packetLog.getPacketSend(missedI);
 			p.setAddress(sourceAddress);
+			System.out.println(sourceAddress.getHostAddress());
 			resendPacket(p);
 		}
 
@@ -297,9 +297,13 @@ public class Client extends Thread {
 			int sequence = PacketUtils.getSequenceNr(packet);
 			int hop = PacketUtils.getHopCount(packet);
 			InetAddress sourceAddress = PacketUtils.getSourceAddress(packet);
-			InetAddress destinationAddress = PacketUtils
-					.getDistinationAddress(packet);
-
+			InetAddress destinationAddress = PacketUtils.getDistinationAddress(packet);	
+			if(sequence == 0) {
+				String txt = new String(encryption.decryptData(message));
+				if(txt.startsWith("[NACK]")) {
+					processPacket(message,sequence,hop,sourceAddress,destinationAddress, PacketUtils.getLength(packet));
+				}
+			}
 			if (sourceAddress.getHostAddress().startsWith("192.168.5.") || sourceAddress.getHostAddress().startsWith("228.5.6.7")) {
 				if (!myAddress.equals(destinationAddress) && hop != 0) {
 					hop--;

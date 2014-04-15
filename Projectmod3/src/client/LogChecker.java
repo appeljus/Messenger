@@ -2,6 +2,7 @@ package client;
 
 import java.net.DatagramPacket;
 import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -54,7 +55,11 @@ public class LogChecker extends Thread {
 						for (int i = 0; i < holes.size(); i++) {
 							System.out.println("NACK " + holes.get(i));
 							byte[] msg = ("[NACK] " + holes.get(i) + " DUMMY_WORD").getBytes();
-							DatagramPacket p = new DatagramPacket(client.getEncryption().encryptData(msg), msg.length, client.getMyAddress(), client.getPort());
+							DatagramPacket p = null;
+							try {
+								PacketUtils.getData(client.getEncryption().encryptData(msg), 0, client.getHopCount(), client.getMyAddress(), InetAddress.getByName("192.168.5." + dn));
+								p = new DatagramPacket(client.getEncryption().encryptData(msg), msg.length, InetAddress.getByName("192.168.5." + dn), client.getPort());
+							} catch (UnknownHostException e) { }
 							client.resendPacket(p);
 						}
 					}
