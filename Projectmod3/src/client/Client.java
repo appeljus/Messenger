@@ -113,7 +113,7 @@ public class Client extends Thread {
 		return encryption;
 	}
 
-	public void receivePacket(byte[] message, int sequenceNr, int hopCount, InetAddress sourceAddress, InetAddress destinationAddress) {
+	public void processPacket(byte[] message, int sequenceNr, int hopCount, InetAddress sourceAddress, InetAddress destinationAddress) {
 		String txt = new String((message));
 
 		if (txt.startsWith("[BROADCAST]") && !sourceAddress.equals(myAddress)) {
@@ -143,6 +143,7 @@ public class Client extends Thread {
 			String[] words = txt.split(" ");
 			if (words[1].equals(myName)) {
 				String data = "";
+				System.out.println(txt);
 				for (int i = 3; i < words.length; i++) {
 					data = data + words[i] + " ";
 				}
@@ -268,7 +269,7 @@ public class Client extends Thread {
 		stillAlive.set(0, true);
 	}
 
-	public void forwardPacket() {
+	public void routePacket() {
 		byte[] data = new byte[1034];
 		DatagramPacket packet = new DatagramPacket(data, data.length);
 
@@ -279,7 +280,7 @@ public class Client extends Thread {
 			int hop = PacketUtils.getHopCount(packet);
 			InetAddress sourceAddress = PacketUtils.getSourceAddress(packet);
 			InetAddress destinationAddress = PacketUtils.getDistinationAddress(packet);
-			if(!myAddress.equals(destinationAddress)) {
+			if(!myAddress.equals(destinationAddress) && hop != 0) {
 				hop--;
 				byte[] pData = PacketUtils.getData(message, sequence, hop, sourceAddress, destinationAddress);
 				DatagramPacket packetToSend = new DatagramPacket(pData, pData.length, destinationAddress, port);
@@ -296,6 +297,7 @@ public class Client extends Thread {
 			if(myAddress.equals(destinationAddress) || group.equals(destinationAddress)) {
 				int devNr = ((int)(sourceAddress.getAddress()[3]) & 0xFF);
 				packetLog.addReceivePacket(devNr, sequence, packet);
+				System.out.println(packet + " | " + packetLog.getPacket(devNr, sequence));
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -304,7 +306,7 @@ public class Client extends Thread {
 
 	public void run() {
 		while (!s.isClosed()) {
-			forwardPacket();
+			routePacket();
 		}
 	}
 
