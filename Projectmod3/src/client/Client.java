@@ -129,7 +129,8 @@ public class Client extends Thread {
 			if(stillAlive.containsKey(hisNr))
 				stillAlive.remove(hisNr);
 			else {
-				chatwindow.pNameList.add(words[1]);
+				System.out.println("YO " + words[1]);
+				chatwindow.updateNames(words[1]);
 				int index = chatwindow.pNameList.indexOf(words[1]);
 				nameIndex.put(hisNr, index);
 			}
@@ -161,7 +162,8 @@ public class Client extends Thread {
 		else if (txt.startsWith("[NACK]: ")) {
 			String[] words = txt.split(" ");
 			int missedI = Integer.parseInt(words[1]);
-			resendPacket(packetLog.getPacketSend(missedI));
+			DatagramPacket p = packetLog.getPacketSend(missedI);
+			p.setAddress(sourceAddress);
 		}
 
 		else if (txt.startsWith("[FILE]")) {
@@ -303,7 +305,6 @@ public class Client extends Thread {
 				if (myAddress.equals(destinationAddress) || group.equals(destinationAddress)) {
 					int devNr = ((int) (sourceAddress.getAddress()[3]) & 0xFF);
 					packetLog.addReceivePacket(devNr, sequence, packet);
-					packetLog.getSizeLog();
 				}
 			}
 		} catch (IOException e) {
