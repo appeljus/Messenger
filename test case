@@ -1,0 +1,60 @@
+Test plan
+|Which behaviour do you expect 
+|Test setup
+|Test scenario
+|What performance metrics do you consider
+- Of berichtje aan komt bij groepschat
+	> We verwachten dat het pakketje aan komt, en dat het berichtje uit het pakketje kan worden gehaald.
+	> 
+	> 
+	> Duur van verzending / aankomst van berichtje; memory; snelheid van transfer; 
+ 
+- Of berichtje aan komt bij prive chat
+	> We verwachten dat het pakketje aan komt, en het berichtje uit het pakketje kan worden gehaald
+	> 
+	> 
+	> Duur van verzending / aankomst van berichtje; memory; snelheid van transfer; 
+
+- Of een message die groter is dan de maximaal toegestane grootte in het pakketje verstuurd en ontvangen kan worden met meerdere pakketjes
+	> We verwachten dat deze message correct verzonden wordt en aan komt.
+	>
+	>
+	> Snelheid van het opsplitsen / samenvoegen;
+
+- Of nack verstuurd wordt
+	> We verwachten dat de client merkt dat er een pakketje mist, de rest van de ontvangen pakketjes van die specifieke node buffert, een nack stuurt met het sequence number dat er mist naar de node die het pakket oorspronkelijk had verstuurd.
+	> 
+	> 
+	> Duur van verzending / aankomst van nack; memory; snelheid van transfer; 
+
+- Of er iets wordt gedaan met nack
+	> We verwachten dat de sender zijn verzonden berichtjes gebuffert heeft, een nack kan uitlezen van een pakketje, het desbetreffende pakketje kan opzoeken in zijn buffer en deze weer kan broadcasten.
+	> 
+	> 
+	> Snelheid opzoeken van sequence number; duur ontvangen nack / resenden pakketje;
+
+- Of encryptie werkt
+	> We verwachten dat de message in een pakketje versleuteld kan worden en dat de receiver de message in het pakketje correct kan decoderen.
+	> 
+	> 
+	> Snelheid encrypten / decrypten;
+
+- Of file sending werkt
+	> We verwachten dat de sender de file kan versturen en de receiver de file kan ontvangen. 
+	> 
+	> 
+	> Snelheid van het versturen (maar hangt ook weer af van snelheid netwerk);
+
+- Wat er gebeurt bij ontvangen verkeerde volgorde sequence number
+	> Wij verwachten dat de receiver bij ontvangst van een verkeerd sequence number, het pakketje in een buffer stored voor later gebruik. Tevens stuurt hij een nack voor dit missende pakketje wat elke drie seconden herhaald wordt. Elk ontvangen sequence number wat de receiver hierna ontvangt, dat groter is dan zijn expected sequence number, wordt ook in de buffer gestored. Als hij dan het expected sequence number ontvangt, weergeeft hij dit pakketje en zoekt hij voor het volgende sequence number in zijn buffer.
+	> 
+	> 
+	> Zoeken van sequence numbers;
+
+- Wat er gebeurt bij ontvangen verkeerde sequence number door packet los
+	> 
+	> 
+	> 
+	> 
+
+
