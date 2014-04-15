@@ -85,7 +85,7 @@ public class PacketUtils {
         lengte[0] = packet.getData()[10];
         lengte[1] = packet.getData()[11];
         ByteBuffer buff = ByteBuffer.wrap(lengte);
-        int nummer = (int)buff.getShort();
+        int nummer = ((int)buff.getShort()) & 0xFF;
         return nummer;
     }
 
