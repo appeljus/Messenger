@@ -118,10 +118,10 @@ public class Client extends Thread {
 
 	public void processPacket(byte[] message, int sequenceNr, int hopCount,
 			InetAddress sourceAddress, InetAddress destinationAddress, int lengte) {
-        byte[] decrypted = encryption.decryptData(message);
-		//String txt = new String((message));
+        //byte[] decrypted = encryption.decryptData(message);
+		String txt = new String((message));
         //Of als encryption is toegevoegd:
-        String txt = new String(decrypted);
+        //String txt = new String(decrypted);
 
 		if (txt.startsWith("[BROADCAST]") && !sourceAddress.equals(myAddress)) {
 			String[] words = txt.split(" ");
@@ -216,9 +216,9 @@ public class Client extends Thread {
 			chatwindow.incoming(message);
 		}
 
-		//byte[] data = PacketUtils.getData((message.getBytes()), currentSeq, hopCount, myAddress, group);
+		byte[] data = PacketUtils.getData((message.getBytes()), currentSeq, hopCount, myAddress, group);
         //Of als encryption toegevoegd is:
-        byte[] data = PacketUtils.getData((encryption.encryptData(message.getBytes())), currentSeq, hopCount, myAddress, group);
+        //byte[] data = PacketUtils.getData((encryption.encryptData(message.getBytes())), currentSeq, hopCount, myAddress, group);
 
 		DatagramPacket packetToSend = new DatagramPacket(data, data.length, group, port);
 		packetLog.addSendPacket(packetToSend);
@@ -233,7 +233,7 @@ public class Client extends Thread {
 	}
 
 	public void sendPacket(byte[] message, boolean isFile) {
-		byte[] data = PacketUtils.getData(encryption.encryptData(message), currentSeq, hopCount,
+		byte[] data = PacketUtils.getData(message, currentSeq, hopCount,
 				myAddress, group);
 		DatagramPacket packetToSend = new DatagramPacket(data, data.length,
 				group, port);
@@ -298,8 +298,9 @@ public class Client extends Thread {
 			int hop = PacketUtils.getHopCount(packet);
 			InetAddress sourceAddress = PacketUtils.getSourceAddress(packet);
 			InetAddress destinationAddress = PacketUtils.getDistinationAddress(packet);	
-			if(sequence == 0) {
-				String txt = new String(encryption.decryptData(message));
+			if(sequence == 0 && destinationAddress.equals(myAddress)) {
+				String txt = new String(message);
+				chatwindow.incoming(txt);
 				if(txt.startsWith("[NACK]")) {
 					processPacket(message,sequence,hop,sourceAddress,destinationAddress, PacketUtils.getLength(packet));
 				}

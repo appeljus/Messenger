@@ -53,13 +53,13 @@ public class LogChecker extends Thread {
 					}
 					if (holes.size() != 0) {
 						for (int i = 0; i < holes.size(); i++) {
-							System.out.println("NACK " + holes.get(i));
 							byte[] msg = ("[NACK] " + holes.get(i) + " DUMMY_WORD").getBytes();
 							DatagramPacket p = null;
 							try {
-								PacketUtils.getData(client.getEncryption().encryptData(msg), 0, client.getHopCount(), client.getMyAddress(), InetAddress.getByName("192.168.5." + dn));
-								p = new DatagramPacket(client.getEncryption().encryptData(msg), msg.length, InetAddress.getByName("192.168.5." + dn), client.getPort());
+								byte[] data = PacketUtils.getData(msg, 0, client.getHopCount(), client.getMyAddress(), InetAddress.getByName("192.168.5." + dn));
+								p = new DatagramPacket(data, msg.length, InetAddress.getByName("192.168.5." + dn), client.getPort());
 							} catch (UnknownHostException e) { }
+							System.out.println(p.getAddress().getHostAddress());
 							client.resendPacket(p);
 						}
 					}
