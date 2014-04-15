@@ -60,7 +60,7 @@ public class SendFile implements Runnable {
 				System.arraycopy(tagData, 0, data3, 0, tagData.length);
 				System.arraycopy(data, 0, data3, tagData.length, data.length);
 				System.out.println(new String(data3));
-			
+				
 				c.sendPacket(data3, true);
 			}
 		}
