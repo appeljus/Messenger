@@ -2,16 +2,31 @@ package tests;
 
 import GUI.ChatWindow;
 
-public class Test {
+public class Test extends Thread{
 	ChatWindow c;
 	
 	public Test(){
-		c = new ChatWindow("Tester");
-		runTests();
+		c = new ChatWindow("Tester", this);
 	}
 	
-	private void runTests(){
-		printTestResult("test van de test xD", "Hoi", "hoi");
+	public void run(){
+		
+	}
+	
+	// all tests here
+	private void basicConnection(){
+		String sentMsg = "Awesome test message";
+		c.addText(c.generateLine(sentMsg));
+		String receivedMsg = null;
+		while (receivedMsg != null){
+			
+		}
+	}
+	
+	// utills here
+	
+	public void incoming(String txt){
+		
 	}
 	
 	private void printTestResult(String description, Object expected, Object result){
@@ -28,6 +43,7 @@ public class Test {
 	}
 	
 	public static void main(String[] arg0){
-		new Test();
+		Thread thread = new Thread(new Test());
+		thread.start();
 	}
 }

@@ -59,7 +59,7 @@ public class LoginWindow extends JFrame implements ActionListener, KeyListener {
 			if (isEchoer)
 				new Echo();
 			else
-				new ChatWindow(txt);
+				new ChatWindow(txt, null);
 		}
 	}
 
@@ -72,7 +72,7 @@ public class LoginWindow extends JFrame implements ActionListener, KeyListener {
 				if (isEchoer)
 					new Echo();
 				else
-					new ChatWindow(txt);
+					new ChatWindow(txt, null);
 			}
 		}
 	}

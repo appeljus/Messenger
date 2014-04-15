@@ -1,7 +1,6 @@
 package GUI;
 
-import java.awt
-.*;
+import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -12,6 +11,8 @@ import java.util.HashMap;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+
+import tests.Test;
 
 import client.Client;
 
@@ -24,6 +25,8 @@ public class ChatWindow extends JFrame implements KeyListener, ActionListener,
 	private static final long serialVersionUID = 1L;
 
 	Client client;
+
+	Test test;
 
 	Boolean wantPersTabs = false;
 	ArrayList<PersonalChat> pChats = new ArrayList<PersonalChat>();
@@ -64,10 +67,11 @@ public class ChatWindow extends JFrame implements KeyListener, ActionListener,
 
 	boolean done = false;
 
-	public ChatWindow(String name) {
+	public ChatWindow(String name, Test t) {
 		super("Pigeon");
 		client = new Client(this, name);
 		myName = name;
+		test = t;
 		init();
 	}
 
@@ -177,7 +181,7 @@ public class ChatWindow extends JFrame implements KeyListener, ActionListener,
 		typeArea.requestFocusInWindow();
 	}
 
-	protected void addText(String txt) {
+	public void addText(String txt) {
 		String[] words = txt.split(" ");
 
 		if (words.length >= 3 && words[1].equals("/w")) {
@@ -212,6 +216,8 @@ public class ChatWindow extends JFrame implements KeyListener, ActionListener,
 		txt = txt.replace(":)", "😉");
 		list.addElement(txt);
 		textArea.ensureIndexIsVisible(list.getSize() - 1);
+		if (test != null)
+			test.incoming(txt);
 	}
 
 	public void privateIncoming(String sender, String txt) {
@@ -242,7 +248,7 @@ public class ChatWindow extends JFrame implements KeyListener, ActionListener,
 		return ret;
 	}
 
-	private String generateLine(String text) {
+	public String generateLine(String text) {
 		return myName + ": " + text;
 	}
 
@@ -266,7 +272,8 @@ public class ChatWindow extends JFrame implements KeyListener, ActionListener,
 	@Override
 	public void keyPressed(KeyEvent arg0) {
 		String[] words = typeArea.getText().split(" ");
-		if (arg0.getKeyCode() == 10 && !typeArea.getText().equals("") && !(words.length == 2 && words[0].equals("/w"))) {
+		if (arg0.getKeyCode() == 10 && !typeArea.getText().equals("")
+				&& !(words.length == 2 && words[0].equals("/w"))) {
 			String txt = typeArea.getText();
 			txt = generateLine(txt);
 			this.addText(txt);
