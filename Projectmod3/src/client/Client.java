@@ -118,7 +118,7 @@ public class Client extends Thread {
 
 	public void processPacket(byte[] message, int sequenceNr, int hopCount,
 			InetAddress sourceAddress, InetAddress destinationAddress, int lengte) {
-        byte[] decrypted = encryption.decryptData(message);
+        //byte[] decrypted = encryption.decryptData(message);
 		String txt = new String((message));
         //Of als encryption is toegevoegd:
         //String txt = new String(decrypted);
