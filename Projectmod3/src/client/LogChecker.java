@@ -9,7 +9,8 @@ import java.util.List;
 public class LogChecker extends Thread {
 	private Client client;
 	private PacketLog log;
-	private int[] cannotPrint = {40000,40000,40000,40000};
+	private int[] cannotPrint = {40000,40000,40000,40000,40000};
+	private int[] lastPrinted = {-1,-1,-1,-1,-1};
 
 	public LogChecker(Client client, PacketLog log) {
 		this.client = client;
@@ -23,7 +24,7 @@ public class LogChecker extends Thread {
 				int highSeq = log.getHighestSeq(dn);
 				if (lowSeq != 40000 && highSeq != -1 && dn != client.getDeviceNr()) {
 					List<Integer> holes = new ArrayList<Integer>();
-					for (int i = lowSeq; i < highSeq; i++) {
+					for (int i = Math.max(lowSeq,lastPrinted[dn]); i < highSeq; i++) {
 						if (!log.containsReceiveSeq(dn,i)) {
 							holes.add(i);
 							if(i < cannotPrint[dn]) cannotPrint[dn] = i;
@@ -32,7 +33,7 @@ public class LogChecker extends Thread {
 						}
 						else if(i == cannotPrint[dn]) {
 							printPacket(dn, i);
-							cannotPrint[dn]++;
+							cannotPrint[dn] = 40000;
 						}
 					}
 					if (holes.size() != 0) {
@@ -41,7 +42,7 @@ public class LogChecker extends Thread {
 							DatagramPacket p = null;
 							try {
 								byte[] data = PacketUtils.getData(msg, 0, client.getHopCount(), client.getMyAddress(), InetAddress.getByName("192.168.5." + dn));
-								p = new DatagramPacket(data, msg.length, InetAddress.getByName("192.168.5." + dn), client.getPort());
+								p = new DatagramPacket(data, data.length, InetAddress.getByName("192.168.5." + dn), client.getPort());
 							} catch (UnknownHostException e) { }
 							System.out.println(p.getAddress().getHostAddress() + " | " + new String(msg) + " | " + lowSeq + " | " + highSeq);
 							client.resendPacket(p);
@@ -66,7 +67,8 @@ public class LogChecker extends Thread {
 		InetAddress destinationAddress = PacketUtils.getDistinationAddress(packet);
         int length = PacketUtils.getLength(packet);
 		client.processPacket(message, sequence, hop, sourceAddress, destinationAddress, length);
-		log.removePacket(dn,i);
+		lastPrinted[dn] = i;
+		//log.removePacket(dn,i);
 	}
 	
 	public void removeDevice(int deviceNr) {

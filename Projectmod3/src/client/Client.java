@@ -162,14 +162,9 @@ public class Client extends Thread {
 			}
 		}
 
-		else if (txt.startsWith("[NACK]: ")) {
-			String[] words = txt.split(" ");
-			int missedI = Integer.parseInt(words[1]);
-			DatagramPacket p = packetLog.getPacketSend(missedI);
-			p.setAddress(sourceAddress);
-			System.out.println(sourceAddress.getHostAddress());
-			resendPacket(p);
-		}
+		//else if (txt.startsWith("[NACK]")) {
+			
+		//}
 
 		else if (txt.startsWith("[FILE]")) {
 			byte[] fileBytes = new byte[1003];
@@ -300,9 +295,13 @@ public class Client extends Thread {
 			InetAddress destinationAddress = PacketUtils.getDistinationAddress(packet);	
 			if(sequence == 0 && destinationAddress.equals(myAddress)) {
 				String txt = new String(message);
-				chatwindow.incoming(txt);
 				if(txt.startsWith("[NACK]")) {
-					processPacket(message,sequence,hop,sourceAddress,destinationAddress, PacketUtils.getLength(packet));
+					String[] words = txt.split(" ");
+					int missedI = Integer.parseInt(words[1]);
+					DatagramPacket p = packetLog.getPacketSend(missedI);
+					p.setAddress(sourceAddress);
+					System.out.println("NACKER: " + sourceAddress.getHostAddress());
+					resendPacket(p);
 				}
 			}
 			if (sourceAddress.getHostAddress().startsWith("192.168.5.") || sourceAddress.getHostAddress().startsWith("228.5.6.7")) {
