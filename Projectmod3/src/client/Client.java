@@ -118,10 +118,12 @@ public class Client extends Thread {
 
 	public void processPacket(byte[] message, int sequenceNr, int hopCount,
 			InetAddress sourceAddress, InetAddress destinationAddress, int lengte) {
+        System.out.println(new String(message));
         byte[] decrypted = encryption.decryptData(message);
 		//String txt = new String((message));
         //Of als encryption is toegevoegd:
         String txt = new String(decrypted);
+        System.out.println(txt);
 
 		if (txt.startsWith("[BROADCAST]") && !sourceAddress.equals(myAddress)) {
 			String[] words = txt.split(" ");
@@ -217,6 +219,7 @@ public class Client extends Thread {
 		//byte[] data = PacketUtils.getData((message.getBytes()), currentSeq, hopCount, myAddress, group);
         //Of als encryption toegevoegd is:
         byte[] data = PacketUtils.getData((encryption.encryptData(message.getBytes())), currentSeq, hopCount, myAddress, group);
+        System.out.println(new String(encryption.encryptData(message.getBytes())));
 
 		DatagramPacket packetToSend = new DatagramPacket(data, data.length, group, port);
 		packetLog.addSendPacket(packetToSend);
