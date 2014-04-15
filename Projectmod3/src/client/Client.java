@@ -11,6 +11,8 @@ import java.net.MulticastSocket;
 import java.net.NetworkInterface;
 import java.util.*;
 
+import tests.Echo;
+
 public class Client extends Thread {
 
 	private ChatWindow chatwindow;
@@ -198,7 +200,7 @@ public class Client extends Thread {
 	}
 
 	public void sendPacket(String message) {
-		if (!message.startsWith("[")) {
+		if (!message.startsWith("[") && !(chatwindow instanceof Echo)) {
 			chatwindow.incoming(message);
 		}
 
