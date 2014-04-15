@@ -10,7 +10,7 @@ public class Echo extends ChatWindow{
 	static String myName = "Echoer";
 	
 	public Echo(){
-		super(myName);
+		super(myName, null);
 		System.out.println("Echo made");
 	}
 	

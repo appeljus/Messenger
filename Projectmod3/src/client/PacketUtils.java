@@ -3,6 +3,7 @@ package client;
 import java.net.DatagramPacket;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.nio.ByteBuffer;
 
 /**
  * Created by Martijn on 11-4-14.
@@ -29,6 +30,12 @@ public class PacketUtils {
         header[7] = dst[1];
         header[8] = dst[2];
         header[9] = dst[3];
+        short length = (short)message.length;
+        ByteBuffer buff = ByteBuffer.allocate(2);
+        buff.putShort(length);
+        byte[] lengte = buff.array();
+        header[10] = lengte[0];
+        header[11] = lengte[1];
 
         data = new byte[header.length + message.length];
         System.arraycopy(header, 0, data, 0, header.length);
@@ -68,8 +75,18 @@ public class PacketUtils {
 
     public static byte[] getMessage(DatagramPacket packet){
         byte[] data = packet.getData();
-        byte[] result = new byte[data.length - 10];
-        System.arraycopy(data, 10, result, 0, data.length-10);
+        byte[] result = new byte[data.length - 12];
+        System.arraycopy(data, 12, result, 0, PacketUtils.getLength(packet));
         return result;
     }
+
+    public static int getLength(DatagramPacket packet){
+        byte[] lengte = new byte[2];
+        lengte[0] = packet.getData()[10];
+        lengte[1] = packet.getData()[11];
+        ByteBuffer buff = ByteBuffer.wrap(lengte);
+        int nummer = (int)buff.getShort();
+        return nummer;
+    }
+
 }
