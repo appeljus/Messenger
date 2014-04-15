@@ -1,0 +1,189 @@
+This is TeX, Version 3.1415926 (TeX Live 2013/Debian) (format=tex 2014.4.15)  15 APR 2014 19:05
+**verslag
+(./verslag.tex
+! Undefined control sequence.
+l.1 \documentclass
+                  {article}
+? 
+! Undefined control sequence.
+l.3 \usepackage
+               [dutch]{babel}
+? 
+! Undefined control sequence.
+l.5 \title
+          {Integration Project}
+? 
+! Undefined control sequence.
+l.6 \author
+           {Kimberly Hengst \emph{1305093}\\ Tim Sonderen \emph{1465252}\\ K...
+
+? 
+! Undefined control sequence.
+l.6 \author{Kimberly Hengst \emph
+                                 {1305093}\\ Tim Sonderen \emph{1465252}\\ K...
+
+? 
+! Argument of \\ has an extra }.
+<inserted text> 
+                \par 
+<to be read again> 
+                   }
+l.6 ...{1490443}\\ Martijn de Bijl \emph{1470108}}
+                                                  
+? 
+Runaway argument?
+ Tim Sonderen \emph {1465252}\\ Kevin Hetterscheid \emph {1490443}\\ \ETC.
+! Paragraph ended before \\ was complete.
+<to be read again> 
+                   \par 
+<to be read again> 
+                   }
+l.6 ...{1490443}\\ Martijn de Bijl \emph{1470108}}
+                                                  
+? 
+! Undefined control sequence.
+l.7 \date
+         {\today}
+? 
+! Undefined control sequence.
+l.7 \date{\today
+                }
+? 
+! Undefined control sequence.
+l.9 \begin
+          {document}
+? 
+! Undefined control sequence.
+l.11 \maketitle
+               
+? 
+! Undefined control sequence.
+l.13 \newpage
+             
+? 
+! Undefined control sequence.
+l.15 \section
+             *{Voor gebruik}
+? 
+! Undefined control sequence.
+l.16 \emph
+          {Onze applicatie maakt gebruik van een externe library. Om te code...
+
+? 
+! Undefined control sequence.
+l.18 \newpage
+             
+? 
+! Undefined control sequence.
+l.20 \tableofcontents
+                     
+? 
+! Undefined control sequence.
+l.22 \section
+             {Inleiding}
+? 
+Missing character: There is no ^^c3 in font cmr10!
+Missing character: There is no ^^a9 in font cmr10!
+Missing character: There is no ^^c3 in font cmr10!
+Missing character: There is no ^^a9 in font cmr10!
+Missing character: There is no ^^c3 in font cmr10!
+Missing character: There is no ^^ab in font cmr10!
+Runaway argument?
+ In het verslag zullen we het proces van het ontwerpen van de applica\ETC.
+! Paragraph ended before \\ was complete.
+<to be read again> 
+                   \par 
+l.26 
+     
+? 
+! Undefined control sequence.
+l.27 \newpage
+             
+? 
+! Undefined control sequence.
+l.29 \section
+             {Ontwerp van de applicatie}
+? 
+! Undefined control sequence.
+l.32 \subsection
+                {Pakketjes}
+? 
+Runaway argument?
+ 
+! Paragraph ended before \\ was complete.
+<to be read again> 
+                   \par 
+l.34 
+     
+? 
+Runaway argument?
+ \begin {tabular}{|c|c|c|c|} \hline Byte array data & lengte van data\ETC.
+! Paragraph ended before \\ was complete.
+<to be read again> 
+                   \par 
+l.44 
+     
+? 
+Runaway argument?
+ \begin {tabular}{| c | c | c | c c |} \hline \multicolumn {5}{|c|}{B\ETC.
+! Paragraph ended before \\ was complete.
+<to be read again> 
+                   \par 
+l.57 
+     
+? 
+Runaway argument?
+ 
+! Paragraph ended before \\ was complete.
+<to be read again> 
+                   \par 
+l.60 
+     
+? 
+! Undefined control sequence.
+l.61 \begin
+           {tabular}{l  p{6cm}l }
+? 
+! Misplaced alignment tab character &.
+l.62 Bericht &
+               Functionaliteit \\
+? 
+Runaway argument?
+ \hline $[FILE]$ & Geeft aan dat het bericht een byte array van een b\ETC.
+! Paragraph ended before \\ was complete.
+<to be read again> 
+                   \par 
+l.74 
+     
+? 
+! Undefined control sequence.
+l.75 \subsection
+                {Bestanden verzenden}
+? 
+! Undefined control sequence.
+l.78 \subsection
+                {Pakket verlies}
+? 
+Runaway argument?
+ We doen het om deze manier, omdat er alleen een bericht gestuurd wor\ETC.
+! Paragraph ended before \\ was complete.
+<to be read again> 
+                   \par 
+l.81 
+     
+? 
+! Undefined control sequence.
+l.82 \subsection
+                {Priv\'{e} chat}
+? 
+! Undefined control sequence.
+l.85 \subsection
+                {User interface}
+? 
+[1]
+! Undefined control sequence.
+l.87 \begin
+           {itemize}
+? 
+[2] )
+Output written on verslag.dvi (2 pages, 7112 bytes).
