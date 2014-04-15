@@ -24,6 +24,12 @@ public class PacketLog {
 	public boolean hasDevice(int deviceNr) {
 		return logReceived.containsKey(deviceNr);
 	}
+	
+	public void removePacket(int deviceNr, int seqNr) {
+		if(logReceived.containsKey(deviceNr) && logReceived.get(deviceNr).containsKey(seqNr)) {
+			logReceived.get(deviceNr).remove(seqNr);
+		}
+	}
 
 	public DatagramPacket getPacket(int deviceNr, int seqNr) {
 		if (logReceived.containsKey(deviceNr)) {

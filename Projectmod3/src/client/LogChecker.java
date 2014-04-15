@@ -20,7 +20,7 @@ public class LogChecker extends Thread {
 			for (int dn = 1; dn < 5; dn++) {
 				int lowSeq = log.getLowestSeq(dn);
 				int highSeq = log.getHighestSeq(dn);
-				if (lowSeq != 40000 && highSeq != -1) {
+				if (lowSeq != 40000 && highSeq != -1 && dn != client.getDeviceNr()) {
 					if(lowSeq != 0 && dn == 2) System.out.println("SASA " + lowSeq);
 					List<Integer> holes = new ArrayList<Integer>();
 					for (int i = Math.max(lastPrintedPacket, lowSeq); i < highSeq; i++) {
@@ -31,13 +31,11 @@ public class LogChecker extends Thread {
 							byte[] message = PacketUtils.getMessage(packet);
 							int sequence = PacketUtils.getSequenceNr(packet);
 							int hop = PacketUtils.getHopCount(packet);
-							InetAddress sourceAddress = PacketUtils
-									.getSourceAddress(packet);
-							InetAddress destinationAddress = PacketUtils
-									.getDistinationAddress(packet);
-							client.processPacket(message, sequence, hop,
-									sourceAddress, destinationAddress);
+							InetAddress sourceAddress = PacketUtils.getSourceAddress(packet);
+							InetAddress destinationAddress = PacketUtils.getDistinationAddress(packet);
+							client.processPacket(message, sequence, hop, sourceAddress, destinationAddress);
 							lastPrintedPacket = i;
+							log.removePacket(dn,i);
 						}
 					}
 					if (holes.size() != 0) {

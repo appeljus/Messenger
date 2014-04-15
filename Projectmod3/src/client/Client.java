@@ -30,7 +30,7 @@ public class Client extends Thread {
 	private Encryption encryption;
 	private int deviceNr;
 	private LogChecker logChecker;
-	
+
 	public Client(ChatWindow c, String name) {
 		myName = name;
 		packetLog = new PacketLog();
@@ -41,12 +41,13 @@ public class Client extends Thread {
 		stillAlive.add(true);
 		encryption = new Encryption();
 		encryption.setPassword("Doif");
-		logChecker = new LogChecker(this,packetLog);
+		logChecker = new LogChecker(this, packetLog);
 		Thread t = new Thread(logChecker);
 		t.start();
 
 		try {
-			Enumeration<NetworkInterface> e = NetworkInterface.getNetworkInterfaces();
+			Enumeration<NetworkInterface> e = NetworkInterface
+					.getNetworkInterfaces();
 			while (e.hasMoreElements()) {
 				NetworkInterface n = (NetworkInterface) e.nextElement();
 				Enumeration<InetAddress> ee = n.getInetAddresses();
@@ -88,11 +89,11 @@ public class Client extends Thread {
 	public InetAddress getMyAddress() {
 		return myAddress;
 	}
-	
+
 	public int getPort() {
 		return port;
 	}
-	
+
 	public int getDeviceNr() {
 		return deviceNr;
 	}
@@ -113,7 +114,8 @@ public class Client extends Thread {
 		return encryption;
 	}
 
-	public void processPacket(byte[] message, int sequenceNr, int hopCount, InetAddress sourceAddress, InetAddress destinationAddress) {
+	public void processPacket(byte[] message, int sequenceNr, int hopCount,
+			InetAddress sourceAddress, InetAddress destinationAddress) {
 		String txt = new String((message));
 
 		if (txt.startsWith("[BROADCAST]") && !sourceAddress.equals(myAddress)) {
@@ -128,7 +130,8 @@ public class Client extends Thread {
 				stillAlive.add(true);
 			}
 
-		} else if (txt.startsWith("[NAME_IN_USE]: ") && !sourceAddress.equals(myAddress)) {
+		} else if (txt.startsWith("[NAME_IN_USE]: ")
+				&& !sourceAddress.equals(myAddress)) {
 			String[] words = txt.split(" ");
 			if (myName.equals(words[1])) {
 				chatwindow.dispose();
@@ -182,21 +185,16 @@ public class Client extends Thread {
 			chatwindow.incoming(txt);
 		}
 
-		/*byte[] addrB = sourceAddress.getAddress();
-		int deviceNr = ((int) (addrB[3])) & 0xFF;
-		deviceNr--;
-
-		if (!seqNrs.containsKey(deviceNr)) {
-			seqNrs.put(deviceNr, sequenceNr);
-		} else {
-			if (seqNrs.get(deviceNr) + 1 < sequenceNr) {
-				for (int i = seqNrs.get(deviceNr) + 1; i < sequenceNr; i++) {
-					String msg = "[NACK]: " + i + " DUMMY_WORD ";
-					sendPacket(msg);
-				}
-			}
-			seqNrs.put(deviceNr, sequenceNr);
-		}*/
+		/*
+		 * byte[] addrB = sourceAddress.getAddress(); int deviceNr = ((int)
+		 * (addrB[3])) & 0xFF; deviceNr--;
+		 * 
+		 * if (!seqNrs.containsKey(deviceNr)) { seqNrs.put(deviceNr,
+		 * sequenceNr); } else { if (seqNrs.get(deviceNr) + 1 < sequenceNr) {
+		 * for (int i = seqNrs.get(deviceNr) + 1; i < sequenceNr; i++) { String
+		 * msg = "[NACK]: " + i + " DUMMY_WORD "; sendPacket(msg); } }
+		 * seqNrs.put(deviceNr, sequenceNr); }
+		 */
 	}
 
 	public void sendPacket(String message) {
@@ -279,24 +277,30 @@ public class Client extends Thread {
 			int sequence = PacketUtils.getSequenceNr(packet);
 			int hop = PacketUtils.getHopCount(packet);
 			InetAddress sourceAddress = PacketUtils.getSourceAddress(packet);
-			InetAddress destinationAddress = PacketUtils.getDistinationAddress(packet);
-			if(!myAddress.equals(destinationAddress) && hop != 0) {
-				hop--;
-				byte[] pData = PacketUtils.getData(message, sequence, hop, sourceAddress, destinationAddress);
-				DatagramPacket packetToSend = new DatagramPacket(pData, pData.length, destinationAddress, port);
-				packetLog.addSendPacket(packetToSend);
+			InetAddress destinationAddress = PacketUtils
+					.getDistinationAddress(packet);
+			if (sourceAddress.getHostAddress().startsWith("192.168.5.") || sourceAddress.getHostAddress().startsWith("228.5.6.7")) {
+				if (!myAddress.equals(destinationAddress) && hop != 0) {
+					hop--;
+					byte[] pData = PacketUtils.getData(message, sequence, hop,
+							sourceAddress, destinationAddress);
+					DatagramPacket packetToSend = new DatagramPacket(pData,
+							pData.length, destinationAddress, port);
+					packetLog.addSendPacket(packetToSend);
 
-				try {
-					s.send(packetToSend);
-				} catch (IOException e) {
-					e.printStackTrace();
+					try {
+						s.send(packetToSend);
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+					incrementSeqNr();
 				}
-				incrementSeqNr();
-			}
-			if(myAddress.equals(destinationAddress) || group.equals(destinationAddress)) {
-				int devNr = ((int)(sourceAddress.getAddress()[3]) & 0xFF);
-				packetLog.addReceivePacket(devNr, sequence, packet);
-				packetLog.getSizeLog();
+				if (myAddress.equals(destinationAddress)
+						|| group.equals(destinationAddress)) {
+					int devNr = ((int) (sourceAddress.getAddress()[3]) & 0xFF);
+					packetLog.addReceivePacket(devNr, sequence, packet);
+					packetLog.getSizeLog();
+				}
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
