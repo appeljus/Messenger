@@ -251,6 +251,7 @@ public class Client extends Thread {
 			if(!stillAlive.get(i)) {
 				chatwindow.incoming(chatwindow.pNameList.get(nameIndex.get(i)));
 				chatwindow.pNameList.remove(nameIndex.get(i));
+				packetLog.removeDevice(i);
 				stillAlive.remove(i);
 			}
 		}
