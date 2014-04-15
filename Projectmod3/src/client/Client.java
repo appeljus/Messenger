@@ -289,14 +289,14 @@ public class Client extends Thread {
 				try {
 					s.send(packetToSend);
 				} catch (IOException e) {
-					System.out.println("WE HAVE A PROBLEM AT THE HOP METHOD!!");
-					System.out.println("ERMAGHERD!! D:");
+					e.printStackTrace();
 				}
 				incrementSeqNr();
 			}
 			if(myAddress.equals(destinationAddress) || group.equals(destinationAddress)) {
 				int devNr = ((int)(sourceAddress.getAddress()[3]) & 0xFF);
 				packetLog.addReceivePacket(devNr, sequence, packet);
+				packetLog.getSizeLog();
 			}
 		} catch (IOException e) {
 			e.printStackTrace();

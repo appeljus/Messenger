@@ -14,17 +14,15 @@ public class PacketLog {
 
 	private HashMap<Integer, DatagramPacket> logSend;
 	private HashMap<Integer, HashMap<Integer, DatagramPacket>> logReceived;
-	private HashMap<Integer, List<Integer>> sequenceReceived;
 	private static final int sizeLog = 128;
 
 	public PacketLog() {
 		logSend = new HashMap<Integer, DatagramPacket>();
-		sequenceReceived = new HashMap<Integer, List<Integer>>();
 		logReceived = new HashMap<Integer, HashMap<Integer, DatagramPacket>>();
 	}
 
 	public boolean hasDevice(int deviceNr) {
-		return sequenceReceived.containsKey(deviceNr);
+		return logReceived.containsKey(deviceNr);
 	}
 
 	public DatagramPacket getPacket(int deviceNr, int seqNr) {
@@ -32,21 +30,6 @@ public class PacketLog {
 			return logReceived.get(deviceNr).get(seqNr);
 		} else
 			return null;
-	}
-
-	public int getLatestSeq(int deviceNr) {
-		return sequenceReceived.get(deviceNr).get(
-				sequenceReceived.get(deviceNr).size() - 1);
-	}
-
-	public void addSequenceNr(int devicenr, int sequencenr) {
-		if (sequenceReceived.containsKey(devicenr))
-			sequenceReceived.get(devicenr).add(sequencenr);
-		else {
-			List<Integer> list = new ArrayList<Integer>();
-			list.add(sequencenr);
-			sequenceReceived.put(devicenr, list);
-		}
 	}
 
 	public void addReceivePacket(int deviceNr, int seqNr, DatagramPacket packet) {
@@ -76,8 +59,8 @@ public class PacketLog {
 		return logSend.containsKey(sqc);
 	}
 
-	public boolean containsReceiveSeq(int sqc) {
-		return sequenceReceived.containsKey(sqc);
+	public boolean containsReceiveSeq(int deviceNr, int sqc) {
+		return logReceived.get(deviceNr).containsKey(sqc);
 	}
 
 	public int getSizeLog() {
@@ -85,11 +68,11 @@ public class PacketLog {
 	}
 
 	public int getLowestSeq(int deviceNr) {
-		int lowestSeq = 0;
-		if (sequenceReceived.containsKey(deviceNr)) {
-			for (int i = 0; i < sequenceReceived.get(deviceNr).size(); i++) {
-				if (sequenceReceived.get(deviceNr).get(i) < lowestSeq) {
-					lowestSeq = sequenceReceived.get(deviceNr).get(i);
+		int lowestSeq = 40000;
+		if (logReceived.containsKey(deviceNr)) {
+			for (Integer i : logReceived.get(deviceNr).keySet()) {
+				if (i < lowestSeq) {
+					lowestSeq = i;
 				}
 			}
 		}
@@ -97,11 +80,11 @@ public class PacketLog {
 	}
 
 	public int getHighestSeq(int deviceNr) {
-		int highestSeq = 0;
-		if (sequenceReceived.containsKey(deviceNr)) {
-			for (int i = 0; i < sequenceReceived.get(deviceNr).size(); i++) {
-				if (sequenceReceived.get(deviceNr).get(i) > highestSeq) {
-					highestSeq = sequenceReceived.get(deviceNr).get(i);
+		int highestSeq = -1;
+		if (logReceived.containsKey(deviceNr)) {
+			for (Integer i : logReceived.get(deviceNr).keySet()) {
+				if (i > highestSeq) {
+					highestSeq = i;
 				}
 			}
 		}

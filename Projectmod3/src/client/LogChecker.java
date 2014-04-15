@@ -17,42 +17,43 @@ public class LogChecker extends Thread {
 	public void run() {
 		int lastPrintedPacket = 0;
 		while (true) {
-			for (int dn = 0; dn < 4; dn++) {
+			for (int dn = 1; dn < 5; dn++) {
 				int lowSeq = log.getLowestSeq(dn);
 				int highSeq = log.getHighestSeq(dn);
-				if (lowSeq != 0)
-					System.out.println("I GOT A PACKET! " + lowSeq);
-				List<Integer> holes = new ArrayList<Integer>();
-				for (int i = Math.max(lastPrintedPacket, lowSeq); i < highSeq; i++) {
-					if (!log.containsReceiveSeq(i)) {
-						holes.add(i);
-					} else if (holes.size() == 0) {
-						DatagramPacket packet = log.getPacket(
-								client.getDeviceNr(), i);
-						byte[] message = PacketUtils.getMessage(packet);
-						int sequence = PacketUtils.getSequenceNr(packet);
-						int hop = PacketUtils.getHopCount(packet);
-						InetAddress sourceAddress = PacketUtils
-								.getSourceAddress(packet);
-						InetAddress destinationAddress = PacketUtils
-								.getDistinationAddress(packet);
-						client.processPacket(message, sequence, hop,
-								sourceAddress, destinationAddress);
-						lastPrintedPacket = i;
+				if (lowSeq != 40000 && highSeq != -1) {
+					if(lowSeq != 0 && dn == 2) System.out.println("SASA " + lowSeq);
+					List<Integer> holes = new ArrayList<Integer>();
+					for (int i = Math.max(lastPrintedPacket, lowSeq); i < highSeq; i++) {
+						if (!log.containsReceiveSeq(dn,i)) {
+							holes.add(i);
+						} else if (holes.size() == 0) {
+							DatagramPacket packet = log.getPacket(dn, i);
+							byte[] message = PacketUtils.getMessage(packet);
+							int sequence = PacketUtils.getSequenceNr(packet);
+							int hop = PacketUtils.getHopCount(packet);
+							InetAddress sourceAddress = PacketUtils
+									.getSourceAddress(packet);
+							InetAddress destinationAddress = PacketUtils
+									.getDistinationAddress(packet);
+							client.processPacket(message, sequence, hop,
+									sourceAddress, destinationAddress);
+							lastPrintedPacket = i;
+						}
 					}
-				}
-				if (holes.size() != 0) {
-					for (int i = 0; i < holes.size(); i++) {
-						byte[] msg = ("[NACK] " + holes.get(i) + " DUMMY_WORD")
-								.getBytes();
-						DatagramPacket p = new DatagramPacket(msg, msg.length,
-								client.getMyAddress(), client.getPort());
-						client.resendPacket(p);
+					if (holes.size() != 0) {
+						System.out.println("NACK");
+						for (int i = 0; i < holes.size(); i++) {
+							byte[] msg = ("[NACK] " + holes.get(i) + " DUMMY_WORD")
+									.getBytes();
+							DatagramPacket p = new DatagramPacket(msg,
+									msg.length, client.getMyAddress(),
+									client.getPort());
+							client.resendPacket(p);
+						}
 					}
 				}
 			}
 			try {
-				System.out.println("IK SLEEP");
 				sleep(1000);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
