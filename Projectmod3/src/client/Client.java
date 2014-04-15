@@ -273,7 +273,6 @@ public class Client extends Thread {
 	public void checkConnections() {
 		List<Integer> remove = new ArrayList<Integer>();
 		for(Integer i : stillAlive.keySet()) {
-			System.out.println("DEVL " + i + stillAlive.get(i));
 			if(!stillAlive.get(i)) {
 				chatwindow.incoming(chatwindow.pNameList.get(nameIndex.get(i)) + " has left.");
 				chatwindow.disconnect(chatwindow.pNameList.get(nameIndex.get(i)));
