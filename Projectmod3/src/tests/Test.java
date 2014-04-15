@@ -17,6 +17,7 @@ public class Test extends Thread {
 
 	public void run() {
 		basicConnection();
+		//seqNrs();
 	}
 
 	// all tests here
@@ -26,12 +27,13 @@ public class Test extends Thread {
 		int count = 0;
 		while (lastReceived == null && count <= 10) {
 			try {
-				sleep(200);
+				sleep(500);
 			} catch (InterruptedException e) {
 				System.out.println("HIJ WIL NIET TUKKEN! :O");
 			}
 			count++;
 		}
+		System.out.println(lastReceived);
 		String result;
 		if (count > 10)
 			result = "NOPE, TIMEOUT!";

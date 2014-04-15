@@ -212,6 +212,7 @@ public class ChatWindow extends JFrame implements KeyListener, ActionListener,
 	}
 
 	public void incoming(String txt) {
+		System.out.println(txt);
 		txt = txt.replace("8)", "😎");
 		txt = txt.replace(":)", "😉");
 		list.addElement(txt);
