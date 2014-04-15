@@ -75,8 +75,8 @@ public class PacketUtils {
 
     public static byte[] getMessage(DatagramPacket packet){
         byte[] data = packet.getData();
-        byte[] result = new byte[data.length-12];
-        System.arraycopy(data, 12, result, 0, data.length-12);
+        byte[] result = new byte[PacketUtils.getLength(packet)];
+        System.arraycopy(data, 12, result, 0, PacketUtils.getLength(packet));
         return result;
     }
 

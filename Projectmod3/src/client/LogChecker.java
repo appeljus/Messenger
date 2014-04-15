@@ -32,7 +32,8 @@ public class LogChecker extends Thread {
 							int hop = PacketUtils.getHopCount(packet);
 							InetAddress sourceAddress = PacketUtils.getSourceAddress(packet);
 							InetAddress destinationAddress = PacketUtils.getDistinationAddress(packet);
-							client.processPacket(message, sequence, hop, sourceAddress, destinationAddress, message.length);
+                            int length = PacketUtils.getLength(packet);
+							client.processPacket(message, sequence, hop, sourceAddress, destinationAddress, length);
 							lastPrintedPacket = i;
 							log.removePacket(dn,i);
 						}

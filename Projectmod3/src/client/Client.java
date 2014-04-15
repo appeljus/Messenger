@@ -118,10 +118,10 @@ public class Client extends Thread {
 
 	public void processPacket(byte[] message, int sequenceNr, int hopCount,
 			InetAddress sourceAddress, InetAddress destinationAddress, int lengte) {
-        //byte[] decrypted = encryption.decryptData(message);
-		String txt = new String((message));
+        byte[] decrypted = encryption.decryptData(message);
+		//String txt = new String((message));
         //Of als encryption is toegevoegd:
-        //String txt = new String(decrypted);
+        String txt = new String(decrypted);
 
 		if (txt.startsWith("[BROADCAST]") && !sourceAddress.equals(myAddress)) {
 			String[] words = txt.split(" ");
@@ -214,9 +214,9 @@ public class Client extends Thread {
 			chatwindow.incoming(message);
 		}
 
-		byte[] data = PacketUtils.getData((message.getBytes()), currentSeq, hopCount, myAddress, group);
+		//byte[] data = PacketUtils.getData((message.getBytes()), currentSeq, hopCount, myAddress, group);
         //Of als encryption toegevoegd is:
-        //byte[] data = PacketUtils.getData((encryption.encryptData(message.getBytes())), currentSeq, hopCount, myAddress, group);
+        byte[] data = PacketUtils.getData((encryption.encryptData(message.getBytes())), currentSeq, hopCount, myAddress, group);
 
 		DatagramPacket packetToSend = new DatagramPacket(data, data.length, group, port);
 		packetLog.addSendPacket(packetToSend);
@@ -293,7 +293,6 @@ public class Client extends Thread {
 			InetAddress sourceAddress = PacketUtils.getSourceAddress(packet);
 			InetAddress destinationAddress = PacketUtils
 					.getDistinationAddress(packet);
-            int lengte = PacketUtils.getLength(packet);
 
 			if (sourceAddress.getHostAddress().startsWith("192.168.5.") || sourceAddress.getHostAddress().startsWith("228.5.6.7")) {
 				if (!myAddress.equals(destinationAddress) && hop != 0) {
