@@ -295,7 +295,6 @@ public class Client extends Thread {
 			if(myAddress.equals(destinationAddress) || group.equals(destinationAddress)) {
 				int devNr = ((int)(sourceAddress.getAddress()[3]) & 0xFF);
 				packetLog.addReceivePacket(devNr, sequence, packet);
-				System.out.println(packet + " | " + packetLog.getPacket(devNr, sequence));
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
