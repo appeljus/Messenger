@@ -54,7 +54,14 @@ public class ChatWindow extends JFrame implements KeyListener, ActionListener,
 	JLabel pusher;
 
 	BufferedImage iconBuff;
+	BufferedImage exitBuff;
+	BufferedImage fileBuff;
+	BufferedImage sendBuff;
+	
 	ImageIcon icon;
+	ImageIcon exitB;
+	ImageIcon fileB;
+	ImageIcon sendB;
 
 	public ArrayList<String> pNameList = new ArrayList<String>();
 	DefaultListModel<String> pList = new DefaultListModel<String>();
@@ -123,11 +130,17 @@ public class ChatWindow extends JFrame implements KeyListener, ActionListener,
 		title = new JLabel("");
 		try {
 			iconBuff = ImageIO.read(new FileInputStream("res/PigeonTitle.png"));
+			exitBuff = ImageIO.read(new FileInputStream("res/Exit.png"));
+			fileBuff = ImageIO.read(new FileInputStream("res/File.png"));
+			sendBuff = ImageIO.read(new FileInputStream("res/Send.png"));
 			icon = new ImageIcon(iconBuff);
+			exitB = new ImageIcon(exitBuff);
+			fileB = new ImageIcon(fileBuff);
+			sendB = new ImageIcon(sendBuff);
 		} catch (IOException e) {
-			System.out.println("Fuck the image!");
+			System.out.println("Fuck the images!");
 		}
-		title.setIcon(icon);
+		
 		title.setForeground(Color.WHITE);
 		title.setPreferredSize(buttonDim);
 		title.setMaximumSize(buttonDim);
@@ -170,6 +183,13 @@ public class ChatWindow extends JFrame implements KeyListener, ActionListener,
 		menuBar.add(exit, c);
 
 		// ////////////////////////////
+		//set icons
+		title.setIcon(icon);
+		send.setIcon(sendB);
+		send.setIconTextGap(-12);
+		exit.setIcon(exitB);
+		exit.setIconTextGap(-12);
+		sendFile.setIcon(fileB);
 
 		mainFrame.add(sendBar, BorderLayout.SOUTH);
 		mainFrame.add(msgScroller, BorderLayout.CENTER);
