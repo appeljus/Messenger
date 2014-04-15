@@ -8,6 +8,7 @@ import java.util.List;
 public class LogChecker extends Thread {
 	private Client client;
 	private PacketLog log;
+	private int cannotPrint = 40000;
 
 	public LogChecker(Client client, PacketLog log) {
 		this.client = client;
@@ -15,7 +16,6 @@ public class LogChecker extends Thread {
 	}
 
 	public void run() {
-		int lastPrintedPacket = 0;
 		while (true) {
 			for (int dn = 1; dn < 5; dn++) {
 				int lowSeq = log.getLowestSeq(dn);
@@ -25,7 +25,8 @@ public class LogChecker extends Thread {
 					for (int i = lowSeq; i < highSeq; i++) {
 						if (!log.containsReceiveSeq(dn,i)) {
 							holes.add(i);
-						} else if (holes.size() == 0) {
+							if(i < cannotPrint) cannotPrint = i;
+						} else if (i < cannotPrint) {
 							DatagramPacket packet = log.getPacket(dn, i);
 							byte[] message = PacketUtils.getMessage(packet);
 							int sequence = PacketUtils.getSequenceNr(packet);
@@ -34,8 +35,19 @@ public class LogChecker extends Thread {
 							InetAddress destinationAddress = PacketUtils.getDistinationAddress(packet);
                             int length = PacketUtils.getLength(packet);
 							client.processPacket(message, sequence, hop, sourceAddress, destinationAddress, length);
-							lastPrintedPacket = i;
 							log.removePacket(dn,i);
+						}
+						else if(i == cannotPrint) {
+							DatagramPacket packet = log.getPacket(dn, i);
+							byte[] message = PacketUtils.getMessage(packet);
+							int sequence = PacketUtils.getSequenceNr(packet);
+							int hop = PacketUtils.getHopCount(packet);
+							InetAddress sourceAddress = PacketUtils.getSourceAddress(packet);
+							InetAddress destinationAddress = PacketUtils.getDistinationAddress(packet);
+							int length = PacketUtils.getLength(packet);
+							client.processPacket(message, sequence, hop, sourceAddress, destinationAddress, length);
+							log.removePacket(dn,i);
+							cannotPrint = 40000;
 						}
 					}
 					if (holes.size() != 0) {
