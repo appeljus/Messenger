@@ -41,13 +41,13 @@ public class SendFile implements Runnable {
 
 	@Override
 	public void run() {
-		byte[] data = new byte[1003];
+		byte[] data = new byte[1001];
 		byte[] tagData = new byte[11];
 		int j = 0;
 		while (currentStartI < fileParts.length) {
 			System.out.println("sdsdsdsds");
 			int i;
-			for (i = 0; i < 1003 && currentStartI + i < fileParts.length; i++) {
+			for (i = 0; i < 1001 && currentStartI + i < fileParts.length; i++) {
 				data[i] = fileParts[currentStartI + i];
 			}
 			if (currentStartI < fileParts.length) {
@@ -56,7 +56,7 @@ public class SendFile implements Runnable {
 			j = i+1;
 			currentStartI += i;
 			if(currentStartI < fileParts.length) {
-				byte[] data3 = new byte[1014];
+				byte[] data3 = new byte[1012];
 				System.arraycopy(tagData, 0, data3, 0, tagData.length);
 				System.arraycopy(data, 0, data3, tagData.length, data.length);
 				System.out.println(new String(data3));
@@ -69,10 +69,8 @@ public class SendFile implements Runnable {
 		
 		System.out.println(tagData.length);
 		
-		byte[] data3 = new byte[1014];
+		byte[] data3 = new byte[1012];
 		data[j] = (byte) 255;
-		
-		System.out.println(data.length);
 		
 		System.arraycopy(tagData, 0, data3, 0, tagData.length);
 		System.arraycopy(data, 0, data3, tagData.length, data.length);

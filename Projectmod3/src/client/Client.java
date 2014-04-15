@@ -169,7 +169,7 @@ public class Client extends Thread {
 
 		else if (txt.startsWith("[FILE]")) {
 			byte[] fileBytes = new byte[1001];
-			System.arraycopy(message, 6, fileBytes, 0, 1001);
+			System.arraycopy(message, 8, fileBytes, 0, 1001);
 			receiveFileInstance.receiveFile(fileBytes, false, "");
 		}
 
