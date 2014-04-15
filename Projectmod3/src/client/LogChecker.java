@@ -28,27 +28,11 @@ public class LogChecker extends Thread {
 							holes.add(i);
 							if(i < cannotPrint[dn]) cannotPrint[dn] = i;
 						} else if (i < cannotPrint[dn]) {
-							DatagramPacket packet = log.getPacket(dn, i);
-							byte[] message = PacketUtils.getMessage(packet);
-							int sequence = PacketUtils.getSequenceNr(packet);
-							int hop = PacketUtils.getHopCount(packet);
-							InetAddress sourceAddress = PacketUtils.getSourceAddress(packet);
-							InetAddress destinationAddress = PacketUtils.getDistinationAddress(packet);
-                            int length = PacketUtils.getLength(packet);
-							client.processPacket(message, sequence, hop, sourceAddress, destinationAddress, length);
-							log.removePacket(dn,i);
+							printPacket(dn, i);
 						}
 						else if(i == cannotPrint[dn]) {
-							DatagramPacket packet = log.getPacket(dn, i);
-							byte[] message = PacketUtils.getMessage(packet);
-							int sequence = PacketUtils.getSequenceNr(packet);
-							int hop = PacketUtils.getHopCount(packet);
-							InetAddress sourceAddress = PacketUtils.getSourceAddress(packet);
-							InetAddress destinationAddress = PacketUtils.getDistinationAddress(packet);
-							int length = PacketUtils.getLength(packet);
-							client.processPacket(message, sequence, hop, sourceAddress, destinationAddress, length);
-							log.removePacket(dn,i);
-							cannotPrint[dn] = 40000;
+							printPacket(dn, i);
+							cannotPrint[dn]++;
 						}
 					}
 					if (holes.size() != 0) {
@@ -59,7 +43,7 @@ public class LogChecker extends Thread {
 								byte[] data = PacketUtils.getData(msg, 0, client.getHopCount(), client.getMyAddress(), InetAddress.getByName("192.168.5." + dn));
 								p = new DatagramPacket(data, msg.length, InetAddress.getByName("192.168.5." + dn), client.getPort());
 							} catch (UnknownHostException e) { }
-							System.out.println(p.getAddress().getHostAddress());
+							System.out.println(p.getAddress().getHostAddress() + " | " + new String(msg) + " | " + lowSeq + " | " + highSeq);
 							client.resendPacket(p);
 						}
 					}
@@ -71,6 +55,18 @@ public class LogChecker extends Thread {
 				e.printStackTrace();
 			}
 		}
+	}
+	
+	public void printPacket(int dn, int i) {
+		DatagramPacket packet = log.getPacket(dn, i);
+		byte[] message = PacketUtils.getMessage(packet);
+		int sequence = PacketUtils.getSequenceNr(packet);
+		int hop = PacketUtils.getHopCount(packet);
+		InetAddress sourceAddress = PacketUtils.getSourceAddress(packet);
+		InetAddress destinationAddress = PacketUtils.getDistinationAddress(packet);
+        int length = PacketUtils.getLength(packet);
+		client.processPacket(message, sequence, hop, sourceAddress, destinationAddress, length);
+		log.removePacket(dn,i);
 	}
 	
 	public void removeDevice(int deviceNr) {
