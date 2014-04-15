@@ -53,6 +53,12 @@ public class PacketLog {
 			logReceived.put(deviceNr, map);
 		}
 	}
+	
+	public void removeDevice(int deviceNr) {
+		if(logReceived.containsKey(deviceNr)) {
+			logReceived.remove(deviceNr);
+		}
+	}
 
 	public DatagramPacket getPacketSend(int sqc) {
 		return logSend.get(sqc);
