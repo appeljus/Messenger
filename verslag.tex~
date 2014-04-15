@@ -65,14 +65,12 @@ $[TOO\_LATE]$ & Geeft aan dat een bericht waarvoor een NACK is gestuurd niet mee
 $[EOF]$ & Geeft het einde van een bestand aan
 \end{tabular}
 
+
 \subsection{Bestanden verzenden}
-Het verzenden van bestanden gaat ook via Datagram pakketjes. Echter is nu de array van bytes niet een bericht van een gebruiker, maar een deel van een bestand. Bij het versturen wordt een bestand over meerdere pakketjes verdeeld. Dit doen we omdat een bestand niet een pakket zou passen. De verzender kiest een bestand via de GUI die hij wil versturen. Deze wordt dan verzonden, en zodra alle pakketjes bij de ontvanger zijn aangekomen, kan hij deze ergens opslaan. 
+%TODO
 
 \subsection{Pakket verlies}
 Doordat het network via Wi-Fi werkt, is de kans dat een pakket verloren gaat veel groter dan via de kabel. Om te zorgen dat deze pakketjes opnieuw worden verstuurd, gebruiken we sequence nummers en NACK's. Als een pakketje verloren gaat, ziet de applicatie dat pas als het volgende pakketje aankomt met een hoger sequence nummer dan verwacht. Als de applicatie een ander sequence nummer binnen krijgt dan verwacht, stuurt de applicatie een negative aknowledgement, een NACK. Omdat er een lange tijd tussen twee berichten kan zitten, zitten er in broadcast berichten ook een sequence nummer, waardoor elke seconde gekeken wordt naar het sequence nummer en het verwachte sequence nummer.
-
-\subsection{Priv\'{e} chat}
-Een gebruiker kan ervoor kiezen om berichten maar naar \'{e}\'{e}n andere gebruiker te sturen. Een gebruiker kan hiervoor kiezen door in de GUI /w en dan de naam van de ontvanger te typen, of op een naam in de lobby te klikken waardoor een priv\'{e} chat begint. Pakketten die alleen voor een bepaalde gebruiker bedoeld zijn worden alleen in zijn GUI weergeven. Andere gebruikers krijgen die pakketten wel binnen, maar ze worden niet standaard uitgelezen. 
 
 \subsection{User interface}
 De gebruiker kan via de user interface met het programma communiceren. De interface bestaat uit een aantal elementen:
@@ -88,7 +86,7 @@ De gebruiker kan via de user interface met het programma communiceren. De interf
 Om te zorgen dat niet iedereen de inhoudt van de pakketten kan lezen, gebruiken we encryptie. 
 
 \subsection{Encryptie}
-Voor het encryptie gebruiken we symetrische sleutel encryptie. Dit betekent dat de clients een sleutel delen, waarmee ze hun berichten kunnen coderen en decoderen. 
+Voor het encryptie gebruiken we symetrische sleutel encryptie. Dit betekent dat de clients een sleutel delen, waarmee ze hun berichten kunnen coderen en decoderen.  
 
 \section{Test plan}
 

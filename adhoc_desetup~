@@ -7,7 +7,7 @@ if [ "$(id -u)" != "0" ]; then
 fi
 
 echo -ne "Bringing down the wireless interface..."
-ifconfig wlan0 down
+ifconfig wlan1 down
 tput cuf $(($(tput cols)-48))
 echo -ne "["
 tput setaf 2
@@ -15,7 +15,7 @@ echo -ne "OK"
 tput setaf 7
 echo "]     "
 echo -ne "Changing interface back to managed networks..."
-iwconfig wlan0 mode Managed
+iwconfig wlan1 mode Managed
 tput cuf $(($(tput cols)-55))
 echo -ne "["
 tput setaf 2
