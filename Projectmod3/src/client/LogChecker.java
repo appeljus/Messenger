@@ -24,7 +24,7 @@ public class LogChecker extends Thread {
 				int highSeq = log.getHighestSeq(dn);
 				if (lowSeq != 40000 && highSeq != -1 && dn != client.getDeviceNr()) {
 					List<Integer> holes = new ArrayList<Integer>();
-					for (int i = Math.max(lowSeq,lastPrinted[dn]); i < highSeq; i++) {
+					for (int i = Math.max(lowSeq,lastPrinted[dn]+1); i < highSeq; i++) {
 						if (!log.containsReceiveSeq(dn,i)) {
 							holes.add(i);
 							if(i < cannotPrint[dn]) cannotPrint[dn] = i;
