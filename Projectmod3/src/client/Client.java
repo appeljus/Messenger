@@ -269,6 +269,7 @@ public class Client extends Thread {
 
 	public void checkConnections() {
 		for(Integer i : stillAlive.keySet()) {
+			System.out.println(i);
 			if(!stillAlive.get(i)) {
 				chatwindow.incoming(chatwindow.pNameList.get(nameIndex.get(i)));
 				chatwindow.pNameList.remove(nameIndex.get(i));
