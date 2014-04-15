@@ -79,7 +79,7 @@ public class Client extends Thread {
 	public int getCurrentSeq() {
 		return currentSeq;
 	}
-
+	
 	public int getHopCount() {
 		return hopCount;
 	}
@@ -234,7 +234,7 @@ public class Client extends Thread {
 	}
 
 	public void sendPacket(byte[] message, boolean isFile) {
-		byte[] data = PacketUtils.getData(message, currentSeq, hopCount,
+		byte[] data = PacketUtils.getData(encryption.encryptData(message), currentSeq, hopCount,
 				myAddress, group);
 		DatagramPacket packetToSend = new DatagramPacket(data, data.length,
 				group, port);

@@ -54,10 +54,7 @@ public class LogChecker extends Thread {
 						for (int i = 0; i < holes.size(); i++) {
 							System.out.println("NACK " + holes.get(i));
 							byte[] msg = ("[NACK] " + holes.get(i) + " DUMMY_WORD").getBytes();
-							System.out.println("NAKC LENGHRTSASA: " + msg.length);
-							DatagramPacket p = new DatagramPacket(msg,
-									msg.length, client.getMyAddress(),
-									client.getPort());
+							DatagramPacket p = new DatagramPacket(client.getEncryption().encryptData(msg), msg.length, client.getMyAddress(), client.getPort());
 							client.resendPacket(p);
 						}
 					}
