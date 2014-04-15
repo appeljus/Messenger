@@ -40,8 +40,8 @@ public class LogChecker extends Thread {
 					if (holes.size() != 0) {
 						for (int i = 0; i < holes.size(); i++) {
 							System.out.println("NACK " + holes.get(i));
-							byte[] msg = ("[NACK] " + holes.get(i) + " DUMMY_WORD")
-									.getBytes();
+							byte[] msg = ("[NACK] " + holes.get(i) + " DUMMY_WORD").getBytes();
+							System.out.println("NAKC LENGHRTSASA: " + msg.length);
 							DatagramPacket p = new DatagramPacket(msg,
 									msg.length, client.getMyAddress(),
 									client.getPort());
