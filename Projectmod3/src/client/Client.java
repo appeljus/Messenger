@@ -9,6 +9,7 @@ import java.net.DatagramPacket;
 import java.net.InetAddress;
 import java.net.MulticastSocket;
 import java.net.NetworkInterface;
+import java.net.UnknownHostException;
 import java.util.*;
 
 import tests.Echo;
@@ -299,9 +300,14 @@ public class Client extends Thread {
 					String[] words = txt.split(" ");
 					int missedI = Integer.parseInt(words[1]);
 					DatagramPacket p = packetLog.getPacketSend(missedI);
-					p.setAddress(sourceAddress);
-					System.out.println("NACKER: " + sourceAddress.getHostAddress());
-					resendPacket(p);
+					if(p == null) {
+						sendPacket("[MSG_LOST]");
+					}
+					else {
+						p.setAddress(sourceAddress);
+						System.out.println("NACKER: " + sourceAddress.getHostAddress());
+						resendPacket(p);
+					}
 				}
 			}
 			if (sourceAddress.getHostAddress().startsWith("192.168.5.") || sourceAddress.getHostAddress().startsWith("228.5.6.7")) {
