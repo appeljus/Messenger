@@ -369,9 +369,9 @@ public class ChatWindow extends JFrame implements KeyListener, ActionListener,
 
 			String txt = (String) value;
 			if (txt.startsWith("From")) {
-				setForeground(Color.GREEN);
+				setForeground(new Color(0,0,255));
 			} else if (txt.startsWith("To")) {
-				setForeground(Color.BLUE);
+				setForeground(new Color(255,0,0));
 			}
 
 			if (isSelected) {
