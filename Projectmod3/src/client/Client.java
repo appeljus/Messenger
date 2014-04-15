@@ -189,6 +189,20 @@ public class Client extends Thread {
 			chatwindow.incoming(txt);
 		}
 	}
+	
+	public void sendTestPacket(String message, int seq){
+		byte[] data = PacketUtils.getData((message.getBytes()), seq, hopCount, myAddress, group);
+		
+		DatagramPacket packetToSend = new DatagramPacket(data, data.length, group, port);
+		packetLog.addSendPacket(packetToSend);
+
+		try {
+			s.send(packetToSend);
+		} catch (IOException e) {
+			System.out.println("WE HAVE A PROBLEM AT THE TEST SEND METHOD!!");
+			System.out.println("ERMAGHERD!! D:");
+		}
+	}
 
 	public void sendPacket(String message) {
 		if (!message.startsWith("[") && !(chatwindow instanceof Echo)) {
