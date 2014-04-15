@@ -78,7 +78,8 @@ Het verzenden van bestanden gaat ook via Datagram pakketjes. Echter is nu de arr
 
 \subsection{Pakket verlies}
 Doordat het network via Wi-Fi werkt, is de kans dat een pakket verloren gaat veel groter dan via de kabel. Om te zorgen dat deze pakketjes opnieuw worden verstuurd, gebruiken we sequence nummers en NACK's. Als een pakketje verloren gaat, ziet de applicatie dat pas als het volgende pakketje aankomt met een hoger sequence nummer dan verwacht. Als de applicatie een ander sequence nummer binnen krijgt dan verwacht, stuurt de applicatie een negative aknowledgement, een NACK. Omdat er een lange tijd tussen twee berichten kan zitten, zitten er in broadcast berichten ook een sequence nummer, waardoor elke seconde gekeken wordt naar het sequence nummer en het verwachte sequence nummer. \\
-We doen het om deze manier, omdat er alleen een bericht gestuurd wordt, als er een bericht mist. Als voor elk pakket een bericht van ontvangst zouden sturen, zou de kans op opstopping groter worden. 
+We doen het om deze manier, omdat er alleen een bericht gestuurd wordt, als er een bericht mist. Als voor elk pakket een bericht van ontvangst zouden sturen, zou de kans op opstopping groter worden.
+%TODO
 
 \subsection{Priv\'{e} chat}
 Een gebruiker kan ervoor kiezen om berichten maar naar \'{e}\'{e}n andere gebruiker te sturen. Een gebruiker kan hiervoor kiezen door in de GUI /w en dan de naam van de ontvanger te typen, of op een naam in de lobby te klikken waardoor een priv\'{e} chat begint. Pakketten die alleen voor een bepaalde gebruiker bedoeld zijn worden alleen in zijn GUI weergeven. Andere gebruikers krijgen die pakketten wel binnen, maar ze worden niet standaard uitgelezen. \\

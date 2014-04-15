@@ -44,13 +44,13 @@ Byte array data & lengte van data & IP-adres verzender of ontvanger & Poort numm
 
 \noindent Het byte array van de data ziet er dan als volgt uit:
 \\
-\begin{tabular}{| c | c | c | c  c |}
+\begin{tabular}{| c | c | c | c | c c |}
 \hline
-\multicolumn{5}{|c|}{Byte array data}  \\
+\multicolumn{6}{|c|}{Byte array data}  \\
 \hline
-\multicolumn{4}{|c|}{Header} & Bericht \\
+\multicolumn{5}{|c|}{Header} & Bericht \\
 \hline
-Sequence nummer & Hop teller & IP-adres verzender & IP-adres ontvanger & \phantom{bericht} \\
+Sequence nummer & Hop teller & IP-adres verzender & IP-adres ontvanger & Lengte bericht &\phantom{bericht} \\
 \hline
 \end{tabular}
 \\
@@ -78,12 +78,11 @@ Het verzenden van bestanden gaat ook via Datagram pakketjes. Echter is nu de arr
 
 \subsection{Pakket verlies}
 Doordat het network via Wi-Fi werkt, is de kans dat een pakket verloren gaat veel groter dan via de kabel. Om te zorgen dat deze pakketjes opnieuw worden verstuurd, gebruiken we sequence nummers en NACK's. Als een pakketje verloren gaat, ziet de applicatie dat pas als het volgende pakketje aankomt met een hoger sequence nummer dan verwacht. Als de applicatie een ander sequence nummer binnen krijgt dan verwacht, stuurt de applicatie een negative aknowledgement, een NACK. Omdat er een lange tijd tussen twee berichten kan zitten, zitten er in broadcast berichten ook een sequence nummer, waardoor elke seconde gekeken wordt naar het sequence nummer en het verwachte sequence nummer. \\
-We doen het om deze manier, omdat er alleen een bericht gestuurd wordt, als er een bericht mist. Als voor elk pakket een bericht van ontvangst zouden sturen, zou de kans op opstopping groter worden.
+We doen het om deze manier, omdat er alleen een bericht gestuurd wordt, als er een bericht mist. Als voor elk pakket een bericht van ontvangst zouden sturen, zou de kans op opstopping groter worden. \\
 %TODO
 
 \subsection{Priv\'{e} chat}
 Een gebruiker kan ervoor kiezen om berichten maar naar \'{e}\'{e}n andere gebruiker te sturen. Een gebruiker kan hiervoor kiezen door in de GUI /w en dan de naam van de ontvanger te typen, of op een naam in de lobby te klikken waardoor een priv\'{e} chat begint. Pakketten die alleen voor een bepaalde gebruiker bedoeld zijn worden alleen in zijn GUI weergeven. Andere gebruikers krijgen die pakketten wel binnen, maar ze worden niet standaard uitgelezen. \\
-We doen het op deze manier omdat alle berichten voor buitenstaanders al beveiligd zijn. 
 
 \subsection{User interface}
 De gebruiker kan via de user interface met het programma communiceren. De interface bestaat uit een aantal elementen:
@@ -94,6 +93,8 @@ De gebruiker kan via de user interface met het programma communiceren. De interf
 \item Een knop voor priv\'{e} chat
 \item Een knop voor het afsluiten van het applicatie
 \end{itemize}
+\\
+Via deze interface is het makkelijk met de applicatie communiceren. Alle functionaliteiten kunnen via de interface aangeroepen worden. 
 
 \section{Beveiling}
 Om te zorgen dat niet iedereen de inhoudt van de pakketten kan lezen, gebruiken we encryptie. 
