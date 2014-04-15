@@ -24,7 +24,7 @@ public class Test extends Thread {
 		String sentMsg = "Awesome test message";
 		c.addText(c.generateLine(sentMsg));
 		int count = 0;
-		while (lastReceived == null) {
+		while (lastReceived == null && count <= 10) {
 			try {
 				sleep(200);
 			} catch (InterruptedException e) {
@@ -40,9 +40,30 @@ public class Test extends Thread {
 		printTestResult("Test for the basic message sending", sentMsg, result);
 
 		lastReceived = null;
+		received = new ArrayList<String>();
 	}
 	
-	
+	private void seqNrs(){
+		c.client.sendTestPacket("a", 5);
+		c.client.sendTestPacket("b", 8);
+		c.client.sendTestPacket("c", 6);
+		c.client.sendTestPacket("d", 7);
+		c.client.sendTestPacket("e", 9);
+		int count = 0;
+		String result = "";
+		while(received.size() < 5 && count <= 10){
+			count ++;
+		}
+		if(count > 10)
+			result = "NOPE, TIMEOUT!";
+		else{
+			for(int i = 0; i < received.size(); i++){
+				result = result + received.get(i);
+			}
+		}
+			
+		printTestResult("Sequence numbers out of sync and starts at 5 ==> 5,8,6,7,9", "a, b, c, d, e", result);
+	}
 
 	// utills here
 

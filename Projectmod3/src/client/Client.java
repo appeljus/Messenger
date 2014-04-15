@@ -36,7 +36,7 @@ public class Client extends Thread {
 		myName = name;
 		packetLog = new PacketLog();
 		currentSeq = 1;
-		hopCount = 4;
+		hopCount = 0;
 		chatwindow = c;
 		receiveFileInstance = new ReceiveFile(this);
 		encryption = new Encryption();

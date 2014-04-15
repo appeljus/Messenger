@@ -24,7 +24,7 @@ public class ChatWindow extends JFrame implements KeyListener, ActionListener,
 	 */
 	private static final long serialVersionUID = 1L;
 
-	Client client;
+	public Client client;
 
 	Test test;
 
