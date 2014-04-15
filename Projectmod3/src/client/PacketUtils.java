@@ -36,7 +36,7 @@ public class PacketUtils {
         byte[] lengte = buff.array();
         header[10] = lengte[0];
         header[11] = lengte[1];
-
+        
         data = new byte[header.length + message.length];
         System.arraycopy(header, 0, data, 0, header.length);
         System.arraycopy(message, 0, data, header.length, message.length);
@@ -85,7 +85,7 @@ public class PacketUtils {
         lengte[0] = packet.getData()[10];
         lengte[1] = packet.getData()[11];
         ByteBuffer buff = ByteBuffer.wrap(lengte);
-        int nummer = ((int)buff.getShort()) & 0xFF;
+        int nummer = (int)(buff.getShort() & 0xFFFF);
         return nummer;
     }
 

@@ -169,7 +169,7 @@ public class Client extends Thread {
 
 		else if (txt.startsWith("[FILE]")) {
 			byte[] fileBytes = new byte[1001];
-			System.arraycopy(message, 18, fileBytes, 0, 1001);
+			System.arraycopy(message, 6, fileBytes, 0, 1001);
 			receiveFileInstance.receiveFile(fileBytes, false, "");
 		}
 
@@ -182,9 +182,11 @@ public class Client extends Thread {
 				} else
 					break;
 			}
-			byte[] file = new byte[1001 - (count - 1)];
-			System.arraycopy(message, 22, file, 0, file.length);
-			System.arraycopy(message, 18, extBytes, 0, 3);
+			System.out.println(message.length);
+			byte[] file = new byte[1001 - (count)];
+			System.out.println(file.length);
+			System.arraycopy(message, 10, file, 0, file.length);
+			System.arraycopy(message, 6, extBytes, 0, 3);
 			receiveFileInstance.receiveFile(file, true, new String(extBytes));
 		}
 
@@ -293,9 +295,12 @@ public class Client extends Thread {
 			int sequence = PacketUtils.getSequenceNr(packet);
 			int hop = PacketUtils.getHopCount(packet);
 			InetAddress sourceAddress = PacketUtils.getSourceAddress(packet);
-			InetAddress destinationAddress = PacketUtils.getDistinationAddress(packet);	
+			InetAddress destinationAddress = PacketUtils.getDistinationAddress(packet);
+			String txt = new String(message);
+			if(txt.contains("[FILE]")) {
+				System.out.println("ROUTE: " + message.length);
+			}
 			if(sequence == 0 && destinationAddress.equals(myAddress)) {
-				String txt = new String(message);
 				if(txt.startsWith("[NACK]")) {
 					String[] words = txt.split(" ");
 					int missedI = Integer.parseInt(words[1]);
