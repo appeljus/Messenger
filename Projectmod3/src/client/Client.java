@@ -123,7 +123,6 @@ public class Client extends Thread {
 		//String txt = new String((message));
         //Of als encryption is toegevoegd:
         String txt = new String(decrypted);
-        System.out.println(txt);
 
 		if (txt.startsWith("[BROADCAST]") && !sourceAddress.equals(myAddress)) {
 			String[] words = txt.split(" ");
@@ -219,7 +218,6 @@ public class Client extends Thread {
 		//byte[] data = PacketUtils.getData((message.getBytes()), currentSeq, hopCount, myAddress, group);
         //Of als encryption toegevoegd is:
         byte[] data = PacketUtils.getData((encryption.encryptData(message.getBytes())), currentSeq, hopCount, myAddress, group);
-        System.out.println(new String(encryption.encryptData(message.getBytes())));
 
 		DatagramPacket packetToSend = new DatagramPacket(data, data.length, group, port);
 		packetLog.addSendPacket(packetToSend);
@@ -277,6 +275,7 @@ public class Client extends Thread {
 				chatwindow.incoming(chatwindow.pNameList.get(nameIndex.get(i)) + " has left.");
 				chatwindow.disconnect(chatwindow.pNameList.get(nameIndex.get(i)));
 				packetLog.removeDevice(i);
+				logChecker.removeDevice(i);
 				remove.add(i);
 			}
 			else stillAlive.put(i, false);

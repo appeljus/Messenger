@@ -8,7 +8,7 @@ import java.util.List;
 public class LogChecker extends Thread {
 	private Client client;
 	private PacketLog log;
-	private int cannotPrint = 40000;
+	private int[] cannotPrint = {40000,40000,40000,40000};
 
 	public LogChecker(Client client, PacketLog log) {
 		this.client = client;
@@ -25,8 +25,8 @@ public class LogChecker extends Thread {
 					for (int i = lowSeq; i < highSeq; i++) {
 						if (!log.containsReceiveSeq(dn,i)) {
 							holes.add(i);
-							if(i < cannotPrint) cannotPrint = i;
-						} else if (i < cannotPrint) {
+							if(i < cannotPrint[dn]) cannotPrint[dn] = i;
+						} else if (i < cannotPrint[dn]) {
 							DatagramPacket packet = log.getPacket(dn, i);
 							byte[] message = PacketUtils.getMessage(packet);
 							int sequence = PacketUtils.getSequenceNr(packet);
@@ -37,7 +37,7 @@ public class LogChecker extends Thread {
 							client.processPacket(message, sequence, hop, sourceAddress, destinationAddress, length);
 							log.removePacket(dn,i);
 						}
-						else if(i == cannotPrint) {
+						else if(i == cannotPrint[dn]) {
 							DatagramPacket packet = log.getPacket(dn, i);
 							byte[] message = PacketUtils.getMessage(packet);
 							int sequence = PacketUtils.getSequenceNr(packet);
@@ -47,7 +47,7 @@ public class LogChecker extends Thread {
 							int length = PacketUtils.getLength(packet);
 							client.processPacket(message, sequence, hop, sourceAddress, destinationAddress, length);
 							log.removePacket(dn,i);
-							cannotPrint = 40000;
+							cannotPrint[dn] = 40000;
 						}
 					}
 					if (holes.size() != 0) {
@@ -66,5 +66,9 @@ public class LogChecker extends Thread {
 				e.printStackTrace();
 			}
 		}
+	}
+	
+	public void removeDevice(int deviceNr) {
+		cannotPrint[deviceNr] = 40000;
 	}
 }
