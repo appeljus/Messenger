@@ -168,6 +168,7 @@ public class Client extends Thread {
 			int missedI = Integer.parseInt(words[1]);
 			DatagramPacket p = packetLog.getPacketSend(missedI);
 			p.setAddress(sourceAddress);
+			resendPacket(p);
 		}
 
 		else if (txt.startsWith("[FILE]")) {
