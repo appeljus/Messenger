@@ -21,7 +21,7 @@ public class LogChecker extends Thread {
 				int lowSeq = log.getLowestSeq(dn);
 				int highSeq = log.getHighestSeq(dn);
 				if (lowSeq != 40000 && highSeq != -1 && dn != client.getDeviceNr()) {
-					if(lowSeq != 0 && dn == 2) System.out.println("SASA " + lowSeq);
+					System.out.println(lowSeq + " + " + highSeq);
 					List<Integer> holes = new ArrayList<Integer>();
 					for (int i = Math.max(lastPrintedPacket, lowSeq); i < highSeq; i++) {
 						if (!log.containsReceiveSeq(dn,i)) {
@@ -39,8 +39,8 @@ public class LogChecker extends Thread {
 						}
 					}
 					if (holes.size() != 0) {
-						System.out.println("NACK");
 						for (int i = 0; i < holes.size(); i++) {
+							//System.out.println("NACK " + holes.get(i));
 							byte[] msg = ("[NACK] " + holes.get(i) + " DUMMY_WORD")
 									.getBytes();
 							DatagramPacket p = new DatagramPacket(msg,

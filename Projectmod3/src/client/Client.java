@@ -21,7 +21,8 @@ public class Client extends Thread {
 	private InetAddress myAddress;
 	private InetAddress group;
 	private String myName;
-	private List<Boolean> stillAlive = new ArrayList<Boolean>();
+	private HashMap<Integer, Boolean> stillAlive = new HashMap<Integer, Boolean>();
+	private HashMap<Integer, Integer> nameIndex = new HashMap<Integer, Integer>();
 	private Timer timer;
 	private PacketLog packetLog;
 	private ReceiveFile receiveFileInstance;
@@ -38,7 +39,6 @@ public class Client extends Thread {
 		hopCount = 4;
 		chatwindow = c;
 		receiveFileInstance = new ReceiveFile(this);
-		stillAlive.add(true);
 		encryption = new Encryption();
 		encryption.setPassword("Doif");
 		logChecker = new LogChecker(this, packetLog);
@@ -60,6 +60,8 @@ public class Client extends Thread {
 			}
 			byte[] addr = myAddress.getAddress();
 			deviceNr = ((int) addr[3]) & 0xFF;
+			stillAlive.put(deviceNr, true);
+			nameIndex.put(deviceNr, 0);
 			group = InetAddress.getByName("228.5.6.7");
 			s = new MulticastSocket(port);
 			s.joinGroup(group);
@@ -120,16 +122,18 @@ public class Client extends Thread {
 
 		if (txt.startsWith("[BROADCAST]") && !sourceAddress.equals(myAddress)) {
 			String[] words = txt.split(" ");
+			int hisNr = ((int)sourceAddress.getAddress()[3]) & 0xFF;
 			if (words[1].equals(myName)) {
 				this.sendPacket("[NAME_IN_USE]: " + words[1] + " STUFF");
 			}
-			if (chatwindow.pNameList.contains(words[1])) {
-				stillAlive.set(chatwindow.pNameList.indexOf(words[1]), true);
-			} else {
-				chatwindow.updateNames(words[1]);
-				stillAlive.add(true);
+			if(stillAlive.containsKey(hisNr))
+				stillAlive.remove(hisNr);
+			else {
+				chatwindow.pNameList.add(words[1]);
+				int index = chatwindow.pNameList.indexOf(words[1]);
+				nameIndex.put(hisNr, index);
 			}
-
+			stillAlive.put(hisNr, true);
 		} else if (txt.startsWith("[NAME_IN_USE]: ")
 				&& !sourceAddress.equals(myAddress)) {
 			String[] words = txt.split(" ");
@@ -184,17 +188,6 @@ public class Client extends Thread {
 		else if (!sourceAddress.equals(myAddress)) {
 			chatwindow.incoming(txt);
 		}
-
-		/*
-		 * byte[] addrB = sourceAddress.getAddress(); int deviceNr = ((int)
-		 * (addrB[3])) & 0xFF; deviceNr--;
-		 * 
-		 * if (!seqNrs.containsKey(deviceNr)) { seqNrs.put(deviceNr,
-		 * sequenceNr); } else { if (seqNrs.get(deviceNr) + 1 < sequenceNr) {
-		 * for (int i = seqNrs.get(deviceNr) + 1; i < sequenceNr; i++) { String
-		 * msg = "[NACK]: " + i + " DUMMY_WORD "; sendPacket(msg); } }
-		 * seqNrs.put(deviceNr, sequenceNr); }
-		 */
 	}
 
 	public void sendPacket(String message) {
@@ -202,11 +195,9 @@ public class Client extends Thread {
 			chatwindow.incoming(message);
 		}
 
-		byte[] data = PacketUtils.getData((message.getBytes()), currentSeq,
-				hopCount, myAddress, group);
+		byte[] data = PacketUtils.getData((message.getBytes()), currentSeq, hopCount, myAddress, group);
 
-		DatagramPacket packetToSend = new DatagramPacket(data, data.length,
-				group, port);
+		DatagramPacket packetToSend = new DatagramPacket(data, data.length, group, port);
 		packetLog.addSendPacket(packetToSend);
 
 		try {
@@ -256,15 +247,14 @@ public class Client extends Thread {
 	}
 
 	public void checkConnections() {
-		for (int i = 0; i < chatwindow.pNameList.size(); i++) {
-			if (!stillAlive.get(i)) {
-				chatwindow.incoming(chatwindow.pNameList.get(i) + " has left!");
-				chatwindow.disconnect(chatwindow.pNameList.get(i));
+		for(Integer i : stillAlive.keySet()) {
+			if(!stillAlive.get(i)) {
+				chatwindow.incoming(chatwindow.pNameList.get(nameIndex.get(i)));
+				chatwindow.pNameList.remove(nameIndex.get(i));
 				stillAlive.remove(i);
-			} else
-				stillAlive.set(i, false);
+			}
 		}
-		stillAlive.set(0, true);
+		stillAlive.put(deviceNr, true);
 	}
 
 	public void routePacket() {
@@ -295,8 +285,7 @@ public class Client extends Thread {
 					}
 					incrementSeqNr();
 				}
-				if (myAddress.equals(destinationAddress)
-						|| group.equals(destinationAddress)) {
+				if (myAddress.equals(destinationAddress) || group.equals(destinationAddress)) {
 					int devNr = ((int) (sourceAddress.getAddress()[3]) & 0xFF);
 					packetLog.addReceivePacket(devNr, sequence, packet);
 					packetLog.getSizeLog();
