@@ -40,7 +40,13 @@ public class PacketLog {
 
 	public void addReceivePacket(int deviceNr, int seqNr, DatagramPacket packet) {
 		if (logReceived.containsKey(deviceNr)) { 
-			logReceived.get(deviceNr).put(seqNr, packet);
+			if(logReceived.get(deviceNr).size() < sizeLog) {
+				logReceived.get(deviceNr).put(seqNr, packet);
+			}
+			else {
+				logReceived.get(deviceNr).remove(getLowestSeq(deviceNr));
+				logReceived.get(deviceNr).put(seqNr, packet);
+			}
 		} else {
 			HashMap<Integer, DatagramPacket> map = new HashMap<Integer, DatagramPacket>();
 			map.put(seqNr, packet);

@@ -37,11 +37,11 @@ public class PacketUtils {
     }
 
     public static int getSequenceNr(DatagramPacket packet){
-        return (int)packet.getData()[0];
+        return ((int)packet.getData()[0]) & 0xFF;
     }
 
     public static int getHopCount(DatagramPacket packet){
-        return (int)packet.getData()[1];
+        return ((int)packet.getData()[1]) & 0xFF;
     }
 
     public static InetAddress getSourceAddress(DatagramPacket packet){
