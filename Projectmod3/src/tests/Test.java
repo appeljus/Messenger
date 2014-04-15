@@ -23,16 +23,26 @@ public class Test extends Thread {
 	private void basicConnection() {
 		String sentMsg = "Awesome test message";
 		c.addText(c.generateLine(sentMsg));
+		int count = 0;
 		while (lastReceived == null) {
 			try {
 				sleep(200);
 			} catch (InterruptedException e) {
 				System.out.println("HIJ WIL NIET TUKKEN! :O");
 			}
+			count++;
 		}
-		printTestResult("Test for the basic message sending", sentMsg, lastReceived);
+		String result;
+		if (count > 10)
+			result = "NOPE, TIMEOUT!";
+		else
+			result = lastReceived;
+		printTestResult("Test for the basic message sending", sentMsg, result);
+
 		lastReceived = null;
 	}
+	
+	
 
 	// utills here
 
