@@ -168,8 +168,8 @@ public class Client extends Thread {
 		//}
 
 		else if (txt.startsWith("[FILE]")) {
-			byte[] fileBytes = new byte[1003];
-			System.arraycopy(message, 6, fileBytes, 0, 1003);
+			byte[] fileBytes = new byte[1001];
+			System.arraycopy(message, 8, fileBytes, 0, 1001);
 			receiveFileInstance.receiveFile(fileBytes, false, "");
 		}
 
@@ -182,8 +182,8 @@ public class Client extends Thread {
 				} else
 					break;
 			}
-			byte[] file = new byte[1003 - (count - 1)];
-			System.arraycopy(message, 11, file, 0, file.length);
+			byte[] file = new byte[1001 - (count - 1)];
+			System.arraycopy(message, 13, file, 0, file.length);
 			System.arraycopy(message, 6, extBytes, 0, 3);
 			receiveFileInstance.receiveFile(file, true, new String(extBytes));
 		}
