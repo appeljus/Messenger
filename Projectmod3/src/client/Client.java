@@ -269,13 +269,14 @@ public class Client extends Thread {
 
 	public void checkConnections() {
 		for(Integer i : stillAlive.keySet()) {
-			System.out.println(i);
+			System.out.println("DEVL " + i + stillAlive.get(i));
 			if(!stillAlive.get(i)) {
-				chatwindow.incoming(chatwindow.pNameList.get(nameIndex.get(i)));
-				chatwindow.pNameList.remove(nameIndex.get(i));
+				chatwindow.incoming(chatwindow.pNameList.get(nameIndex.get(i)) + " has left.");
+				chatwindow.disconnect(chatwindow.pNameList.get(nameIndex.get(i)));
 				packetLog.removeDevice(i);
 				stillAlive.remove(i);
 			}
+			else stillAlive.put(i, false);
 		}
 		stillAlive.put(deviceNr, true);
 	}
