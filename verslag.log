@@ -1,189 +1,230 @@
-This is TeX, Version 3.1415926 (TeX Live 2013/Debian) (format=tex 2014.4.15)  15 APR 2014 19:05
-**verslag
-(./verslag.tex
-! Undefined control sequence.
-l.1 \documentclass
-                  {article}
-? 
-! Undefined control sequence.
-l.3 \usepackage
-               [dutch]{babel}
-? 
-! Undefined control sequence.
-l.5 \title
-          {Integration Project}
-? 
-! Undefined control sequence.
-l.6 \author
-           {Kimberly Hengst \emph{1305093}\\ Tim Sonderen \emph{1465252}\\ K...
+This is pdfTeX, Version 3.1415926-2.4-1.40.13 (MiKTeX 2.9) (preloaded format=pdflatex 2013.10.29)  15 APR 2014 19:34
+entering extended mode
+**C:/Martijn/UTWENTE/pigeon/verslag.tex
+(C:/Martijn/UTWENTE/pigeon/verslag.tex
+LaTeX2e <2011/06/27>
+Babel <v3.8m> and hyphenation patterns for english, afrikaans, ancientgreek, ar
+abic, armenian, assamese, basque, bengali, bokmal, bulgarian, catalan, coptic, 
+croatian, czech, danish, dutch, esperanto, estonian, farsi, finnish, french, ga
+lician, german, german-x-2012-05-30, greek, gujarati, hindi, hungarian, iceland
+ic, indonesian, interlingua, irish, italian, kannada, kurmanji, latin, latvian,
+ lithuanian, malayalam, marathi, mongolian, mongolianlmc, monogreek, ngerman, n
+german-x-2012-05-30, nynorsk, oriya, panjabi, pinyin, polish, portuguese, roman
+ian, russian, sanskrit, serbian, slovak, slovenian, spanish, swedish, swissgerm
+an, tamil, telugu, turkish, turkmen, ukenglish, ukrainian, uppersorbian, usengl
+ishmax, welsh, loaded.
+("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\base\article.cls"
+Document Class: article 2007/10/19 v1.4h Standard LaTeX document class
+("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\base\size10.clo"
+File: size10.clo 2007/10/19 v1.4h Standard LaTeX file (size option)
+)
+\c@part=\count79
+\c@section=\count80
+\c@subsection=\count81
+\c@subsubsection=\count82
+\c@paragraph=\count83
+\c@subparagraph=\count84
+\c@figure=\count85
+\c@table=\count86
+\abovecaptionskip=\skip41
+\belowcaptionskip=\skip42
+\bibindent=\dimen102
+)
+("C:\Program Files (x86)\MiKTeX 2.9\tex\generic\babel\babel.sty"
+Package: babel 2008/07/08 v3.8m The Babel package
 
-? 
-! Undefined control sequence.
-l.6 \author{Kimberly Hengst \emph
-                                 {1305093}\\ Tim Sonderen \emph{1465252}\\ K...
+*************************************
+* Local config file bblopts.cfg used
+*
+("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\00miktex\bblopts.cfg"
+File: bblopts.cfg 2006/07/31 v1.0 MiKTeX 'babel' configuration
+)
+("C:\Program Files (x86)\MiKTeX 2.9\tex\generic\babel\dutch.ldf"
+Language: dutch 2005/03/30 v3.8i Dutch support from the babel system
 
-? 
-! Argument of \\ has an extra }.
-<inserted text> 
-                \par 
-<to be read again> 
-                   }
-l.6 ...{1490443}\\ Martijn de Bijl \emph{1470108}}
-                                                  
-? 
-Runaway argument?
- Tim Sonderen \emph {1465252}\\ Kevin Hetterscheid \emph {1490443}\\ \ETC.
-! Paragraph ended before \\ was complete.
-<to be read again> 
-                   \par 
-<to be read again> 
-                   }
-l.6 ...{1490443}\\ Martijn de Bijl \emph{1470108}}
-                                                  
-? 
-! Undefined control sequence.
-l.7 \date
-         {\today}
-? 
-! Undefined control sequence.
-l.7 \date{\today
-                }
-? 
-! Undefined control sequence.
-l.9 \begin
-          {document}
-? 
-! Undefined control sequence.
-l.11 \maketitle
-               
-? 
-! Undefined control sequence.
-l.13 \newpage
-             
-? 
-! Undefined control sequence.
-l.15 \section
-             *{Voor gebruik}
-? 
-! Undefined control sequence.
-l.16 \emph
-          {Onze applicatie maakt gebruik van een externe library. Om te code...
+("C:\Program Files (x86)\MiKTeX 2.9\tex\generic\babel\babel.def"
+File: babel.def 2008/07/08 v3.8m Babel common definitions
+\babel@savecnt=\count87
+\U@D=\dimen103
+)
+Package babel Info: Making " an active character on input line 132.
+))
+("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\amsmath\amsmath.sty"
+Package: amsmath 2013/01/14 v2.14 AMS math features
+\@mathmargin=\skip43
 
-? 
-! Undefined control sequence.
-l.18 \newpage
-             
-? 
-! Undefined control sequence.
-l.20 \tableofcontents
-                     
-? 
-! Undefined control sequence.
-l.22 \section
-             {Inleiding}
-? 
-Missing character: There is no ^^c3 in font cmr10!
-Missing character: There is no ^^a9 in font cmr10!
-Missing character: There is no ^^c3 in font cmr10!
-Missing character: There is no ^^a9 in font cmr10!
-Missing character: There is no ^^c3 in font cmr10!
-Missing character: There is no ^^ab in font cmr10!
-Runaway argument?
- In het verslag zullen we het proces van het ontwerpen van de applica\ETC.
-! Paragraph ended before \\ was complete.
-<to be read again> 
-                   \par 
-l.26 
-     
-? 
-! Undefined control sequence.
-l.27 \newpage
-             
-? 
-! Undefined control sequence.
-l.29 \section
-             {Ontwerp van de applicatie}
-? 
-! Undefined control sequence.
-l.32 \subsection
-                {Pakketjes}
-? 
-Runaway argument?
- 
-! Paragraph ended before \\ was complete.
-<to be read again> 
-                   \par 
-l.34 
-     
-? 
-Runaway argument?
- \begin {tabular}{|c|c|c|c|} \hline Byte array data & lengte van data\ETC.
-! Paragraph ended before \\ was complete.
-<to be read again> 
-                   \par 
-l.44 
-     
-? 
-Runaway argument?
- \begin {tabular}{| c | c | c | c c |} \hline \multicolumn {5}{|c|}{B\ETC.
-! Paragraph ended before \\ was complete.
-<to be read again> 
-                   \par 
-l.57 
-     
-? 
-Runaway argument?
- 
-! Paragraph ended before \\ was complete.
-<to be read again> 
-                   \par 
-l.60 
-     
-? 
-! Undefined control sequence.
-l.61 \begin
-           {tabular}{l  p{6cm}l }
-? 
-! Misplaced alignment tab character &.
-l.62 Bericht &
-               Functionaliteit \\
-? 
-Runaway argument?
- \hline $[FILE]$ & Geeft aan dat het bericht een byte array van een b\ETC.
-! Paragraph ended before \\ was complete.
-<to be read again> 
-                   \par 
-l.74 
-     
-? 
-! Undefined control sequence.
-l.75 \subsection
-                {Bestanden verzenden}
-? 
-! Undefined control sequence.
-l.78 \subsection
-                {Pakket verlies}
-? 
-Runaway argument?
- We doen het om deze manier, omdat er alleen een bericht gestuurd wor\ETC.
-! Paragraph ended before \\ was complete.
-<to be read again> 
-                   \par 
-l.81 
-     
-? 
-! Undefined control sequence.
-l.82 \subsection
-                {Priv\'{e} chat}
-? 
-! Undefined control sequence.
-l.85 \subsection
-                {User interface}
-? 
-[1]
-! Undefined control sequence.
-l.87 \begin
-           {itemize}
-? 
-[2] )
-Output written on verslag.dvi (2 pages, 7112 bytes).
+For additional information on amsmath, use the `?' option.
+("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\amsmath\amstext.sty"
+Package: amstext 2000/06/29 v2.01
+
+("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\amsmath\amsgen.sty"
+File: amsgen.sty 1999/11/30 v2.0
+\@emptytoks=\toks14
+\ex@=\dimen104
+))
+("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\amsmath\amsbsy.sty"
+Package: amsbsy 1999/11/29 v1.2d
+\pmbraise@=\dimen105
+)
+("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\amsmath\amsopn.sty"
+Package: amsopn 1999/12/14 v2.01 operator names
+)
+\inf@bad=\count88
+LaTeX Info: Redefining \frac on input line 210.
+\uproot@=\count89
+\leftroot@=\count90
+LaTeX Info: Redefining \overline on input line 306.
+\classnum@=\count91
+\DOTSCASE@=\count92
+LaTeX Info: Redefining \ldots on input line 378.
+LaTeX Info: Redefining \dots on input line 381.
+LaTeX Info: Redefining \cdots on input line 466.
+\Mathstrutbox@=\box26
+\strutbox@=\box27
+\big@size=\dimen106
+LaTeX Font Info:    Redeclaring font encoding OML on input line 566.
+LaTeX Font Info:    Redeclaring font encoding OMS on input line 567.
+\macc@depth=\count93
+\c@MaxMatrixCols=\count94
+\dotsspace@=\muskip10
+\c@parentequation=\count95
+\dspbrk@lvl=\count96
+\tag@help=\toks15
+\row@=\count97
+\column@=\count98
+\maxfields@=\count99
+\andhelp@=\toks16
+\eqnshift@=\dimen107
+\alignsep@=\dimen108
+\tagshift@=\dimen109
+\tagwidth@=\dimen110
+\totwidth@=\dimen111
+\lineht@=\dimen112
+\@envbody=\toks17
+\multlinegap=\skip44
+\multlinetaggap=\skip45
+\mathdisplay@stack=\toks18
+LaTeX Info: Redefining \[ on input line 2665.
+LaTeX Info: Redefining \] on input line 2666.
+)
+(C:\Martijn\UTWENTE\pigeon\verslag.aux)
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 9.
+LaTeX Font Info:    ... okay on input line 9.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 9.
+LaTeX Font Info:    ... okay on input line 9.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 9.
+LaTeX Font Info:    ... okay on input line 9.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 9.
+LaTeX Font Info:    ... okay on input line 9.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 9.
+LaTeX Font Info:    ... okay on input line 9.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 9.
+LaTeX Font Info:    ... okay on input line 9.
+ [1
+
+{C:/ProgramData/MiKTeX/2.9/pdftex/config/pdftex.map}] [2] (C:\Martijn\UTWENTE\p
+igeon\verslag.toc)
+\tf@toc=\write3
+Missing character: There is no Ã in font cmr10!
+Missing character: There is no © in font cmr10!
+Missing character: There is no Ã in font cmr10!
+Missing character: There is no © in font cmr10!
+Missing character: There is no Ã in font cmr10!
+Missing character: There is no « in font cmr10!
+ [3]
+Underfull \hbox (badness 10000) in paragraph at lines 33--34
+
+ []
+
+
+Overfull \hbox (43.13957pt too wide) in paragraph at lines 36--44
+[] 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 36--44
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 54--56
+
+ []
+
+
+Overfull \hbox (65.19499pt too wide) in paragraph at lines 57--69
+[]
+ []
+
+[4]
+Underfull \hbox (badness 10000) in paragraph at lines 70--72
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 88--89
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 92--95
+
+ []
+
+[5]
+Underfull \hbox (badness 10000) in paragraph at lines 97--98
+
+ []
+
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 102.
+
+("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\base\omscmr.fd"
+File: omscmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
+)
+LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10> not available
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 102.
+ [6]
+Underfull \hbox (badness 10000) in paragraph at lines 132--134
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 135--136
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 138--139
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 141--147
+
+ []
+
+[7] [8] (C:\Martijn\UTWENTE\pigeon\verslag.aux) ) 
+Here is how much of TeX's memory you used:
+ 1207 strings out of 493921
+ 14138 string characters out of 3144869
+ 71023 words of memory out of 3000000
+ 4536 multiletter control sequences out of 15000+200000
+ 9716 words of font info for 35 fonts, out of 3000000 for 9000
+ 841 hyphenation exceptions out of 8191
+ 27i,14n,24p,1059b,236s stack positions out of 5000i,500n,10000p,200000b,50000s
+<C:/Program Files (x86)/MiKTeX
+ 2.9/fonts/type1/public/amsfonts/cm/cmbx10.pfb><C:/Program Files (x86)/MiKTeX 2
+.9/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Program Files (x86)/MiKTeX 2.9
+/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Program Files (x86)/MiKTeX 2.9/f
+onts/type1/public/amsfonts/cm/cmr10.pfb><C:/Program Files (x86)/MiKTeX 2.9/font
+s/type1/public/amsfonts/cm/cmr12.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/t
+ype1/public/amsfonts/cm/cmr17.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type
+1/public/amsfonts/cm/cmsy10.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/
+public/amsfonts/cm/cmti10.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/pu
+blic/amsfonts/cm/cmti12.pfb>
+Output written on verslag.pdf (8 pages, 133475 bytes).
+PDF statistics:
+ 65 PDF objects out of 1000 (max. 8388607)
+ 0 named destinations out of 1000 (max. 500000)
+ 1 words of extra memory for PDF output out of 10000 (max. 10000000)
+

@@ -1,7 +1,7 @@
 \documentclass{article}
 
 \usepackage[dutch]{babel}
-
+\usepackage{amsmath}
 \title{Integration Project}
 \author{Kimberly Hengst \emph{1305093}\\ Tim Sonderen \emph{1465252}\\ Kevin Hetterscheid \emph{1490443}\\ Martijn de Bijl \emph{1470108}}
 \date{\today}
@@ -43,19 +43,31 @@ Byte array data & lengte van data & IP-adres verzender of ontvanger & Poort numm
 \\
 
 \noindent Het byte array van de data ziet er dan als volgt uit:
-\\
-\begin{tabular}{| c | c | c | c | c c |}
+\begin{align*}
+\begin{tabular}[center]{| c | c |}
 \hline
-\multicolumn{6}{|c|}{Byte array data}  \\
+\multicolumn{2}{|c|}{Byte array data}  \\
 \hline
-\multicolumn{5}{|c|}{Header} & Bericht \\
-\hline
-Sequence nummer & Hop teller & IP-adres verzender & IP-adres ontvanger & Lengte bericht &\phantom{bericht} \\
+Header & Bericht \\
 \hline
 \end{tabular}
+\end{align*}
 \\
 
-\noindent We gebruiken pakketten niet alleen voor het verzenden van berichten uit de GUI, maar ook voor een aantal andere functionaliteiten. De functionaliteiten worden dan in het bericht van de data van het packet toegevoegd. Als het bericht dan met een bepaalde string begint, wordt hiermee een functionaliteit uitgevoerd. De volgende berichten gebruiken wij:
+De header ziet er dan als volgt uit:
+\\
+\begin{tabular}{| c | c | c | c | c |}
+\hline
+\multicolumn{5}{|c|}{Header}  \\
+\hline
+Sequence nummer & Hop teller & IP-adres verzender & IP-adres ontvanger & Lengte bericht \\
+\hline
+\end{tabular}
+\phantom{YOLO}
+\\
+\noindent We gebruiken pakketten niet alleen voor het verzenden van berichten uit de GUI, maar ook voor een aantal andere functionaliteiten. De functionaliteiten worden dan in het bericht van de data van het packet toegevoegd. Als het bericht dan met een bepaalde string begint, wordt hiermee een functionaliteit uitgevoerd.
+\newpage
+De volgende berichten gebruiken wij:
 \\
 
 \begin{tabular}{l  p{6cm}l }
@@ -93,7 +105,7 @@ De gebruiker kan via de user interface met het programma communiceren. De interf
 \item Een knop voor priv\'{e} chat
 \item Een knop voor het afsluiten van het applicatie
 \end{itemize}
-\\
+
 Via deze interface is het makkelijk met de applicatie communiceren. Alle functionaliteiten kunnen via de interface aangeroepen worden. 
 
 \section{Beveiling}
