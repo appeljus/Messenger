@@ -278,8 +278,10 @@ public class Client extends Thread {
 		List<Integer> remove = new ArrayList<Integer>();
 		for (Integer i : stillAlive.keySet()) {
 			if (!stillAlive.get(i)) {
-				chatwindow.incoming(chatwindow.pNameList.get(nameIndex.get(i))+ " has left.");
-				chatwindow.disconnect(chatwindow.pNameList.get(nameIndex.get(i)));
+				if(nameIndex.containsKey(i)) {
+					chatwindow.incoming(chatwindow.pNameList.get(nameIndex.get(i))+ " has left.");
+					chatwindow.disconnect(chatwindow.pNameList.get(nameIndex.get(i)));
+				}
 				packetLog.removeDevice(i);
 				logChecker.removeDevice(i);
 				remove.add(i);
@@ -342,7 +344,7 @@ public class Client extends Thread {
 					}
 				}
 				if(myAddress.equals(destinationAddress) || group.equals(destinationAddress)){
-					packetLog.addReceivePacket(devNr, sequence, packet);
+					if(hop == 0) packetLog.addReceivePacket(devNr, sequence, packet);
 				}
 			}
 		} catch (IOException e) {
