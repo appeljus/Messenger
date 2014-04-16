@@ -29,7 +29,7 @@ public class Client extends Thread {
 	public ReceiveFile receiveFileInstance;
 	private int currentSeq;
 	private int hopCount;
-	private Encryption encryption;
+	private Encryption2 encryption;
 	private int deviceNr;
 	private LogChecker logChecker;
 
@@ -40,8 +40,7 @@ public class Client extends Thread {
 		hopCount = 3;
 		chatwindow = c;
 		receiveFileInstance = new ReceiveFile(this);
-		encryption = new Encryption();
-		encryption.setPassword("Doif");
+		encryption = new Encryption2();
 		logChecker = new LogChecker(this, packetLog);
 		Thread t = new Thread(logChecker);
 		t.start();
@@ -116,14 +115,14 @@ public class Client extends Thread {
 		return chatwindow;
 	}
 
-	public Encryption getEncryption() {
+	public Encryption2 getEncryption() {
 		return encryption;
 	}
 
 	public void processPacket(byte[] message, int sequenceNr, int hopCount,
 			InetAddress sourceAddress, InetAddress destinationAddress,
 			int lengte) {
-		byte[] decrypted = encryption.decryptData(message);
+		byte[] decrypted = encryption.decrypt(message);
 		//String txt = new String((message));
 		// Of als encryption is toegevoegd:
 		String txt = new String(decrypted);
@@ -223,7 +222,7 @@ public class Client extends Thread {
 		//byte[] data = PacketUtils.getData((message.getBytes()), currentSeq,
 			//	hopCount, myAddress, group);
 		// Of als encryption toegevoegd is:
-		byte[] data = PacketUtils.getData((encryption.encryptData(message.getBytes())),currentSeq, hopCount, myAddress, group);
+		byte[] data = PacketUtils.getData((encryption.encrypt(message.getBytes())),currentSeq, hopCount, myAddress, group);
 
 		DatagramPacket packetToSend = new DatagramPacket(data, data.length,
 				group, port);
@@ -240,7 +239,7 @@ public class Client extends Thread {
 
 	public void sendPacket(byte[] message, boolean isFile) {
 		//byte[] data = PacketUtils.getData(message, currentSeq, hopCount,myAddress, group);
-		byte[] data = PacketUtils.getData((encryption.encryptData(message)),currentSeq, hopCount, myAddress, group);
+		byte[] data = PacketUtils.getData((encryption.encrypt(message)),currentSeq, hopCount, myAddress, group);
 		DatagramPacket packetToSend = new DatagramPacket(data, data.length,
 				group, port);
 		packetLog.addSendPacket(packetToSend);
@@ -306,7 +305,7 @@ public class Client extends Thread {
 			InetAddress sourceAddress = PacketUtils.getSourceAddress(packet);
 			InetAddress destinationAddress = PacketUtils.getDistinationAddress(packet);
 			int devNr = ((int) (sourceAddress.getAddress()[3]) & 0xFF);
-			String txt = new String(encryption.decryptData(message));
+			String txt = new String(encryption.decrypt(message));
 			if (txt.startsWith("[NACK]")) {
 				String[] words = txt.split(" ");
 				int missedI = Integer.parseInt(words[1]);
