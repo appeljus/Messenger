@@ -69,7 +69,7 @@ public class ChatWindow extends JFrame implements KeyListener, ActionListener,
 	Dimension buttonDim = new Dimension(96, 64);
 	Dimension ptDim = new Dimension(96, 16);
 	Dimension menuBarDim = new Dimension(96, 576);
-	
+
 	Clip clip;
 
 	public ChatWindow(String name, Test t) {
@@ -196,7 +196,7 @@ public class ChatWindow extends JFrame implements KeyListener, ActionListener,
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		cont.add(mainFrame);
 		setVisible(true);
-		typeArea.requestFocusInWindow();		
+		typeArea.requestFocusInWindow();
 	}
 
 	public void addText(String txt) {
@@ -276,7 +276,7 @@ public class ChatWindow extends JFrame implements KeyListener, ActionListener,
 			pNameList.remove(index);
 		}
 		int index = doIHaveWindow(name);
-		if (index >= 0){
+		if (index >= 0) {
 			pChats.get(index).dispose();
 			pChats.remove(index);
 		}
@@ -313,15 +313,27 @@ public class ChatWindow extends JFrame implements KeyListener, ActionListener,
 	public void keyTyped(KeyEvent arg0) {
 		// TODO Auto-generated method stub
 		typeArea.requestFocus();
-	}// dfsdlg
-
+	}
+	
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		if (arg0.getSource() == this.exit) {
 			System.exit(0);
 		} else if (arg0.getSource() == this.send) {
 			String[] words = typeArea.getText().split(" ");
-			if (!typeArea.getText().equals("")
+			if(words[0].equals("/count")){
+				int i = 0;
+				try{
+				i = Integer.parseInt(words[1]);
+				} catch(Exception e){
+					i = 64;
+				}
+				for(int j = 0; j < i; j++){
+					this.addText(("Counter - ") + j);
+				}
+				
+			}
+			else if (!typeArea.getText().equals("")
 					&& !(words.length == 2 && words[0].equals("/w"))
 					&& typeArea.getText().length() <= 1001) {
 				String txt = typeArea.getText();
@@ -372,10 +384,11 @@ public class ChatWindow extends JFrame implements KeyListener, ActionListener,
 	public void mouseReleased(MouseEvent arg0) {
 
 	}
-	
-	public static void main(String[] args){
+
+	public static void main(String[] args) {
 		String name = JOptionPane.showInputDialog("What is your name?");
-		if(name != null) new ChatWindow(name,null);
+		if (name != null)
+			new ChatWindow(name, null);
 	}
 
 	private class MyListRenderer extends DefaultListCellRenderer {
