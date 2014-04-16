@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
+import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
@@ -54,7 +55,8 @@ public class ReceiveFile extends Thread {
 			String path = "C:";
 			if (returnVal == JFileChooser.APPROVE_OPTION) {
 				path = fc.getSelectedFile().getPath();
-				client.getChatWindow().incoming("Saved file at: " + path + "." + ext);
+				client.getChatWindow().incoming(
+						"Saved file at: " + path + "." + ext);
 				System.out.println(new String(file));
 				try {
 					fOutS = new FileOutputStream(path + "." + ext);
@@ -66,5 +68,5 @@ public class ReceiveFile extends Thread {
 				}
 			}
 		}
-		}
+	}
 }

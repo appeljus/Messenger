@@ -374,6 +374,11 @@ public class ChatWindow extends JFrame implements KeyListener, ActionListener,
 		// TODO Auto-generated method stub
 
 	}
+	
+	public static void main(String[] args){
+		String name = JOptionPane.showInputDialog("What is your name?");
+		if(name != null) new ChatWindow(name,null);
+	}
 
 	private class MyListRenderer extends DefaultListCellRenderer {
 		/**
@@ -406,5 +411,4 @@ public class ChatWindow extends JFrame implements KeyListener, ActionListener,
 			return (this);
 		}
 	}
-
 }

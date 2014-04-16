@@ -1,7 +1,6 @@
 package client;
 
 import GUI.ChatWindow;
-import GUI.LoginWindow;
 
 import java.io.File;
 import java.io.IOException;
@@ -11,6 +10,8 @@ import java.net.MulticastSocket;
 import java.net.NetworkInterface;
 import java.net.UnknownHostException;
 import java.util.*;
+
+import javax.swing.JOptionPane;
 
 import tests.Echo;
 
@@ -147,7 +148,8 @@ public class Client extends Thread {
 			String[] words = txt.split(" ");
 			if (myName.equals(words[1])) {
 				chatwindow.dispose();
-				new LoginWindow();
+				String name = JOptionPane.showInputDialog("What is your name?");
+				if(name != null) new ChatWindow(name,null);
 				s.close();
 				timer.cancel();
 
