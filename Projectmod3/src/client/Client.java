@@ -16,7 +16,7 @@ import tests.Echo;
 
 public class Client extends Thread {
 
-	private ChatWindow chatwindow;
+	public ChatWindow chatwindow;
 	private static final int port = 4242;
 	private MulticastSocket s;
 	private InetAddress myAddress;
