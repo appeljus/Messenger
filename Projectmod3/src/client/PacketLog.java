@@ -7,20 +7,21 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Created by Martijn on 11-4-14.
  */
 public class PacketLog {
 
-	private volatile HashMap<Integer, DatagramPacket> logSend;
-	private volatile HashMap<Integer, HashMap<Integer, DatagramPacket>> logReceived;
+	private ConcurrentHashMap<Integer, DatagramPacket> logSend;
+	private ConcurrentHashMap<Integer, HashMap<Integer, DatagramPacket>> logReceived;
 	private static final int sizeLog = 128;
 	private int[] lastSeq = {-1, -1, -1, -1, -1};
 
 	public PacketLog() {
-		logSend = new HashMap<Integer, DatagramPacket>();
-		logReceived = new HashMap<Integer, HashMap<Integer, DatagramPacket>>();
+		logSend = new ConcurrentHashMap<Integer, DatagramPacket>();
+		logReceived = new ConcurrentHashMap<Integer, HashMap<Integer, DatagramPacket>>();
 	}
 
 	public boolean hasDevice(int deviceNr) {
@@ -92,7 +93,8 @@ public class PacketLog {
 	}
 
 	public boolean containsReceiveSeq(int deviceNr, int sqc) {
-		return logReceived.get(deviceNr).containsKey(sqc);
+		if(!logReceived.containsKey(deviceNr)) return false;
+		else return logReceived.get(deviceNr).containsKey(sqc);
 	}
 
 	public int getSizeLog() {
@@ -102,7 +104,7 @@ public class PacketLog {
 	public int getLowestSeq(int deviceNr) {
 		if (logReceived.containsKey(deviceNr)) {
 			int lowSeq = 40000;
-			Iterator i = logReceived.get(deviceNr).keySet().iterator();
+			Iterator<Integer> i = logReceived.get(deviceNr).keySet().iterator();
 			while(i.hasNext()) {
 				int seq = (int)i.next();
 				if(seq < lowSeq)
@@ -116,7 +118,7 @@ public class PacketLog {
 	public int getHighestSeq(int deviceNr) {
 		if (logReceived.containsKey(deviceNr)) {
 			int highSeq = -1;
-			Iterator i = logReceived.get(deviceNr).keySet().iterator();
+			Iterator<Integer> i = logReceived.get(deviceNr).keySet().iterator();
 			while(i.hasNext()) {
 				int seq = (int)i.next();
 				if(seq > highSeq)
@@ -127,7 +129,7 @@ public class PacketLog {
 		return -1;
 	}
 
-	private Integer lowestSqc(HashMap<Integer, DatagramPacket> log) {
+	private Integer lowestSqc(ConcurrentHashMap<Integer, DatagramPacket> log) {
 		Set<Integer> keySet = log.keySet();
 		return (Integer) Collections.min(keySet);
 	}
