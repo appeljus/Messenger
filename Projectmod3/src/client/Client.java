@@ -37,7 +37,7 @@ public class Client extends Thread {
 		myName = name;
 		packetLog = new PacketLog();
 		currentSeq = 1;
-		hopCount = 1;
+		hopCount = 2;
 		chatwindow = c;
 		receiveFileInstance = new ReceiveFile(this);
 		encryption = new Encryption();
@@ -325,7 +325,7 @@ public class Client extends Thread {
 				int missedI = Integer.parseInt(words[1]);
 				logChecker.seqGone(devNr, missedI);
 			} else if (sourceAddress.getHostAddress().startsWith("192.168.5.") || sourceAddress.getHostAddress().startsWith("228.5.6.7")) {
-				if(!myAddress.equals(destinationAddress) && !group.equals(destinationAddress)) {
+				if(!myAddress.equals(destinationAddress)) {
 					if(myAddress.equals(sourceAddress)) {
 						return;
 					}
@@ -345,7 +345,7 @@ public class Client extends Thread {
 						return;
 					}
 				}
-				else {
+				else if(myAddress.equals(destinationAddress) || group.equals(destinationAddress)){
 					if(hop == 0) {
 						packetLog.addReceivePacket(devNr, sequence, packet);
 					}
