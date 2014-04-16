@@ -56,6 +56,17 @@ public class PersonalChat extends JFrame implements KeyListener, ActionListener 
 		mainFrame.setBackground(Color.DARK_GRAY);
 		mainFrame.setLayout(new BorderLayout());
 		mainFrame.addKeyListener(this);
+		
+		this.addWindowListener(new WindowAdapter()
+		{
+		    public void windowClosing(WindowEvent e)
+		    {
+				int index = chatWindow.doIHaveWindow(hisName);
+				if (index >= 0) {
+					chatWindow.pChats.remove(index);
+				}
+		    }
+		});
 
 		sendBar = new JPanel();
 		sendBar.setBackground(Color.DARK_GRAY);

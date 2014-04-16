@@ -254,7 +254,7 @@ public class ChatWindow extends JFrame implements KeyListener, ActionListener,
 		// incoming(sender + ": " + txt);
 	}
 
-	private int doIHaveWindow(String target) {
+	public int doIHaveWindow(String target) {
 		int ret = -1;
 		for (int i = 0; i < pChats.size(); i++) {
 			if (pChats.get(i).getTarget().equals(target)) {
