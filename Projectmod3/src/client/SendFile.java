@@ -75,7 +75,7 @@ public class SendFile implements Runnable {
 		System.out.println(tagData.length);
 		
 		byte[] data3 = new byte[tagData.length + data.length];
-		data[j] = (byte) 255;
+		if(data.length < j) data[j] = (byte) 255;
 		
 		System.arraycopy(tagData, 0, data3, 0, tagData.length);
 		System.arraycopy(data, 0, data3, tagData.length, data.length);
