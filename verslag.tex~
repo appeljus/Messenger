@@ -124,29 +124,21 @@ Voor een aantal eisen voor de applicatie hebben we test cases geschreven en uitg
 \end{itemize}
 
 \subsection{Test cases}
-\subsubsection{Verzenden berichten & Pakket verlies}
-We verwachten van de applicatie dat elk bericht wat door een gebruiker in de GUI vestuurd wordt, ook verzonden wordt, en aankomt bij de andere gebruikers. Ook moeten verloren pakketten gedecteerd worden, en daarna opnieuw verstuurd worden. \\
-Om dit te testen, hebben we een klasse geschreven, die een aantal berichten stuurt. Deze berichten zijn oplopend, bijvoorbeeld 0 tot 99, en worden snel achter elkaar verstuurd. Hierdoor worden een aantal elementen tegelijk getest:
-\begin{itemize}
-\item Berichten worden verstuurd
-\item Berichten komen aan
-\item In de goede volgorde
-\item Pakketverlies wordt gedecteerd
-\item Verloren pakketten worden opnieuw verstuurd
-\end{itemize} \\
-
+\subsubsection{Verzenden berichten}
+We verwachten van de applicatie dat elk bericht wat door een gebruiker in de GUI vestuurd wordt, ook verzonden wordt, en aankomt bij de andere gebruikers. \\
+Om dit te testen, hebben we een klasse geschreven, die een aantal berichten stuurt. Deze berichten zijn oplopend, bijvoorbeeld 0 tot 99, en worden snel achter elkaar verstuurd \\
 
 \subsubsection{Multi-hop}
 We verwachten dat de applicatie berichten doorstuurt, die binnen komen. \\
 Om dit te testen proberen we ons te verspreiden, zodat twee individuelen nodes elkaars berichten niet meer ontvangen, maar als een node er tussen in gaat staan, die de berichten doorstuurt, de andere twee elkaars berichten weer binnenkrijgt. Doordat de middelste node de berichten doorstuurt. \\
+\subsubsection{Pakket verlies opvangen}
+We verwachten dat de applicatie verloren pakketjes detecteerd, en ervoor zorgt dat deze weer opnieuw verzonden worden. \\
 
 \subsubsection{Beveiliging}
 We verwachten van de applicatie dat de berichten of data uit pakketten versleuteld worden. \\
-Om dit te testen kijken we naar de berichten na de codering. Als het bericht niet direct hieruit gelezen kan worden, is de codering geslaagd. Het is echter zeer makkelijk als een aantal berichten onderschept zijn, om de sleutel te achterhalen. \\
 
 \subsubsection{Bestanden versturen}
 We verwachten van de applicatie dat bestanden verstuurd kunenn worden, en indien groter dan wat er in \'{e}\'{e}n pakket, dat het bestand verdeeld wordt over meerdere pakketten. \\
-Om dit te testen, versturen we een aantal bestanden van verschillende groottes. 
 %Voor elke caye moet beschreven zijn:
 %		Wat je van het systeem verwacht
 %		Wat de preciese test opstelling is. Aan de hand hiervan moet de test herhaal kunnen worden
