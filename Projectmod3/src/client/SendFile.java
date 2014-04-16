@@ -41,6 +41,11 @@ public class SendFile implements Runnable {
 
 	@Override
 	public void run() {
+		if(ext.length() > 3 || ext.length() < 1){
+			c.getChatWindow().incoming("Sorry, we do not support this kind of file.");
+			return;
+		}
+		c.getChatWindow().incoming("Sending file..");
 		byte[] data = new byte[1001];
 		byte[] tagData = new byte[11];
 		int j = 0;
@@ -79,6 +84,7 @@ public class SendFile implements Runnable {
 		System.out.println(new String(data3));
 		
 		c.sendPacket(data3, true);
+		c.getChatWindow().incoming("File sent!");
 	}
 
 }
