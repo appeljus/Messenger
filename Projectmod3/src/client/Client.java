@@ -325,9 +325,7 @@ public class Client extends Thread {
 				int missedI = Integer.parseInt(words[1]);
 				logChecker.seqGone(devNr, missedI);
 			} else if (sourceAddress.getHostAddress().startsWith("192.168.5.") || sourceAddress.getHostAddress().startsWith("228.5.6.7")) {
-				if (packetLog.containsReceiveSeq(devNr, sequence)) {
-					return;
-				} else if (!myAddress.equals(destinationAddress) && hop != 0) {
+				if (!packetLog.containsSendSeq(sequence) && !myAddress.equals(destinationAddress) && hop != 0) {
 					hop--;
 					if(devNr != deviceNr) System.out.println("IK HOP " + devNr + " + " + hop);
 					byte[] pData = PacketUtils.getData(message, sequence, hop,sourceAddress, destinationAddress);
@@ -340,7 +338,7 @@ public class Client extends Thread {
 					}
 					incrementSeqNr();
 				}
-				if (myAddress.equals(destinationAddress) || group.equals(destinationAddress)) {
+				if (!packetLog.containsReceiveSeq(devNr, sequence) && (myAddress.equals(destinationAddress) || group.equals(destinationAddress))) {
 					packetLog.addReceivePacket(devNr, sequence, packet);
 				}
 			}
