@@ -325,7 +325,7 @@ public class Client extends Thread {
 				int missedI = Integer.parseInt(words[1]);
 				logChecker.seqGone(devNr, missedI);
 			} else if (sourceAddress.getHostAddress().startsWith("192.168.5.") || sourceAddress.getHostAddress().startsWith("228.5.6.7")) {
-				if(!myAddress.equals(destinationAddress)) {
+				if(!myAddress.equals(destinationAddress) && !group.equals(destinationAddress)) {
 					if(myAddress.equals(sourceAddress)) {
 						return;
 					}
