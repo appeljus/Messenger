@@ -107,6 +107,7 @@ public class Client extends Thread {
 
 	public synchronized void incrementSeqNr() {
 		currentSeq++;
+		System.out.println(currentSeq);
 		if(currentSeq == 256) {
 			currentSeq = 0;
 		}
@@ -296,6 +297,7 @@ public class Client extends Thread {
 			int hop = PacketUtils.getHopCount(packet);
 			InetAddress sourceAddress = PacketUtils.getSourceAddress(packet);
 			InetAddress destinationAddress = PacketUtils.getDistinationAddress(packet);
+			int devNr = ((int) (sourceAddress.getAddress()[3]) & 0xFF);
 			String txt = new String(message);
 			if(sequence == 0 && destinationAddress.equals(myAddress)) {
 				if(txt.startsWith("[NACK]")) {
@@ -303,12 +305,18 @@ public class Client extends Thread {
 					int missedI = Integer.parseInt(words[1]);
 					DatagramPacket p = packetLog.getPacketSend(missedI);
 					if(p == null) {
-						sendPacket("[MSG_LOST]");
+						byte[] data2 = PacketUtils.getData(("[MSG_LOST] " + missedI + " DUMMY_WORD").getBytes(), 0, getHopCount(), getMyAddress(), sourceAddress);
+						p = new DatagramPacket(data2, data2.length, sourceAddress, getPort());
 					}
 					else {
 						p.setAddress(sourceAddress);
-						resendPacket(p);
 					}
+					resendPacket(p);
+				}
+				else if(txt.startsWith("[MSG_LOST]")) {
+					String[] words = txt.split(" ");
+					int missedI = Integer.parseInt(words[1]);
+					logChecker.seqGone(devNr,missedI); 
 				}
 			}
 			if (sourceAddress.getHostAddress().startsWith("192.168.5.") || sourceAddress.getHostAddress().startsWith("228.5.6.7")) {
@@ -328,7 +336,6 @@ public class Client extends Thread {
 					incrementSeqNr();
 				}
 				if (myAddress.equals(destinationAddress) || group.equals(destinationAddress)) {
-					int devNr = ((int) (sourceAddress.getAddress()[3]) & 0xFF);
 					packetLog.addReceivePacket(devNr, sequence, packet);
 				}
 			}

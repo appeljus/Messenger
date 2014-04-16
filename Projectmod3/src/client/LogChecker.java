@@ -75,4 +75,11 @@ public class LogChecker extends Thread {
 	public void removeDevice(int deviceNr) {
 		cannotPrint[deviceNr] = 40000;
 	}
+	
+	public void seqGone(int deviceNr, int seqNr) {
+		if(cannotPrint[deviceNr] == seqNr) {
+			cannotPrint[deviceNr] = 40000;
+			lastPrinted[deviceNr] = seqNr;
+		}
+	}
 }
