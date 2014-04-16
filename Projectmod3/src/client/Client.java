@@ -325,21 +325,33 @@ public class Client extends Thread {
 				int missedI = Integer.parseInt(words[1]);
 				logChecker.seqGone(devNr, missedI);
 			} else if (sourceAddress.getHostAddress().startsWith("192.168.5.") || sourceAddress.getHostAddress().startsWith("228.5.6.7")) {
-				if (!packetLog.containsSendSeq(sequence) && !myAddress.equals(destinationAddress) && hop != 0) {
-					hop--;
-					if(devNr != deviceNr) System.out.println("IK HOP " + devNr + " + " + hop);
-					byte[] pData = PacketUtils.getData(message, sequence, hop,sourceAddress, destinationAddress);
-					DatagramPacket packetToSend = new DatagramPacket(pData,pData.length, destinationAddress, port);
-					packetLog.addSendPacket(packetToSend);
-					try {
-						s.send(packetToSend);
-					} catch (IOException e) {
-						e.printStackTrace();
+				if(!myAddress.equals(destinationAddress)) {
+					if(myAddress.equals(sourceAddress)) {
+						return;
 					}
-					incrementSeqNr();
+					else if(hop > 0) {
+						hop--;
+						byte[] pData = PacketUtils.getData(message, sequence, hop, sourceAddress, destinationAddress);
+						DatagramPacket packetToSend = new DatagramPacket(pData,pData.length, destinationAddress, port);
+						packetLog.addSendPacket(packetToSend);
+						try {
+							s.send(packetToSend);
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
+						incrementSeqNr();
+					}
+					else {
+						return;
+					}
 				}
-				if (!packetLog.containsReceiveSeq(devNr, sequence) && (myAddress.equals(destinationAddress) || group.equals(destinationAddress))) {
-					packetLog.addReceivePacket(devNr, sequence, packet);
+				else {
+					if(hop == 0) {
+						packetLog.addReceivePacket(devNr, sequence, packet);
+					}
+					else {
+						return;
+					}
 				}
 			}
 		} catch (IOException e) {
