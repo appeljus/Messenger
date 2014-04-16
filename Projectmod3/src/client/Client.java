@@ -37,7 +37,7 @@ public class Client extends Thread {
 		myName = name;
 		packetLog = new PacketLog();
 		currentSeq = 1;
-		hopCount = 0;
+		hopCount = 4;
 		chatwindow = c;
 		receiveFileInstance = new ReceiveFile(this);
 		encryption = new Encryption();
@@ -107,7 +107,6 @@ public class Client extends Thread {
 
 	public synchronized void incrementSeqNr() {
 		currentSeq++;
-		System.out.println(currentSeq);
 		if(currentSeq == 256) {
 			currentSeq = 0;
 		}
