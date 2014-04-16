@@ -85,6 +85,7 @@ public class SendFile implements Runnable {
 		
 		c.sendPacket(data3, true);
 		c.getChatWindow().incoming("File sent!");
+		return;
 	}
 
 }

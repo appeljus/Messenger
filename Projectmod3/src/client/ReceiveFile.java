@@ -68,5 +68,7 @@ public class ReceiveFile extends Thread {
 				}
 			}
 		}
+		file = new byte[0];
+		return;
 	}
 }
