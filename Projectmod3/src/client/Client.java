@@ -139,8 +139,8 @@ public class Client extends Thread {
 				chatwindow.updateNames(words[1]);
 				int index = chatwindow.pNameList.indexOf(words[1]);
 				nameIndex.put(hisNr, index);
+				stillAlive.put(hisNr, true);
 			}
-			stillAlive.put(hisNr, true);
 		} else if (txt.startsWith("[NAME_IN_USE]: ")
 				&& !sourceAddress.equals(myAddress)) {
 			String[] words = txt.split(" ");
@@ -308,6 +308,9 @@ public class Client extends Thread {
 			InetAddress destinationAddress = PacketUtils.getDistinationAddress(packet);
 			int devNr = ((int) (sourceAddress.getAddress()[3]) & 0xFF);
 			String txt = new String(message);
+			
+			if(stillAlive.containsKey(devNr)) stillAlive.put(devNr, true);
+			
 			if (txt.startsWith("[NACK]")) {
 				String[] words = txt.split(" ");
 				int missedI = Integer.parseInt(words[1]);
