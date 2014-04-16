@@ -7,7 +7,7 @@ import java.net.InetAddress;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import org.apache.commons.io.*;
+import org.apache.commons.io.FilenameUtils;
 
 public class SendFile implements Runnable {
 	Client c;
@@ -46,13 +46,13 @@ public class SendFile implements Runnable {
 			return;
 		}
 		c.getChatWindow().incoming("Sending file..");
-		byte[] data = new byte[1001];
+		byte[] data = new byte[995];
 		byte[] tagData = new byte[11];
 		int j = 0;
 		while (currentStartI < fileParts.length) {
 			System.out.println("sdsdsdsds");
 			int i;
-			for (i = 0; i < 1001 && currentStartI + i < fileParts.length; i++) {
+			for (i = 0; i < 995 && currentStartI + i < fileParts.length; i++) {
 				data[i] = fileParts[currentStartI + i];
 			}
 			if (currentStartI < fileParts.length) {
@@ -69,13 +69,13 @@ public class SendFile implements Runnable {
 				c.sendPacket(data3, true);
 			}
 		}
-		if(ext.length() == 3) tagData = ("[EOF][" + ext + "]").getBytes();
-		else tagData = ("[EOF][" + ext + "]").getBytes();
+		if(ext.length() == 3) tagData = ("[EOF][" + ext + "][" + (int)(fileParts.length/995) + "]").getBytes();
+		else tagData = ("[EOF][" + ext + "][" + (int)(fileParts.length/995) + "]").getBytes();
 		
 		System.out.println(tagData.length);
 		
 		byte[] data3 = new byte[tagData.length + data.length];
-		if(data.length < j) data[j] = (byte) 255;
+		if(data.length > j) data[j] = (byte) 255;
 		
 		System.arraycopy(tagData, 0, data3, 0, tagData.length);
 		System.arraycopy(data, 0, data3, tagData.length, data.length);

@@ -16,6 +16,8 @@ public class ReceiveFile extends Thread {
 	byte[] file = new byte[0];
 	String sender = "DUDE";
 	String ext;
+	boolean waitingForPackets;
+	int numPackets;
 
 	public ReceiveFile(Client client) {
 		this.client = client;
@@ -25,13 +27,19 @@ public class ReceiveFile extends Thread {
 		createFile(ext);
 	}
 
-	public void receiveFile(byte[] e, boolean EOF, String ext, String sender) {
+	public void receiveFile(byte[] e, boolean EOF, String ext, String sender, int num) {
 		addToFile(e);
-		if (EOF) {
+		numPackets++;
+		if (EOF || waitingForPackets) {
 			this.ext = ext;
 			this.sender = sender;
-			Thread t = new Thread(this);
-			t.start();
+			if(num > numPackets) {
+				waitingForPackets = true;
+			}
+			else if(waitingForPackets){
+				Thread t = new Thread(this);
+				t.start();
+			}
 		}
 	}
 
@@ -69,6 +77,8 @@ public class ReceiveFile extends Thread {
 			}
 		}
 		file = new byte[0];
+		waitingForPackets = false;
+		numPackets = 0;
 		return;
 	}
 }

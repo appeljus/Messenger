@@ -14,6 +14,11 @@ import javax.swing.JOptionPane;
 
 import tests.Echo;
 
+/**
+ * 
+ * @author kevin
+ *
+ */
 public class Client extends Thread {
 
 	private ChatWindow chatwindow;
@@ -172,9 +177,9 @@ public class Client extends Thread {
 
 		else if (txt.startsWith("[FILE]")) {
 			System.out.println("FILE");
-			byte[] fileBytes = new byte[1001];
-			System.arraycopy(message, 6, fileBytes, 0, 1001);
-			receiveFileInstance.receiveFile(fileBytes, false, "", "");
+			byte[] fileBytes = new byte[995];
+			System.arraycopy(message, 6, fileBytes, 0, 995);
+			receiveFileInstance.receiveFile(fileBytes, false, "", "",0);
 		}
 
 		else if (txt.startsWith("[EOF]")) {
@@ -187,13 +192,15 @@ public class Client extends Thread {
 				} else
 					break;
 			}
-			byte[] file = new byte[1001 - (count)];
-			System.arraycopy(message, 10, file, 0, file.length);
+			byte[] file = new byte[995 - (count)];
+			byte[] numPacket = new byte[6];
+			System.arraycopy(message, 16, file, 0, file.length);
 			System.arraycopy(message, 6, extBytes, 0, 3);
+			System.arraycopy(message, 9, numPacket, 0, 6);
 			int devNr = ((int) sourceAddress.getAddress()[3]) & 0xFF;
 			String name = chatwindow.pNameList.get(nameIndex.get(devNr));
-			receiveFileInstance.receiveFile(file, true, new String(extBytes),
-					name);
+			int length = Integer.parseInt(new String(numPacket));
+			receiveFileInstance.receiveFile(file, true, new String(extBytes),name,length);
 		}
 
 		else if (!sourceAddress.equals(myAddress)) {
