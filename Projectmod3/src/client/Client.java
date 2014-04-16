@@ -1,7 +1,6 @@
 package client;
 
 import GUI.ChatWindow;
-import GUI.LoginWindow;
 
 import java.io.File;
 import java.io.IOException;
@@ -9,8 +8,9 @@ import java.net.DatagramPacket;
 import java.net.InetAddress;
 import java.net.MulticastSocket;
 import java.net.NetworkInterface;
-import java.net.UnknownHostException;
 import java.util.*;
+
+import javax.swing.JOptionPane;
 
 import tests.Echo;
 
@@ -26,7 +26,7 @@ public class Client extends Thread {
 	private HashMap<Integer, Integer> nameIndex = new HashMap<Integer, Integer>();
 	private Timer timer;
 	private PacketLog packetLog;
-	private ReceiveFile receiveFileInstance;
+	public ReceiveFile receiveFileInstance;
 	private int currentSeq;
 	private int hopCount;
 	private Encryption encryption;
@@ -80,7 +80,7 @@ public class Client extends Thread {
 	public int getCurrentSeq() {
 		return currentSeq;
 	}
-	
+
 	public int getHopCount() {
 		return hopCount;
 	}
@@ -107,7 +107,7 @@ public class Client extends Thread {
 
 	public synchronized void incrementSeqNr() {
 		currentSeq++;
-		if(currentSeq == 256) {
+		if (currentSeq == 256) {
 			currentSeq = 0;
 		}
 	}
@@ -121,19 +121,20 @@ public class Client extends Thread {
 	}
 
 	public void processPacket(byte[] message, int sequenceNr, int hopCount,
-			InetAddress sourceAddress, InetAddress destinationAddress, int lengte) {
-        //byte[] decrypted = encryption.decryptData(message);
+			InetAddress sourceAddress, InetAddress destinationAddress,
+			int lengte) {
+		// byte[] decrypted = encryption.decryptData(message);
 		String txt = new String((message));
-        //Of als encryption is toegevoegd:
-        //String txt = new String(decrypted);
+		// Of als encryption is toegevoegd:
+		// String txt = new String(decrypted);
 
 		if (txt.startsWith("[BROADCAST]") && !sourceAddress.equals(myAddress)) {
 			String[] words = txt.split(" ");
-			int hisNr = ((int)sourceAddress.getAddress()[3]) & 0xFF;
+			int hisNr = ((int) sourceAddress.getAddress()[3]) & 0xFF;
 			if (words[1].equals(myName)) {
 				this.sendPacket("[NAME_IN_USE]: " + words[1] + " STUFF");
 			}
-			if(stillAlive.containsKey(hisNr))
+			if (stillAlive.containsKey(hisNr))
 				stillAlive.remove(hisNr);
 			else {
 				System.out.println("YO " + words[1]);
@@ -147,7 +148,9 @@ public class Client extends Thread {
 			String[] words = txt.split(" ");
 			if (myName.equals(words[1])) {
 				chatwindow.dispose();
-				new LoginWindow();
+				String name = JOptionPane.showInputDialog("What is your name?");
+				if (name != null)
+					new ChatWindow(name, null);
 				s.close();
 				timer.cancel();
 
@@ -165,14 +168,14 @@ public class Client extends Thread {
 			}
 		}
 
-		//else if (txt.startsWith("[NACK]")) {
-			
-		//}
+		// else if (txt.startsWith("[NACK]")) {
+
+		// }
 
 		else if (txt.startsWith("[FILE]")) {
 			byte[] fileBytes = new byte[1001];
 			System.arraycopy(message, 6, fileBytes, 0, 1001);
-			receiveFileInstance.receiveFile(fileBytes, false, "");
+			receiveFileInstance.receiveFile(fileBytes, false, "", "");
 		}
 
 		else if (txt.startsWith("[EOF]")) {
@@ -187,18 +190,23 @@ public class Client extends Thread {
 			byte[] file = new byte[1001 - (count)];
 			System.arraycopy(message, 10, file, 0, file.length);
 			System.arraycopy(message, 6, extBytes, 0, 3);
-			receiveFileInstance.receiveFile(file, true, new String(extBytes));
+			int devNr = ((int) sourceAddress.getAddress()[3]) & 0xFF;
+			String name = chatwindow.pNameList.get(nameIndex.get(devNr));
+			receiveFileInstance.receiveFile(file, true, new String(extBytes),
+					name);
 		}
 
 		else if (!sourceAddress.equals(myAddress)) {
 			chatwindow.incoming(txt);
 		}
 	}
-	
-	public void sendTestPacket(String message, int seq){
-		byte[] data = PacketUtils.getData((message.getBytes()), seq, hopCount, myAddress, group);
-		
-		DatagramPacket packetToSend = new DatagramPacket(data, data.length, group, port);
+
+	public void sendTestPacket(String message, int seq) {
+		byte[] data = PacketUtils.getData((message.getBytes()), seq, hopCount,
+				myAddress, group);
+
+		DatagramPacket packetToSend = new DatagramPacket(data, data.length,
+				group, port);
 		packetLog.addSendPacket(packetToSend);
 
 		try {
@@ -214,11 +222,15 @@ public class Client extends Thread {
 			chatwindow.incoming(message);
 		}
 
-		byte[] data = PacketUtils.getData((message.getBytes()), currentSeq, hopCount, myAddress, group);
-        //Of als encryption toegevoegd is:
-        //byte[] data = PacketUtils.getData((encryption.encryptData(message.getBytes())), currentSeq, hopCount, myAddress, group);
+		byte[] data = PacketUtils.getData((message.getBytes()), currentSeq,
+				hopCount, myAddress, group);
+		// Of als encryption toegevoegd is:
+		// byte[] data =
+		// PacketUtils.getData((encryption.encryptData(message.getBytes())),
+		// currentSeq, hopCount, myAddress, group);
 
-		DatagramPacket packetToSend = new DatagramPacket(data, data.length, group, port);
+		DatagramPacket packetToSend = new DatagramPacket(data, data.length,
+				group, port);
 		packetLog.addSendPacket(packetToSend);
 
 		try {
@@ -269,17 +281,19 @@ public class Client extends Thread {
 
 	public void checkConnections() {
 		List<Integer> remove = new ArrayList<Integer>();
-		for(Integer i : stillAlive.keySet()) {
-			if(!stillAlive.get(i)) {
-				chatwindow.incoming(chatwindow.pNameList.get(nameIndex.get(i)) + " has left.");
-				chatwindow.disconnect(chatwindow.pNameList.get(nameIndex.get(i)));
+		for (Integer i : stillAlive.keySet()) {
+			if (!stillAlive.get(i)) {
+				chatwindow.incoming(chatwindow.pNameList.get(nameIndex.get(i))
+						+ " has left.");
+				chatwindow
+						.disconnect(chatwindow.pNameList.get(nameIndex.get(i)));
 				packetLog.removeDevice(i);
 				logChecker.removeDevice(i);
 				remove.add(i);
-			}
-			else stillAlive.put(i, false);
+			} else
+				stillAlive.put(i, false);
 		}
-		for(int i=0; i<remove.size(); i++){
+		for (int i = 0; i < remove.size(); i++) {
 			stillAlive.remove(remove.get(i));
 		}
 		stillAlive.put(deviceNr, true);
@@ -295,31 +309,36 @@ public class Client extends Thread {
 			int sequence = PacketUtils.getSequenceNr(packet);
 			int hop = PacketUtils.getHopCount(packet);
 			InetAddress sourceAddress = PacketUtils.getSourceAddress(packet);
-			InetAddress destinationAddress = PacketUtils.getDistinationAddress(packet);
+			InetAddress destinationAddress = PacketUtils
+					.getDistinationAddress(packet);
 			int devNr = ((int) (sourceAddress.getAddress()[3]) & 0xFF);
 			String txt = new String(message);
-			if(sequence == 0 && destinationAddress.equals(myAddress)) {
-				if(txt.startsWith("[NACK]")) {
-					String[] words = txt.split(" ");
-					int missedI = Integer.parseInt(words[1]);
-					DatagramPacket p = packetLog.getPacketSend(missedI);
-					if(p == null) {
-						byte[] data2 = PacketUtils.getData(("[MSG_LOST] " + missedI + " DUMMY_WORD").getBytes(), 0, getHopCount(), getMyAddress(), sourceAddress);
-						p = new DatagramPacket(data2, data2.length, sourceAddress, getPort());
-					}
-					else {
-						p.setAddress(sourceAddress);
-					}
-					resendPacket(p);
+			if (txt.startsWith("[NACK]")) {
+				String[] words = txt.split(" ");
+				int missedI = Integer.parseInt(words[1]);
+				DatagramPacket p = packetLog.getPacketSend(missedI);
+				if (p == null) {
+					byte[] data2 = PacketUtils.getData(
+							("[MSG_LOST] " + missedI + " DUMMY_WORD")
+									.getBytes(), 0, getHopCount(),
+							getMyAddress(), sourceAddress);
+					p = new DatagramPacket(data2, data2.length, sourceAddress,
+							getPort());
+				} else {
+					p.setAddress(sourceAddress);
 				}
-				else if(txt.startsWith("[MSG_LOST]")) {
-					String[] words = txt.split(" ");
-					int missedI = Integer.parseInt(words[1]);
-					logChecker.seqGone(devNr,missedI); 
-				}
-			}
-			if (sourceAddress.getHostAddress().startsWith("192.168.5.") || sourceAddress.getHostAddress().startsWith("228.5.6.7")) {
-				if (!myAddress.equals(destinationAddress) && hop != 0) {
+				resendPacket(p);
+			} else if (txt.startsWith("[MSG_LOST]")) {
+				String[] words = txt.split(" ");
+				int missedI = Integer.parseInt(words[1]);
+				logChecker.seqGone(devNr, missedI);
+			} else if (sourceAddress.getHostAddress().startsWith("192.168.5.")
+					|| sourceAddress.getHostAddress().startsWith("228.5.6.7")) {
+				if (packetLog.containsReceiveSeq(devNr, sequence)) {
+					System.out.println("IK HOP NIET!");
+					return;
+				} else if (!myAddress.equals(destinationAddress) && hop != 0) {
+					System.out.println("IK HOP!");
 					hop--;
 					byte[] pData = PacketUtils.getData(message, sequence, hop,
 							sourceAddress, destinationAddress);
@@ -334,7 +353,8 @@ public class Client extends Thread {
 					}
 					incrementSeqNr();
 				}
-				if (myAddress.equals(destinationAddress) || group.equals(destinationAddress)) {
+				if (myAddress.equals(destinationAddress)
+						|| group.equals(destinationAddress)) {
 					packetLog.addReceivePacket(devNr, sequence, packet);
 				}
 			}
