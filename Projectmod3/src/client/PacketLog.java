@@ -15,6 +15,7 @@ public class PacketLog {
 	private HashMap<Integer, DatagramPacket> logSend;
 	private HashMap<Integer, HashMap<Integer, DatagramPacket>> logReceived;
 	private static final int sizeLog = 128;
+	private int[] lastSeq = {-1, -1, -1, -1, -1};
 
 	public PacketLog() {
 		logSend = new HashMap<Integer, DatagramPacket>();
@@ -41,15 +42,27 @@ public class PacketLog {
 	public void addReceivePacket(int deviceNr, int seqNr, DatagramPacket packet) {
 		if (logReceived.containsKey(deviceNr)) { 
 			if(logReceived.get(deviceNr).size() < sizeLog) {
+				if(seqNr == 0 && lastSeq[deviceNr] == 255) {
+					logReceived.get(deviceNr).clear();
+				}
 				logReceived.get(deviceNr).put(seqNr, packet);
+				lastSeq[deviceNr] = seqNr;
 			}
 			else {
 				logReceived.get(deviceNr).remove(getLowestSeq(deviceNr));
+				if(seqNr == 0 && lastSeq[deviceNr] == 255) {
+					logReceived.get(deviceNr).clear();
+				}
 				logReceived.get(deviceNr).put(seqNr, packet);
+				lastSeq[deviceNr] = seqNr;
 			}
 		} else {
 			HashMap<Integer, DatagramPacket> map = new HashMap<Integer, DatagramPacket>();
 			map.put(seqNr, packet);
+			if(seqNr == 0 && lastSeq[deviceNr] == 255) {
+				logReceived.get(deviceNr).clear();
+			}
+			lastSeq[deviceNr] = seqNr;
 			logReceived.put(deviceNr, map);
 		}
 	}
@@ -86,27 +99,19 @@ public class PacketLog {
 	}
 
 	public int getLowestSeq(int deviceNr) {
-		int lowestSeq = 40000;
 		if (logReceived.containsKey(deviceNr)) {
-			for (Integer i : logReceived.get(deviceNr).keySet()) {
-				if (i < lowestSeq) {
-					lowestSeq = i;
-				}
-			}
+			Set<Integer> keySet = logReceived.get(deviceNr).keySet();
+			return (int) Collections.min(keySet);
 		}
-		return lowestSeq;
+		return -1;
 	}
 
 	public int getHighestSeq(int deviceNr) {
-		int highestSeq = -1;
 		if (logReceived.containsKey(deviceNr)) {
-			for (Integer i : logReceived.get(deviceNr).keySet()) {
-				if (i > highestSeq) {
-					highestSeq = i;
-				}
-			}
+			Set<Integer> keySet = logReceived.get(deviceNr).keySet();
+			return (int) Collections.max(keySet);
 		}
-		return highestSeq;
+		return -1;
 	}
 
 	private Integer lowestSqc(HashMap<Integer, DatagramPacket> log) {

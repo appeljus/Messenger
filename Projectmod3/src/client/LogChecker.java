@@ -23,6 +23,8 @@ public class LogChecker extends Thread {
 				int lowSeq = log.getLowestSeq(dn);
 				int highSeq = log.getHighestSeq(dn);
 				if (lowSeq != 40000 && highSeq != -1 && dn != client.getDeviceNr()) {
+					if(highSeq == 0 && lastPrinted[dn] == 255)
+						lastPrinted[dn] = -1;
 					List<Integer> holes = new ArrayList<Integer>();
 					for (int i = Math.max(lowSeq,lastPrinted[dn]+1); i < highSeq; i++) {
 						if (!log.containsReceiveSeq(dn,i)) {
@@ -44,7 +46,6 @@ public class LogChecker extends Thread {
 								byte[] data = PacketUtils.getData(msg, 0, client.getHopCount(), client.getMyAddress(), InetAddress.getByName("192.168.5." + dn));
 								p = new DatagramPacket(data, data.length, InetAddress.getByName("192.168.5." + dn), client.getPort());
 							} catch (UnknownHostException e) { }
-							System.out.println(p.getAddress().getHostAddress() + " | " + new String(msg) + " | " + lowSeq + " | " + highSeq);
 							client.resendPacket(p);
 						}
 					}

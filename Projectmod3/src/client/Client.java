@@ -107,6 +107,9 @@ public class Client extends Thread {
 
 	public synchronized void incrementSeqNr() {
 		currentSeq++;
+		if(currentSeq == 256) {
+			currentSeq = 0;
+		}
 	}
 
 	public ChatWindow getChatWindow() {
@@ -155,7 +158,6 @@ public class Client extends Thread {
 			String[] words = txt.split(" ");
 			if (words[1].equals(myName)) {
 				String data = "";
-				System.out.println(txt);
 				for (int i = 3; i < words.length; i++) {
 					data = data + words[i] + " ";
 				}
@@ -182,9 +184,7 @@ public class Client extends Thread {
 				} else
 					break;
 			}
-			System.out.println(message.length);
 			byte[] file = new byte[1001 - (count)];
-			System.out.println(file.length);
 			System.arraycopy(message, 10, file, 0, file.length);
 			System.arraycopy(message, 6, extBytes, 0, 3);
 			receiveFileInstance.receiveFile(file, true, new String(extBytes));
@@ -297,9 +297,6 @@ public class Client extends Thread {
 			InetAddress sourceAddress = PacketUtils.getSourceAddress(packet);
 			InetAddress destinationAddress = PacketUtils.getDistinationAddress(packet);
 			String txt = new String(message);
-			if(txt.contains("[FILE]")) {
-				System.out.println("ROUTE: " + message.length);
-			}
 			if(sequence == 0 && destinationAddress.equals(myAddress)) {
 				if(txt.startsWith("[NACK]")) {
 					String[] words = txt.split(" ");
@@ -310,7 +307,6 @@ public class Client extends Thread {
 					}
 					else {
 						p.setAddress(sourceAddress);
-						System.out.println("NACKER: " + sourceAddress.getHostAddress());
 						resendPacket(p);
 					}
 				}
