@@ -16,12 +16,11 @@ import javax.swing.JOptionPane;
 import tests.Echo;
 
 /**
- * 
- * @author kevin
- *
+ * The Class Client for our multihop-chatprogram.
+ * @author Kevin + Tim
+ * @version 0.9.5
  */
 public class Client extends Thread {
-
 	private ChatWindow chatwindow;
 	private static final int port = 4242;
 	private MulticastSocket s;
@@ -39,6 +38,11 @@ public class Client extends Thread {
 	private int deviceNr;
 	private LogChecker logChecker;
 
+	/**
+	 * De constructor van <code>Client</code>
+	 * @param c de <code>ChatWindow</code> van de gebruiker.
+	 * @param name de naam van de gebruiker.
+	 */
 	public Client(ChatWindow c, String name) {
 		myName = name;
 		packetLog = new PacketLog();
@@ -82,50 +86,98 @@ public class Client extends Thread {
 			e.printStackTrace();
 		}
 	}
-
+	
+	/**
+	 * Een getter voor het huidige Sequence number.
+	 * @return het huidige Sequence number.
+	 */
 	public int getCurrentSeq() {
 		return currentSeq;
 	}
 
+	/**
+	 * Een getter voor het huidige Hop count.
+	 * @return het huidige Hop count.
+	 */
 	public int getHopCount() {
 		return hopCount;
 	}
 
+	/**
+	 * Een getter voor het huidige <code>group</code> IP.
+	 * @return het huidige <code>group</code> IP.
+	 */
 	public InetAddress getGroup() {
 		return group;
 	}
 
+	/**
+	 * Een getter voor het <code>IP Adres</code> van de gebruiker.
+	 * @return het <code>IP Adres</code> van de gebruiker.
+	 */
 	public InetAddress getMyAddress() {
 		return myAddress;
 	}
 
+	/**
+	 * Een getter voor de huidige <code>Port</code>.
+	 * @return de huidige <code>Port</code>.
+	 */
 	public int getPort() {
 		return port;
 	}
 
+	/**
+	 * Een getter voor het <code>Device Number</code> van de gebruiker.
+	 * @return het <code>Device Number</code> van de gebruiker.
+	 */
 	public int getDeviceNr() {
 		return deviceNr;
 	}
 
+	/**
+	 * Een getter voor de naam van de gebruiker.
+	 * @return de naam van de gebruiker.
+	 */
 	public String getClientName() {
 		return myName;
 	}
 
+	/**
+	 * Een method om het sequence nummer op te hogen.
+	 */
 	public synchronized void incrementSeqNr() {
 		currentSeq++;
 		if (currentSeq == 256) {
 			currentSeq = 0;
 		}
 	}
-
+	
+	/**
+	 * Een getter voor de <code>ChatWindow</code> van de gebruiker.
+	 * @return the user's <code>ChatWindow</code>.
+	 */
 	public ChatWindow getChatWindow() {
 		return chatwindow;
 	}
 
+	/**
+	 * Een getter voor de huidige <code>Encryption</code> van de gebruiker.
+	 * @return de huidige <code>Encryption</code> van de gebruiker.
+	 */
 	public Encryption getEncryption() {
 		return encryption;
 	}
 
+	/**
+	 * De method om een <code>Packet</code> te verwerken.
+	 * @param message de <code>Byte-Array</code> die werd gestuurd.
+	 * @param sequenceNr de <code>Integer</code> die de sequence number van de <code>Packet</code> representeerd.
+	 * @param hopCount de <code>Integer</code> die de hop count van de <code>Packet</code> representeeerd.
+	 * @param sourceAddress de <code>IP Address</code> van de zender.
+	 * @param destinationAddress de <code>IP Address</code> van de ontvanger.
+	 * @param lengte de lengte van de <code>message</code>.
+	 */
 	public void processPacket(byte[] message, int sequenceNr, int hopCount,
 			InetAddress sourceAddress, InetAddress destinationAddress,
 			int lengte) {
@@ -209,6 +261,11 @@ public class Client extends Thread {
 		}
 	}
 
+	/**
+	 * De method die een <code>Test-Packet</code> stuurt.
+	 * @param message de <code>message</code> om mee te sturen.
+	 * @param seq het sequence nummer om te gebruiken. 
+	 */
 	public void sendTestPacket(String message, int seq) {
 		byte[] data = PacketUtils.getData((message.getBytes()), seq, hopCount,
 				myAddress, group);
@@ -225,6 +282,10 @@ public class Client extends Thread {
 		}
 	}
 
+	/**
+	 * De method om een <code>message</code> te verzenden.
+	 * @param message the <code>message</code> om te verzenden.
+	 */
 	public void sendPacket(String message) {
 		if (!message.startsWith("[") && !(chatwindow instanceof Echo)) {
 			chatwindow.incoming(message);
@@ -247,6 +308,11 @@ public class Client extends Thread {
 		incrementSeqNr();
 	}
 
+	/**
+	 * De method om een <code>File</code> te verzenden.
+	 * @param message de <code>Byte-Array</code> die een stuk van de <code>File</code> representeerd.
+	 * @param isFile een <code>Boolean</code> om deze method van de andere <code>sendPacket()</code> te onderscheiden.
+	 */
 	public void sendPacket(byte[] message, boolean isFile) {
 		byte[] data = PacketUtils.getData(message, currentSeq, hopCount,myAddress, group);
 		//byte[] data = PacketUtils.getData((encryption.encryptData(message)),currentSeq, hopCount, myAddress, group);
@@ -263,6 +329,10 @@ public class Client extends Thread {
 		incrementSeqNr();
 	}
 
+	/**
+	 * De method om een <code>Packet</code> te verzenden.
+	 * @param packet de <code>Packet</code> om te verzenden.
+	 */
 	public void resendPacket(DatagramPacket packet) {
 		try {
 			s.send(packet);
@@ -272,18 +342,30 @@ public class Client extends Thread {
 			System.out.println("ERMAGHERD!! D:");
 		}
 	}
-
+	
+	/**
+	 * De method om een <code>File</code> klaar te maken om te verzenden.
+	 * @param f de <code>File</code> om te verzenden.
+	 */
 	public void sendFile(File f) {
 		SendFile sender = new SendFile(this, f, group, port);
 		Thread t = new Thread(sender);
 		t.start();
 	}
 
+	/**
+	 * De method om een <code>PrivateMessage</code> te verzenden.
+	 * @param target de <code>Target</code> om de <code>PrivateMessage</code> naar toe te zenden.
+	 * @param message de <code>message</code> om te verzenden.
+	 */
 	public void sendPrivate(String target, String message) {
 		String returnString = "[PRIV_MSG]: " + target + " " + message;
 		sendPacket(returnString);
 	}
-
+	
+	/**
+	 * De method om te testen of andere gebruikers nog geconnect zijn.
+	 */
 	public synchronized void checkConnections() {
 		List<Integer> remove = new ArrayList<Integer>();
 		for (Integer i : stillAlive.keySet()) {
@@ -305,6 +387,9 @@ public class Client extends Thread {
 		stillAlive.put(deviceNr, true);
 	}
 
+	/**
+	 * De method die een <code>Packet</code> of doorstuurt, of dropped, of opslaat in een <code>PacketLog</code>.
+	 */
 	public void routePacket() {
 		byte[] data = new byte[1034];
 		DatagramPacket packet = new DatagramPacket(data, data.length);
@@ -365,6 +450,9 @@ public class Client extends Thread {
 		}
 	}
 	
+	/**
+	 * TODO ==> Martijn, doe er wat aan.
+	 */
 	public void testRTT(){
 		long time = System.currentTimeMillis();
 		byte[] timeCommand = "[TIME_STAMP]".getBytes();
@@ -375,6 +463,9 @@ public class Client extends Thread {
 		sendPacket(message, false);
 	}
 
+	/**
+	 * De method die <code>routePacket</code> blijft aanroepen om <code>Packets</code> te kunnen ontvangen.
+	 */
 	public void run() {
 		while (!s.isClosed()) {
 			routePacket();

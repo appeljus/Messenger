@@ -9,6 +9,11 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import org.apache.commons.io.FilenameUtils;
 
+/**
+ * De klasse om een <code>File</code> te verzenden.
+ * @author Tim + Kevin
+ * @version 1.0.0
+ */
 public class SendFile implements Runnable {
 	Client c;
 	File file;

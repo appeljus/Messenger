@@ -6,6 +6,11 @@ import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * De method om de <code>PacketLog</code> te checken.
+ * @author Kevin + Tim
+ * @version 1.0.0
+ */
 public class LogChecker extends Thread {
 	private Client client;
 	private PacketLog log;

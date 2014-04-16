@@ -11,6 +11,11 @@ import javax.swing.JOptionPane;
 
 import GUI.ChatWindow;
 
+/**
+ * De klasse om een <code>File</code> te ontvangen.
+ * @author Kevin + Tim
+ * @version 1.0.0
+ */
 public class ReceiveFile extends Thread {
 	Client client;
 	byte[] file = new byte[0];

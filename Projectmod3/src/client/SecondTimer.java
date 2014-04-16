@@ -2,6 +2,11 @@ package client;
 
 import java.util.TimerTask;
 
+/**
+ * De klass die elke seconde een <code>Broadcast</code> stuurt.
+ * @author Kevin
+ * @version 1.0.0
+ */
 public class SecondTimer extends TimerTask {
 	Client client;
 	int secCount;
