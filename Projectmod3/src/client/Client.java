@@ -37,7 +37,7 @@ public class Client extends Thread {
 		myName = name;
 		packetLog = new PacketLog();
 		currentSeq = 1;
-		hopCount = 4;
+		hopCount = 0;
 		chatwindow = c;
 		receiveFileInstance = new ReceiveFile(this);
 		encryption = new Encryption();
@@ -309,8 +309,7 @@ public class Client extends Thread {
 			int sequence = PacketUtils.getSequenceNr(packet);
 			int hop = PacketUtils.getHopCount(packet);
 			InetAddress sourceAddress = PacketUtils.getSourceAddress(packet);
-			InetAddress destinationAddress = PacketUtils
-					.getDistinationAddress(packet);
+			InetAddress destinationAddress = PacketUtils.getDistinationAddress(packet);
 			int devNr = ((int) (sourceAddress.getAddress()[3]) & 0xFF);
 			String txt = new String(message);
 			if (txt.startsWith("[NACK]")) {
@@ -318,12 +317,8 @@ public class Client extends Thread {
 				int missedI = Integer.parseInt(words[1]);
 				DatagramPacket p = packetLog.getPacketSend(missedI);
 				if (p == null) {
-					byte[] data2 = PacketUtils.getData(
-							("[MSG_LOST] " + missedI + " DUMMY_WORD")
-									.getBytes(), 0, getHopCount(),
-							getMyAddress(), sourceAddress);
-					p = new DatagramPacket(data2, data2.length, sourceAddress,
-							getPort());
+					byte[] data2 = PacketUtils.getData(("[MSG_LOST] " + missedI + " DUMMY_WORD").getBytes(), 0, getHopCount(),getMyAddress(), sourceAddress);
+					p = new DatagramPacket(data2, data2.length, sourceAddress,getPort());
 				} else {
 					p.setAddress(sourceAddress);
 				}
@@ -332,20 +327,16 @@ public class Client extends Thread {
 				String[] words = txt.split(" ");
 				int missedI = Integer.parseInt(words[1]);
 				logChecker.seqGone(devNr, missedI);
-			} else if (sourceAddress.getHostAddress().startsWith("192.168.5.")
-					|| sourceAddress.getHostAddress().startsWith("228.5.6.7")) {
+			} else if (sourceAddress.getHostAddress().startsWith("192.168.5.") || sourceAddress.getHostAddress().startsWith("228.5.6.7")) {
 				if (packetLog.containsReceiveSeq(devNr, sequence)) {
-					System.out.println("IK HOP NIET!");
+					if(devNr != deviceNr) System.out.println("IK HOP NIET!");
 					return;
 				} else if (!myAddress.equals(destinationAddress) && hop != 0) {
-					System.out.println("IK HOP!");
+					if(devNr != deviceNr) System.out.println("IK HOP! " + hop);
 					hop--;
-					byte[] pData = PacketUtils.getData(message, sequence, hop,
-							sourceAddress, destinationAddress);
-					DatagramPacket packetToSend = new DatagramPacket(pData,
-							pData.length, destinationAddress, port);
+					byte[] pData = PacketUtils.getData(message, sequence, hop,sourceAddress, destinationAddress);
+					DatagramPacket packetToSend = new DatagramPacket(pData,pData.length, destinationAddress, port);
 					packetLog.addSendPacket(packetToSend);
-
 					try {
 						s.send(packetToSend);
 					} catch (IOException e) {
@@ -353,8 +344,7 @@ public class Client extends Thread {
 					}
 					incrementSeqNr();
 				}
-				if (myAddress.equals(destinationAddress)
-						|| group.equals(destinationAddress)) {
+				if (myAddress.equals(destinationAddress) || group.equals(destinationAddress)) {
 					packetLog.addReceivePacket(devNr, sequence, packet);
 				}
 			}
