@@ -2,8 +2,13 @@ package GUI;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.awt.image.BufferedImage;
+import java.io.FileInputStream;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
+
 import client.Client;
 
 public class PersonalChat extends JFrame implements KeyListener, ActionListener {
@@ -15,6 +20,9 @@ public class PersonalChat extends JFrame implements KeyListener, ActionListener 
 	Client client;
 	String hisName;
 	String myName;
+	
+	BufferedImage sendBuff;
+	ImageIcon sendB;
 
 	Container cont;
 	JPanel mainFrame;
@@ -72,12 +80,21 @@ public class PersonalChat extends JFrame implements KeyListener, ActionListener 
 
 		c.gridx = 1;
 
-		send = new JButton("Send");
+		send = new JButton();
 		send.setPreferredSize(new Dimension(96, 32));
 		send.addActionListener(this);
 		sendBar.add(send);
 
 		// ////////////////////////////
+		
+		try{
+		sendBuff = ImageIO.read(new FileInputStream("res/Send.png"));
+		sendB = new ImageIcon(sendBuff);
+		} catch (IOException e) {
+			System.out.println("Fuck the images!");
+		}
+		send.setIcon(sendB);
+		send.setIconTextGap(12);
 
 		mainFrame.add(sendBar, BorderLayout.SOUTH);
 		mainFrame.add(msgScroller, BorderLayout.CENTER);
