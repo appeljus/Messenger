@@ -20,7 +20,7 @@ public class PersonalChat extends JFrame implements KeyListener, ActionListener 
 	Client client;
 	String hisName;
 	String myName;
-	
+
 	BufferedImage sendBuff;
 	ImageIcon sendB;
 
@@ -56,16 +56,13 @@ public class PersonalChat extends JFrame implements KeyListener, ActionListener 
 		mainFrame.setBackground(Color.DARK_GRAY);
 		mainFrame.setLayout(new BorderLayout());
 		mainFrame.addKeyListener(this);
-		
-		this.addWindowListener(new WindowAdapter()
-		{
-		    public void windowClosing(WindowEvent e)
-		    {
+
+		this.addWindowListener(new WindowAdapter() {
+			public void windowClosing(WindowEvent e) {
 				int index = chatWindow.doIHaveWindow(hisName);
-				if (index >= 0) {
+				if (index >= 0)
 					chatWindow.pChats.remove(index);
-				}
-		    }
+			}
 		});
 
 		sendBar = new JPanel();
@@ -97,10 +94,10 @@ public class PersonalChat extends JFrame implements KeyListener, ActionListener 
 		sendBar.add(send);
 
 		// ////////////////////////////
-		
-		try{
-		sendBuff = ImageIO.read(new FileInputStream("res/Send.png"));
-		sendB = new ImageIcon(sendBuff);
+
+		try {
+			sendBuff = ImageIO.read(new FileInputStream("res/Send.png"));
+			sendB = new ImageIcon(sendBuff);
 		} catch (IOException e) {
 			System.out.println("Fuck the images!");
 		}
@@ -113,7 +110,7 @@ public class PersonalChat extends JFrame implements KeyListener, ActionListener 
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		cont.add(mainFrame);
 		setVisible(true);
-		
+
 	}
 
 	private void addText(String txt) {
@@ -123,7 +120,7 @@ public class PersonalChat extends JFrame implements KeyListener, ActionListener 
 		client.sendPrivate(hisName, txt);
 		this.textArea.ensureIndexIsVisible(list.getSize() - 1);
 	}
-	
+
 	public void incoming(String txt) {
 		txt = txt.replace("8)", "😎");
 		txt = txt.replace(":)", "😉");
@@ -161,8 +158,8 @@ public class PersonalChat extends JFrame implements KeyListener, ActionListener 
 			// also.. send the text
 		}
 	}
-	
-	public String getTarget(){
+
+	public String getTarget() {
 		return hisName;
 	}
 }

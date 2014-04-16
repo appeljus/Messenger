@@ -275,6 +275,11 @@ public class ChatWindow extends JFrame implements KeyListener, ActionListener,
 			pList.remove(index);
 			pNameList.remove(index);
 		}
+		int index = doIHaveWindow(name);
+		if (index >= 0){
+			pChats.get(index).dispose();
+			pChats.remove(index);
+		}
 	}
 
 	public void updateNames(String name) {
