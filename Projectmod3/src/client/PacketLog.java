@@ -4,6 +4,7 @@ import java.net.DatagramPacket;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -12,8 +13,8 @@ import java.util.Set;
  */
 public class PacketLog {
 
-	private HashMap<Integer, DatagramPacket> logSend;
-	private HashMap<Integer, HashMap<Integer, DatagramPacket>> logReceived;
+	private volatile HashMap<Integer, DatagramPacket> logSend;
+	private volatile HashMap<Integer, HashMap<Integer, DatagramPacket>> logReceived;
 	private static final int sizeLog = 128;
 	private int[] lastSeq = {-1, -1, -1, -1, -1};
 
@@ -100,16 +101,28 @@ public class PacketLog {
 
 	public int getLowestSeq(int deviceNr) {
 		if (logReceived.containsKey(deviceNr)) {
-			Set<Integer> keySet = logReceived.get(deviceNr).keySet();
-			return (int) Collections.min(keySet);
+			int lowSeq = 40000;
+			Iterator i = logReceived.get(deviceNr).keySet().iterator();
+			while(i.hasNext()) {
+				int seq = (int)i.next();
+				if(seq < lowSeq)
+					lowSeq = seq;
+			}
+			return lowSeq;
 		}
-		return -1;
+		return 40000;
 	}
 
 	public int getHighestSeq(int deviceNr) {
 		if (logReceived.containsKey(deviceNr)) {
-			Set<Integer> keySet = logReceived.get(deviceNr).keySet();
-			return (int) Collections.max(keySet);
+			int highSeq = -1;
+			Iterator i = logReceived.get(deviceNr).keySet().iterator();
+			while(i.hasNext()) {
+				int seq = (int)i.next();
+				if(seq > highSeq)
+					highSeq = seq;
+			}
+			return highSeq;
 		}
 		return -1;
 	}
