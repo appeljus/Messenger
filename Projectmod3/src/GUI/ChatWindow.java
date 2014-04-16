@@ -326,7 +326,6 @@ public class ChatWindow extends JFrame implements KeyListener, ActionListener,
 			int returnVal = fc.showOpenDialog(this);
 			if (returnVal == JFileChooser.APPROVE_OPTION) {
 				client.sendFile(fc.getSelectedFile());
-				incoming("Sending file..");
 			}
 		}
 	}
