@@ -14,12 +14,15 @@ import tests.Test;
 
 import client.Client;
 
+/**
+ * Deze klasse bevat de main method en is de hoofdklasse van de applicatie.
+ * Hier word het hoofdwindow gemaakt en weergeven en word een instantie van Client
+ * aangemaakt en zo nodig een instantie van PersoalChat.
+ * @Author Tim
+ */
 public class ChatWindow extends JFrame implements KeyListener, ActionListener,
 		MouseListener {
-
-	/**
-	 * 
-	 */
+	
 	private static final long serialVersionUID = 1L;
 
 	public Client client;
@@ -71,7 +74,12 @@ public class ChatWindow extends JFrame implements KeyListener, ActionListener,
 	Dimension menuBarDim = new Dimension(96, 576);
 
 	Clip clip;
-
+	
+	/**
+	 * Constructor
+	 * @param name De naam die je invult in het login window.
+	 * @param t Als het een test is, kan dit een Test klasse zijn, anders moet het null zijn.
+	 */
 	public ChatWindow(String name, Test t) {
 		super("Pigeon");
 		client = new Client(this, name);
@@ -79,7 +87,11 @@ public class ChatWindow extends JFrame implements KeyListener, ActionListener,
 		test = t;
 		init();
 	}
-
+	/**
+	 * Deze methode is eigenlijk een extensie van de constructor.
+	 * Hier worden de JComponents aan gemaakt en de Icons etc.
+	 * Eigenlijk word hier gewoon het hele window aangemaakt.
+	 */
 	private void init() {
 		cont = getContentPane();
 		setSize(windowSize);
@@ -198,7 +210,12 @@ public class ChatWindow extends JFrame implements KeyListener, ActionListener,
 		setVisible(true);
 		typeArea.requestFocusInWindow();
 	}
-
+	/**
+	 * Deze methode word aangeroepen als er een nieuw stuk text is getyped in de typeArea.
+	 * Hier word ook gekeken of het een whisper is en maakt dan zo nodig een nieuwe instantie van PersonalChat.
+	 * Tot slot word dan de nieuwe regel in het goede window geprint.
+	 * @param txt De nieuwe text die ingevoerd word.
+	 */
 	public void addText(String txt) {
 		String[] words = txt.split(" ");
 
@@ -228,7 +245,11 @@ public class ChatWindow extends JFrame implements KeyListener, ActionListener,
 			typeArea.setText("");
 		}
 	}
-
+	
+	/**
+	 * Deze methode word aangeroepen als er een nieuwe regel geprint moet worden.
+	 * @param txt De nieuwe regel die binnen is gekomen.
+	 */
 	public void incoming(String txt) {
 		txt = txt.replace("8)", "😎");
 		txt = txt.replace(":)", "😉");
@@ -237,7 +258,13 @@ public class ChatWindow extends JFrame implements KeyListener, ActionListener,
 		if (test != null)
 			test.incoming(txt);
 	}
-
+	
+	/**
+	 * Deze doet in principe het zelfde als <code>incoming()</code>, maar dan voor private messages.
+	 * Hier is dus wel een sender nodig.
+	 * @param sender Naam van persoon van wie het berich komt.
+	 * @param txt De nieuwe regel die binnen is gekomen.
+	 */
 	public void privateIncoming(String sender, String txt) {
 		if (checkTabs.isSelected()) {
 			if (doIHaveWindow(sender) == -1) {
@@ -254,6 +281,12 @@ public class ChatWindow extends JFrame implements KeyListener, ActionListener,
 		// incoming(sender + ": " + txt);
 	}
 
+	/**
+	 * Deze methode kijkt of er al een instantie van <code>PersonalChat</code> in de lijst staat.
+	 * Dus of er al een apart scherm is voor deze persoon.
+	 * @param target Naam van de persoon waarvan je wil testen of er voor hem al een apart window is.
+	 * @return true als er al een window voor de target persoon is, false als dit niet het geval is.
+	 */
 	public int doIHaveWindow(String target) {
 		int ret = -1;
 		for (int i = 0; i < pChats.size(); i++) {
@@ -265,10 +298,20 @@ public class ChatWindow extends JFrame implements KeyListener, ActionListener,
 		return ret;
 	}
 
+	/**
+	 * Deze methode maakt van de text die getyped is in typeArea een duidelijke regel die geprint kan worden.
+	 * @param text De text die getyped is.
+	 * @return De regel die geprint moet worden.
+	 */
 	public String generateLine(String text) {
 		return myName + ": " + text;
 	}
-
+	
+	/**
+	 * Deze methode word aangeroepen als er een persoon weg is gegaan.
+	 * Zijn naam word dan uit de lijst met personen die mee doen gehaald en als er een apart window voor hem was word die gesloten.
+	 * @param name Naam van de gene die weg is gegaan.
+	 */
 	public void disconnect(String name) {
 		if (pNameList.contains(name)) {
 			int index = pNameList.indexOf(name);
@@ -281,7 +324,11 @@ public class ChatWindow extends JFrame implements KeyListener, ActionListener,
 			pChats.remove(index);
 		}
 	}
-
+	/**
+	 * De lijst van mensen die mee doen geupdate. Word aangeroepen als er een bericht van iemand binnen komt.
+	 * Voegt een naam toe als die er nog niet in stond en anders laat hij de naam gewoon staan.
+	 * @param name Naam van de persoon die er nog blijkt te zijn.
+	 */
 	public void updateNames(String name) {
 		if (!pNameList.contains(name)) {
 			pList.addElement(name);
@@ -311,7 +358,6 @@ public class ChatWindow extends JFrame implements KeyListener, ActionListener,
 
 	@Override
 	public void keyTyped(KeyEvent arg0) {
-		// TODO Auto-generated method stub
 		typeArea.requestFocus();
 	}
 	
@@ -384,17 +430,23 @@ public class ChatWindow extends JFrame implements KeyListener, ActionListener,
 	public void mouseReleased(MouseEvent arg0) {
 
 	}
-
+/**
+ * Main method. Maakt eerst een JOptionPane om je naam in te vullen en als dat een geldige naam is maakt hij een nieuw ChatWindow aan.
+ * @param args Niets..
+ */
 	public static void main(String[] args) {
 		String name = JOptionPane.showInputDialog("What is your name?");
 		if (name != null)
 			new ChatWindow(name, null);
 	}
 
+	/**
+	 * Een klasse om de lijst voor textArea met kleuren te weergeven.
+	 * @author Groep 8
+	 *
+	 */
 	private class MyListRenderer extends DefaultListCellRenderer {
-		/**
-		 * 
-		 */
+		
 		private static final long serialVersionUID = 1L;
 
 		public Component getListCellRendererComponent(JList list, Object value,

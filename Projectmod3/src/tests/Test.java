@@ -4,6 +4,11 @@ import java.util.ArrayList;
 
 import GUI.ChatWindow;
 
+/**
+ * 
+ * @author Tim
+ *
+ */
 public class Test extends Thread {
 	ChatWindow c;
 

@@ -2,10 +2,13 @@ package tests;
 
 import GUI.ChatWindow;
 
+/**
+ * 
+ * @author Tim
+ *
+ */
 public class Echo extends ChatWindow{
-	/**
-	 * 
-	 */
+	
 	private static final long serialVersionUID = 1L;
 	static String myName = "Echoer";
 	

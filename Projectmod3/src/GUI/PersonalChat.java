@@ -11,10 +11,13 @@ import javax.swing.*;
 
 import client.Client;
 
+/**
+ * Deze klasse is gebaseert op ChatWindow. Deze klasse is om een apart window te maken om te praten met 1 persoon.
+ * @author Tim
+ *
+ */
 public class PersonalChat extends JFrame implements KeyListener, ActionListener {
-	/**
-	 * 
-	 */
+	
 	private static final long serialVersionUID = 1L;
 	ChatWindow chatWindow;
 	Client client;
@@ -37,6 +40,13 @@ public class PersonalChat extends JFrame implements KeyListener, ActionListener 
 
 	Dimension windowSize = new Dimension(400, 300);
 
+	/**
+	 * Constructor.
+	 * @param chatWindow ChatWindow waaraan deze personal chat gekoppeld is.
+	 * @param c De bijbehorende client van chatWindow.
+	 * @param myName1 De naam van persoon 
+	 * @param hisName2
+	 */
 	public PersonalChat(ChatWindow chatWindow, Client c, String myName1,
 			String hisName2) {
 		super("Chatting with " + hisName2);
@@ -46,7 +56,11 @@ public class PersonalChat extends JFrame implements KeyListener, ActionListener 
 		this.chatWindow = chatWindow;
 		init();
 	}
-
+	/**
+	 * Deze methode is eigenlijk een extensie van de constructor.
+	 * Hier worden de JComponents aan gemaakt en de Icons etc.
+	 * Eigenlijk word hier gewoon het hele window aangemaakt.
+	 */
 	private void init() {
 		cont = getContentPane();
 		setSize(windowSize);
@@ -112,7 +126,10 @@ public class PersonalChat extends JFrame implements KeyListener, ActionListener 
 		setVisible(true);
 
 	}
-
+	/**
+	 * Deze methode word aangeroepen als er een nieuw stuk text is getyped in de typeArea.
+	 * @param txt De nieuwe text die ingevoerd word.
+	 */
 	private void addText(String txt) {
 		list.addElement(myName + ": " + txt);
 		typeArea.setText("");
@@ -120,7 +137,10 @@ public class PersonalChat extends JFrame implements KeyListener, ActionListener 
 		client.sendPrivate(hisName, txt);
 		this.textArea.ensureIndexIsVisible(list.getSize() - 1);
 	}
-
+	/**
+	 * Deze methode word aangeroepen als er een nieuwe regel geprint moet worden.
+	 * @param txt De nieuwe regel die binnen is gekomen.
+	 */
 	public void incoming(String txt) {
 		txt = txt.replace("8)", "😎");
 		txt = txt.replace(":)", "😉");
