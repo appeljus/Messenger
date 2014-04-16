@@ -8,6 +8,7 @@ import java.net.DatagramPacket;
 import java.net.InetAddress;
 import java.net.MulticastSocket;
 import java.net.NetworkInterface;
+import java.nio.ByteBuffer;
 import java.util.*;
 
 import javax.swing.JOptionPane;
@@ -362,6 +363,16 @@ public class Client extends Thread {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public void testRTT(){
+		long time = System.currentTimeMillis();
+		byte[] timeCommand = "[TIME_STAMP]".getBytes();
+		byte[] timeUnit = ByteBuffer.allocate(8).putLong(time).array();
+		byte[] message = new byte[timeCommand.length + timeUnit.length];
+		System.arraycopy(timeCommand, 0, message, 0, timeCommand.length);
+		System.arraycopy(timeUnit, 0, message, timeCommand.length, message.length);
+		sendPacket(message, false);
 	}
 
 	public void run() {
