@@ -37,7 +37,7 @@ public class Client extends Thread {
 		myName = name;
 		packetLog = new PacketLog();
 		currentSeq = 1;
-		hopCount = 2;
+		hopCount = 3;
 		chatwindow = c;
 		receiveFileInstance = new ReceiveFile(this);
 		encryption = new Encryption();
@@ -277,7 +277,7 @@ public class Client extends Thread {
 		sendPacket(returnString);
 	}
 
-	public void checkConnections() {
+	public synchronized void checkConnections() {
 		List<Integer> remove = new ArrayList<Integer>();
 		for (Integer i : stillAlive.keySet()) {
 			if (!stillAlive.get(i)) {
@@ -339,19 +339,13 @@ public class Client extends Thread {
 						} catch (IOException e) {
 							e.printStackTrace();
 						}
-						incrementSeqNr();
 					}
 					else {
 						return;
 					}
 				}
-				else if(myAddress.equals(destinationAddress) || group.equals(destinationAddress)){
-					if(hop == 0) {
-						packetLog.addReceivePacket(devNr, sequence, packet);
-					}
-					else {
-						return;
-					}
+				if(myAddress.equals(destinationAddress) || group.equals(destinationAddress)){
+					packetLog.addReceivePacket(devNr, sequence, packet);
 				}
 			}
 		} catch (IOException e) {
