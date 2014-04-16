@@ -13,7 +13,9 @@
 \newpage
 
 \section*{Voor gebruik}
-\emph{Onze applicatie maakt gebruik van een externe library. Om te code te laten werken, moet deze waarschijnlijk aan de projectpath worden toegevoegd. De jar is al met onze source meegeleverd, dus de instellingen van het project hoeven alleen maar angepast te worden, zodat de jar goed geimporteerd wordt.}
+\emph{Onze applicatie maakt gebruik van een externe library. Om te code te laten werken, moet deze waarschijnlijk aan de projectpath worden toegevoegd. De jar is al met onze source meegeleverd, dus de instellingen van het project hoeven alleen maar angepast te worden, zodat de jar goed geimporteerd wordt.\\
+\phantom{YOLO} \\
+Om de applicatie te laten werken moet er een adhoc netwerk opgezet worden, wat alleen in ubuntu kan. We hebben zelf een script waarmee dit makkelijk gebeurd. Als adhoc\_setup als root gedraaid wordt, wordt automatisch het netwerk opgezet. Als je klaar bent met de applicatie kan adhoc\_desetup gedraaid wordt, waardoor het normale netwerk weer opgezet wordt, en er weer normaal op het internet gesurfd kan worden.}
 
 \newpage
 
@@ -80,8 +82,8 @@ $[PRIV\_MESSAGE]$ & Geeft een priv\'{e} bericht aan. Het bericht zal dan alleen 
 $[NACK]$ & Geeft aan dat het bericht een NACK is \\
 $[TOO\_LATE]$ & Geeft aan dat een bericht waarvoor een NACK is gestuurd niet meer in de buffer voorkomt \\
 $[EOF]$ & Geeft het einde van een bestand aan
-\end{tabular}
-\\
+\end{tabular} \\
+\phantom{YOLO} \\
 We hebben voor deze header van de pakket gekozen, omdat de methode om het IP-adres van een pakket op de vragen verschilt afhankelijk van de context. Door het IP-adressen in de header weten we zeker dat we de goede adressen hebben. Daarnaast gebruiken we het sequence nummer om te kijken of we alle pakketten hebben binnen gekregen. De hop teller gebruiken we om te zorgen dat pakketjes niet oneindig doorgestuurd worden. Het laatste veld gebruiken we om het bericht goed te ontcijferen. 
 
 \subsection{Bestanden verzenden}
@@ -112,7 +114,7 @@ Via deze interface is het makkelijk met de applicatie communiceren. Alle functio
 Om te zorgen dat niet iedereen de inhoudt van de pakketten kan lezen, gebruiken we encryptie. 
 
 \subsection{Encryptie}
-Voor het encryptie gebruiken we symetrische sleutel encryptie. Dit betekent dat de clients een sleutel delen, waarmee ze hun berichten kunnen coderen en decoderen. 
+Voor de encryptie gebruiken we caesar cipher. Dit betekent dat voor elke byte van de data bij het coderen een vooraf afgesproken getal wordt afgetrokken, en bij het decoderen dat getal er weer bij wordt opgeteld. Dit is geen sterke encryptie, en is makkelijk te kraken met bepaalde algoritmes, maar we hadden geen tijd meer om betere encryptie te implementeren. We waren van plan symetrische AES encryptie te gebruiken. Elke client zou dan een vooraf afgesproken key hebben, waarmee ze zouden kunnen coderen en decoderen. Dit is veel veiliger dan caesar cipher, omdat de data die gecodeerd wordt in blokken gecodeerd wordt. Hierdoor is de key veel lastiger te achter halen. \\
 
 \section{Test plan}
 Voor een aantal eisen voor de applicatie hebben we test cases geschreven en uitgevoerd. De volgende eisen hebben we getest:
