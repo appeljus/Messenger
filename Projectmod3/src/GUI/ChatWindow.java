@@ -3,13 +3,11 @@ package GUI;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
-
 import javax.imageio.ImageIO;
+import javax.sound.sampled.Clip;
 import javax.swing.*;
 
 import tests.Test;
@@ -71,8 +69,8 @@ public class ChatWindow extends JFrame implements KeyListener, ActionListener,
 	Dimension buttonDim = new Dimension(96, 64);
 	Dimension ptDim = new Dimension(96, 16);
 	Dimension menuBarDim = new Dimension(96, 576);
-
-	boolean done = false;
+	
+	Clip clip;
 
 	public ChatWindow(String name, Test t) {
 		super("Pigeon");
@@ -198,7 +196,7 @@ public class ChatWindow extends JFrame implements KeyListener, ActionListener,
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		cont.add(mainFrame);
 		setVisible(true);
-		typeArea.requestFocusInWindow();
+		typeArea.requestFocusInWindow();		
 	}
 
 	public void addText(String txt) {
@@ -253,7 +251,6 @@ public class ChatWindow extends JFrame implements KeyListener, ActionListener,
 			list.addElement("From " + sender + ": " + txt);
 			textArea.ensureIndexIsVisible(list.getSize() - 1);
 		}
-
 		// incoming(sender + ": " + txt);
 	}
 

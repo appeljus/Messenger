@@ -45,7 +45,7 @@ public class LogChecker extends Thread {
 							byte[] msg = ("[NACK] " + holes.get(i) + " DUMMY_WORD").getBytes();
 							DatagramPacket p = null;
 							try {
-								byte[] data = PacketUtils.getData(client.getEncryption().encrypt(msg), 0, client.getHopCount(), client.getMyAddress(), InetAddress.getByName("192.168.5." + dn));
+								byte[] data = PacketUtils.getData(client.getEncryption().encryptData(msg), 0, client.getHopCount(), client.getMyAddress(), InetAddress.getByName("192.168.5." + dn));
 								p = new DatagramPacket(data, data.length, InetAddress.getByName("192.168.5." + dn), client.getPort());
 							} catch (UnknownHostException e) { }
 							client.resendPacket(p);
