@@ -171,12 +171,14 @@ public class Client extends Thread {
 		// }
 
 		else if (txt.startsWith("[FILE]")) {
+			System.out.println("FILE");
 			byte[] fileBytes = new byte[1001];
 			System.arraycopy(message, 6, fileBytes, 0, 1001);
 			receiveFileInstance.receiveFile(fileBytes, false, "", "");
 		}
 
 		else if (txt.startsWith("[EOF]")) {
+			System.out.println("EOF");
 			byte[] extBytes = new byte[3];
 			int count = 0;
 			for (int i = message.length - 1; i > 20; i--) {
