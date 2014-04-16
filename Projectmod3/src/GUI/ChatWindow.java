@@ -57,7 +57,7 @@ public class ChatWindow extends JFrame implements KeyListener, ActionListener,
 	BufferedImage exitBuff;
 	BufferedImage fileBuff;
 	BufferedImage sendBuff;
-	
+
 	ImageIcon icon;
 	ImageIcon exitB;
 	ImageIcon fileB;
@@ -140,7 +140,7 @@ public class ChatWindow extends JFrame implements KeyListener, ActionListener,
 		} catch (IOException e) {
 			System.out.println("Fuck the images!");
 		}
-		
+
 		title.setForeground(Color.WHITE);
 		title.setPreferredSize(buttonDim);
 		title.setMaximumSize(buttonDim);
@@ -183,7 +183,7 @@ public class ChatWindow extends JFrame implements KeyListener, ActionListener,
 		menuBar.add(exit, c);
 
 		// ////////////////////////////
-		//set icons
+		// set icons
 		title.setIcon(icon);
 		send.setIcon(sendB);
 		send.setIconTextGap(-12);
@@ -293,7 +293,8 @@ public class ChatWindow extends JFrame implements KeyListener, ActionListener,
 	public void keyPressed(KeyEvent arg0) {
 		String[] words = typeArea.getText().split(" ");
 		if (arg0.getKeyCode() == 10 && !typeArea.getText().equals("")
-				&& !(words.length == 2 && words[0].equals("/w"))) {
+				&& !(words.length == 2 && words[0].equals("/w"))
+				&& typeArea.getText().length() <= 1001) {
 			String txt = typeArea.getText();
 			txt = generateLine(txt);
 			this.addText(txt);
@@ -317,9 +318,14 @@ public class ChatWindow extends JFrame implements KeyListener, ActionListener,
 		if (arg0.getSource() == this.exit) {
 			System.exit(0);
 		} else if (arg0.getSource() == this.send) {
-			String txt = typeArea.getText();
-			this.addText(generateLine(txt));
-			typeArea.requestFocusInWindow();
+			String[] words = typeArea.getText().split(" ");
+			if (!typeArea.getText().equals("")
+					&& !(words.length == 2 && words[0].equals("/w"))
+					&& typeArea.getText().length() <= 1001) {
+				String txt = typeArea.getText();
+				this.addText(generateLine(txt));
+				typeArea.requestFocusInWindow();
+			}
 
 		} else if (arg0.getSource() == sendFile) {
 			JFileChooser fc = new JFileChooser();
@@ -387,9 +393,9 @@ public class ChatWindow extends JFrame implements KeyListener, ActionListener,
 
 			String txt = (String) value;
 			if (txt.startsWith("From")) {
-				setForeground(new Color(0,0,255));
+				setForeground(new Color(0, 0, 255));
 			} else if (txt.startsWith("To")) {
-				setForeground(new Color(255,0,0));
+				setForeground(new Color(255, 0, 0));
 			}
 
 			if (isSelected) {
