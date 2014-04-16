@@ -321,12 +321,12 @@ public class Client extends Thread {
 				}
 			}
 			if (sourceAddress.getHostAddress().startsWith("192.168.5.") || sourceAddress.getHostAddress().startsWith("228.5.6.7")) {
-				if (!myAddress.equals(destinationAddress) && hop != 0) {
+				if (packetLog.containsReceiveSeq(devNr, sequence))
+					return;
+				else if (!myAddress.equals(destinationAddress) && hop != 0) {
 					hop--;
-					byte[] pData = PacketUtils.getData(message, sequence, hop,
-							sourceAddress, destinationAddress);
-					DatagramPacket packetToSend = new DatagramPacket(pData,
-							pData.length, destinationAddress, port);
+					byte[] pData = PacketUtils.getData(message, sequence, hop, sourceAddress, destinationAddress);
+					DatagramPacket packetToSend = new DatagramPacket(pData, pData.length, destinationAddress, port);
 					packetLog.addSendPacket(packetToSend);
 
 					try {
