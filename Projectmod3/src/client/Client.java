@@ -26,7 +26,7 @@ public class Client extends Thread {
 	private HashMap<Integer, Integer> nameIndex = new HashMap<Integer, Integer>();
 	private Timer timer;
 	private PacketLog packetLog;
-	private ReceiveFile receiveFileInstance;
+	public ReceiveFile receiveFileInstance;
 	private int currentSeq;
 	private int hopCount;
 	private Encryption encryption;
@@ -37,7 +37,7 @@ public class Client extends Thread {
 		myName = name;
 		packetLog = new PacketLog();
 		currentSeq = 1;
-		hopCount = 4;
+		hopCount = 0;
 		chatwindow = c;
 		receiveFileInstance = new ReceiveFile(this);
 		encryption = new Encryption();
@@ -172,7 +172,7 @@ public class Client extends Thread {
 		else if (txt.startsWith("[FILE]")) {
 			byte[] fileBytes = new byte[1001];
 			System.arraycopy(message, 6, fileBytes, 0, 1001);
-			receiveFileInstance.receiveFile(fileBytes, false, "");
+			receiveFileInstance.receiveFile(fileBytes, false, "", "");
 		}
 
 		else if (txt.startsWith("[EOF]")) {
@@ -187,7 +187,9 @@ public class Client extends Thread {
 			byte[] file = new byte[1001 - (count)];
 			System.arraycopy(message, 10, file, 0, file.length);
 			System.arraycopy(message, 6, extBytes, 0, 3);
-			receiveFileInstance.receiveFile(file, true, new String(extBytes));
+			int devNr = ((int)sourceAddress.getAddress()[3]) & 0xFF;
+			String name = chatwindow.pNameList.get(nameIndex.get(devNr));
+			receiveFileInstance.receiveFile(file, true, new String(extBytes),name);
 		}
 
 		else if (!sourceAddress.equals(myAddress)) {
