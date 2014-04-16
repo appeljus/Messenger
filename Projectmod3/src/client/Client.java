@@ -37,7 +37,7 @@ public class Client extends Thread {
 		myName = name;
 		packetLog = new PacketLog();
 		currentSeq = 1;
-		hopCount = 0;
+		hopCount = 1;
 		chatwindow = c;
 		receiveFileInstance = new ReceiveFile(this);
 		encryption = new Encryption();
@@ -134,9 +134,7 @@ public class Client extends Thread {
 			if (words[1].equals(myName)) {
 				this.sendPacket("[NAME_IN_USE]: " + words[1] + " STUFF");
 			}
-			if (stillAlive.containsKey(hisNr))
-				stillAlive.remove(hisNr);
-			else {
+			if(!stillAlive.containsKey(hisNr)) {
 				System.out.println("YO " + words[1]);
 				chatwindow.updateNames(words[1]);
 				int index = chatwindow.pNameList.indexOf(words[1]);
@@ -283,10 +281,8 @@ public class Client extends Thread {
 		List<Integer> remove = new ArrayList<Integer>();
 		for (Integer i : stillAlive.keySet()) {
 			if (!stillAlive.get(i)) {
-				chatwindow.incoming(chatwindow.pNameList.get(nameIndex.get(i))
-						+ " has left.");
-				chatwindow
-						.disconnect(chatwindow.pNameList.get(nameIndex.get(i)));
+				chatwindow.incoming(chatwindow.pNameList.get(nameIndex.get(i))+ " has left.");
+				chatwindow.disconnect(chatwindow.pNameList.get(nameIndex.get(i)));
 				packetLog.removeDevice(i);
 				logChecker.removeDevice(i);
 				remove.add(i);
@@ -295,6 +291,7 @@ public class Client extends Thread {
 		}
 		for (int i = 0; i < remove.size(); i++) {
 			stillAlive.remove(remove.get(i));
+			nameIndex.remove(remove.get(i));
 		}
 		stillAlive.put(deviceNr, true);
 	}
@@ -329,11 +326,10 @@ public class Client extends Thread {
 				logChecker.seqGone(devNr, missedI);
 			} else if (sourceAddress.getHostAddress().startsWith("192.168.5.") || sourceAddress.getHostAddress().startsWith("228.5.6.7")) {
 				if (packetLog.containsReceiveSeq(devNr, sequence)) {
-					if(devNr != deviceNr) System.out.println("IK HOP NIET!");
 					return;
 				} else if (!myAddress.equals(destinationAddress) && hop != 0) {
-					if(devNr != deviceNr) System.out.println("IK HOP! " + hop);
 					hop--;
+					if(devNr != deviceNr) System.out.println("IK HOP " + devNr + " + " + hop);
 					byte[] pData = PacketUtils.getData(message, sequence, hop,sourceAddress, destinationAddress);
 					DatagramPacket packetToSend = new DatagramPacket(pData,pData.length, destinationAddress, port);
 					packetLog.addSendPacket(packetToSend);
