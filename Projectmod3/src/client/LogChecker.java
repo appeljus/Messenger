@@ -8,8 +8,8 @@ import java.util.List;
 
 /**
  * De method om de <code>PacketLog</code> te checken.
- * @author Kevin + Tim
- * @version 1.0.0
+ * @author Kevin, Tim, Kimberly, Martijn
+ * @version 1.0
  */
 public class LogChecker extends Thread {
 	private Client client;
@@ -76,7 +76,6 @@ public class LogChecker extends Thread {
         int length = PacketUtils.getLength(packet);
 		client.processPacket(message, sequence, hop, sourceAddress, destinationAddress, length);
 		lastPrinted[dn] = i;
-		//log.removePacket(dn,i);
 	}
 	
 	public void removeDevice(int deviceNr) {

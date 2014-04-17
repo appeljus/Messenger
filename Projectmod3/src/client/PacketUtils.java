@@ -6,7 +6,7 @@ import java.net.UnknownHostException;
 import java.nio.ByteBuffer;
 
 /**
- * Created by Martijn on 11-4-14.
+ * @author Kevin, Tim, Kimberly, Martijn
  */
 public class PacketUtils {
 

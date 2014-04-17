@@ -17,25 +17,74 @@ import tests.Echo;
 
 /**
  * The Class Client for our multihop-chatprogram.
- * @author Kevin + Tim
- * @version 0.9.5
+ * @author Kevin, Tim, Kimberly, Martijn
+ * @version 1.0
  */
 public class Client extends Thread {
+
+    /**
+     * De window van de client
+     */
 	private ChatWindow chatwindow;
+    /**
+     * Het standaard poortnummer
+     */
 	private static final int port = 4242;
-	private MulticastSocket s;
-	private InetAddress myAddress;
+    /**
+     * De multicast socket van de client, waarover de pakketten gestuurd worden
+     */
+    private MulticastSocket s;
+    /**
+     * Het IP-adres van de gebruiker
+     */
+    private InetAddress myAddress;
+    /**
+     * Het multicast adres
+     */
 	private InetAddress group;
+    /**
+     * De naam die de gebruiker heeft ingevoerd
+     */
 	private String myName;
+    /**
+     * Een lijst met alle clients die geconnect zijn
+     */
 	private HashMap<Integer, Boolean> stillAlive = new HashMap<Integer, Boolean>();
+    /**
+     * Een lijst met de namen van de clients
+     */
 	private HashMap<Integer, Integer> nameIndex = new HashMap<Integer, Integer>();
+    /**
+     * Een timer
+     */
 	private Timer timer;
+    /**
+     * De log van de pakketten
+     */
 	private PacketLog packetLog;
+    /**
+     * Ontvangen van bestanden
+     */
 	public ReceiveFile receiveFileInstance;
+    /**
+     * Het huidige sequence nummer van de client
+     */
 	private int currentSeq;
+    /**
+     * De standaard hopcount die met een pakket mee wordt gestuurd
+     */
 	private int hopCount;
+    /**
+     * Beveiligen van pakketten
+     */
 	private Encryption encryption;
+    /**
+     * Het nummer van de client
+     */
 	private int deviceNr;
+    /**
+     * Checker van de log
+     */
 	private LogChecker logChecker;
 
 	/**
@@ -51,11 +100,13 @@ public class Client extends Thread {
 		chatwindow = c;
 		receiveFileInstance = new ReceiveFile(this);
 		encryption = new Encryption();
-		encryption.setPassword("Doif");
 		logChecker = new LogChecker(this, packetLog);
 		Thread t = new Thread(logChecker);
 		t.start();
 
+        /*
+        Probeer het eigen IP adres op te vragen
+         */
 		try {
 			Enumeration<NetworkInterface> e = NetworkInterface
 					.getNetworkInterfaces();
@@ -69,6 +120,7 @@ public class Client extends Thread {
 					}
 				}
 			}
+
 			byte[] addr = myAddress.getAddress();
 			deviceNr = ((int) addr[3]) & 0xFF;
 			stillAlive.put(deviceNr, true);
@@ -162,8 +214,8 @@ public class Client extends Thread {
 	}
 
 	/**
-	 * Een getter voor de huidige <code>Encryption</code> van de gebruiker.
-	 * @return de huidige <code>Encryption</code> van de gebruiker.
+	 * Een getter voor de huidige <code>Encryption3</code> van de gebruiker.
+	 * @return de huidige <code>Encryption3</code> van de gebruiker.
 	 */
 	public Encryption getEncryption() {
 		return encryption;
@@ -181,11 +233,14 @@ public class Client extends Thread {
 	public void processPacket(byte[] message, int sequenceNr, int hopCount,
 			InetAddress sourceAddress, InetAddress destinationAddress,
 			int lengte) {
-		//byte[] decrypted = encryption.decryptData(message);
-		String txt = new String((message));
+		byte[] decrypted = encryption.decryptData(message);
+		//String txt = new String((message));
 		// Of als encryption is toegevoegd:
-		//String txt = new String(decrypted);
+		String txt = new String(decrypted);
 
+        /*
+        Als het bericht een broadcast is, update de lijst met clients die geconnect zijn
+         */
 		if (txt.startsWith("[BROADCAST]") && !sourceAddress.equals(myAddress)) {
 			String[] words = txt.split(" ");
 			int hisNr = ((int) sourceAddress.getAddress()[3]) & 0xFF;
@@ -199,7 +254,11 @@ public class Client extends Thread {
 				nameIndex.put(hisNr, index);
 				stillAlive.put(hisNr, true);
 			}
-		} else if (txt.startsWith("[NAME_IN_USE]: ")
+		}
+        /*
+        Als het bericht een name_in_use is
+         */
+        else if (txt.startsWith("[NAME_IN_USE]: ")
 				&& !sourceAddress.equals(myAddress)) {
 			String[] words = txt.split(" ");
 			if (myName.equals(words[1])) {
@@ -212,7 +271,9 @@ public class Client extends Thread {
 
 			}
 		}
-
+        /*
+        Als het een privé bericht is, laat het alleen aan de ontvanger zien
+         */
 		else if (txt.startsWith("[PRIV_MSG]: ")) {
 			String[] words = txt.split(" ");
 			if (words[1].equals(myName)) {
@@ -223,18 +284,18 @@ public class Client extends Thread {
 				chatwindow.privateIncoming(words[2], data);
 			}
 		}
-
-		// else if (txt.startsWith("[NACK]")) {
-
-		// }
-
+        /*
+        Als het een bestand is, ontvang het bestand via receive file
+         */
 		else if (txt.startsWith("[FILE]")) {
 			System.out.println("FILE");
 			byte[] fileBytes = new byte[995];
 			System.arraycopy(message, 6, fileBytes, 0, 995);
 			receiveFileInstance.receiveFile(fileBytes, false, "", "",0);
 		}
-
+        /*
+        Als het einde van het bestand bereikt is, sla het ergens op
+         */
 		else if (txt.startsWith("[EOF]")) {
 			System.out.println("EOF");
 			byte[] extBytes = new byte[3];
@@ -267,7 +328,7 @@ public class Client extends Thread {
 	 * @param seq het sequence nummer om te gebruiken. 
 	 */
 	public void sendTestPacket(String message, int seq) {
-		byte[] data = PacketUtils.getData((message.getBytes()), seq, hopCount,
+		byte[] data = PacketUtils.getData(encryption.encryptData(message.getBytes()), seq, hopCount,
 				myAddress, group);
 
 		DatagramPacket packetToSend = new DatagramPacket(data, data.length,
@@ -291,9 +352,9 @@ public class Client extends Thread {
 			chatwindow.incoming(message);
 		}
 
-		byte[] data = PacketUtils.getData((message.getBytes()), currentSeq, hopCount, myAddress, group);
+		//byte[] data = PacketUtils.getData((message.getBytes()), currentSeq, hopCount, myAddress, group);
 		// Of als encryption toegevoegd is:
-		//byte[] data = PacketUtils.getData((encryption.encryptData(message.getBytes())),currentSeq, hopCount, myAddress, group);
+		byte[] data = PacketUtils.getData((encryption.encryptData(message.getBytes())),currentSeq, hopCount, myAddress, group);
 
 		DatagramPacket packetToSend = new DatagramPacket(data, data.length,
 				group, port);

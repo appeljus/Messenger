@@ -10,8 +10,7 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
- * Created by Martijn on 11-4-14.
- * Edited by Kevin
+ * @author Kevin, Tim, Kimberly, Martijn
  */
 public class PacketLog {
 

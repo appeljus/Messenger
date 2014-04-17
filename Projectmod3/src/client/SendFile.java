@@ -11,10 +11,11 @@ import org.apache.commons.io.FilenameUtils;
 
 /**
  * De klasse om een <code>File</code> te verzenden.
- * @author Tim + Kevin
+ * @author Kevin, Tim, Kimberly, Martijn
  * @version 1.0.0
  */
 public class SendFile implements Runnable {
+
 	Client c;
 	File file;
 	InetAddress target;

@@ -4,7 +4,7 @@ import java.util.TimerTask;
 
 /**
  * De klass die elke seconde een <code>Broadcast</code> stuurt.
- * @author Kevin
+ * @author Kevin, Tim, Kimberly, Martijn
  * @version 1.0.0
  */
 public class SecondTimer extends TimerTask {

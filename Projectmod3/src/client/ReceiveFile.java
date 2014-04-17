@@ -13,7 +13,7 @@ import GUI.ChatWindow;
 
 /**
  * De klasse om een <code>File</code> te ontvangen.
- * @author Kevin + Tim
+ * @author Kevin, Tim, Kimberly, Martijn
  * @version 1.0.0
  */
 public class ReceiveFile extends Thread {
