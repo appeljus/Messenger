@@ -24,8 +24,10 @@ Om de applicatie te laten werken moet er een adhoc netwerk opgezet worden, wat a
 \tableofcontents
 
 \section{Inleiding}
-Dit is ons verslag van het project van de derde module. Voor het project hebben wij een chat applicatie gemaakt. In deze applicatie kan een gebruiker in een ad-hoc netwerk met andere gebruikers berichten uitwisselen. De applicatie ondersteunt maximaal vier gebruikers. Een gebruiker kan ervoor kiezen om met één persoon, of drie personen te chatten. De berichten zijn beveiligd met behulp van encryptie. Hierdoor kunnen alleen de andere gebruikers de berichten uitlezen. Als twee gebruikers alleen willen chatten, is dit voor de andere gebruikers geëncrypt. Het netwerk waarop de applicatie draait is een ad-hoc netwerk. Dit betekent dat het netwerk geen router of server nodig heeft. De computers  maken een eigen netwerk via Wi-Fi.
+Dit is ons verslag van het project van de derde module. Voor het project hebben wij een chat applicatie gemaakt. In deze applicatie kan een gebruiker in een ad-hoc netwerk met andere gebruikers berichten uitwisselen. De applicatie ondersteunt maximaal vier gebruikers. Een gebruiker kan ervoor kiezen om met \'{e}\'{e}n persoon, of drie andere personen te chatten. De berichten zijn beveiligd met behulp van encryptie. Hierdoor kunnen alleen de andere gebruikers de berichten uitlezen. Als twee gebruikers alleen willen chatten, is dit voor de andere gebruikers ge\"{e}ncrypt.\\
+Het netwerk waarop de applicatie draait is een ad-hoc netwerk. Dit betekent dat het netwerk geen router of server nodig heeft. De computers  maken een eigen netwerk via Wi-Fi.
 \\
+\phantom{YOLO} \\
 In het verslag zullen we het proces van het ontwerpen van de applicatie, en de keuzes die we daarbij gemaakt hebben uitleggen. Als eerste bekijken we het ontwerp van de applicatie, hier zal de basis uitgelegd worden. Daarna zal de implementatie van de beveiliging uitgelegd worden. Als laatste zal het test proces beschreven worden.
 
 \newpage
@@ -93,7 +95,7 @@ Het verzenden van bestanden gaat ook via Datagram pakketjes. Echter is nu de arr
 
 
 \subsection{Pakket verlies}
-Doordat het network via Wi-Fi werkt, is de kans dat een pakket verloren gaat veel groter dan via de kabel. Om te zorgen dat deze pakketjes opnieuw worden verstuurd, gebruiken we sequence nummers en NACK's. Als een pakketje verloren gaat, ziet de applicatie dat pas als het volgende pakketje aankomt met een hoger sequence nummer dan verwacht. Als de applicatie een ander sequence nummer binnen krijgt dan verwacht, stuurt de applicatie een negative aknowledgement, een NACK. Omdat er een lange tijd tussen twee berichten kan zitten, zitten er in broadcast berichten ook een sequence nummer, waardoor elke seconde gekeken wordt naar het sequence nummer en het verwachte sequence nummer. \\
+Doordat het netwerk via Wi-Fi werkt, en het standaard combinatie met UDP, is de kans dat een pakket verloren gaat veel groter dan via de kabel. Om te zorgen dat deze pakketjes opnieuw worden verstuurd, gebruiken we sequence nummers en NACK's. Als een pakketje verloren gaat, ziet de applicatie dat pas als het volgende pakketje aankomt met een hoger sequence nummer dan verwacht. Als de applicatie een ander sequence nummer binnen krijgt dan verwacht, stuurt de applicatie een negative aknowledgement, een NACK. Omdat er een lange tijd tussen twee berichten kan zitten, bevattem de broadcast berichten ook een sequence nummer, waardoor elke seconde gekeken wordt naar het sequence nummer en het verwachte sequence nummer. \\
 We doen het om deze manier, omdat er alleen een bericht gestuurd wordt, als er een bericht mist. Als voor elk pakket een bericht van ontvangst zouden sturen, zou de kans op opstopping groter worden. \\
 
 \subsection{Priv\'{e} chat}
@@ -109,10 +111,14 @@ De gebruiker kan via de user interface met het programma communiceren. De interf
 \item Een knop voor het afsluiten van het applicatie
 \end{itemize}
 
-Via deze interface is het makkelijk met de applicatie communiceren. Alle functionaliteiten kunnen via de interface aangeroepen worden. 
+Via deze interface is het makkelijk met de applicatie communiceren. Alle functionaliteiten kunnen via de interface aangeroepen worden. In het midden is een groot tekst veld, waarin alle berichten verschijnen die gestuurd en ontvangen worden. Daaronder is een tekstveld waarin berichten naar andere gebruikers gestuurd kunnen worden. Aan de linkerkant is een knop voor het versturen van een bestand. Als hierop geklikt wordt, wordt een pop-up geopend waarin een bestand gekozen kan worden. De ontvangers kunnen ervoor kiezen om dit bestand op te slaan of niet, en waar. Ook kan een venster geopend worden voor een persoonlijke chat sessie, door op de naam van een persoon te klikken. Een persoonlijke chat kan ook gevoerd worden in het normale chat venster, door /w "ontvanger" voor het bericht te typen, met als ontvanger de naam van de andere gebruiker.  Er kan voor gekozen worden om persoonlijke berichten in een appart venster te voeren, door de checkbox aan te hebben staan. De applicatie kan afgesloten worden door op de exit knop te drukken.
 
 \section{State diagram}
 \includegraphics[angle=90, scale=0.6]{chatapplication.png}
+\newpage
+In het bovenstaande state machine diagram zijn de states te zien die ons programma kan aannemen. We hebben hiervoor de client bekeken. Bij het inloggen is het mogelijk dat er een naam wordt ingevuld die al in gebruik is, hier wordt dan een check voor uitgevoerd, en in het geval dat de naam al in gebruik is, moet de gebruiker een nieuwe naam invullen. \\
+Als er een naam is ingevuld die toegestaan is, wordt de gebruiker geconnect in het chatprogramma. De client bevindt zich in een luister staat, die alleen verbroken wordt als hij een pakketje ontvangt. Dan gaat de client naar de staat waarin er pakketjes behandeld worden. Ook kan de luister staat verbroken worden doordat de gebruiker een bericht of een file verstuurd. Dan verzend de client het pakketje. \\
+Er zijn een aantal pakketjes die de de client kan ontvangen. Hij kan bijvoorbeeld broadcast pakketjes ontvangen, waarin de naam van de mede chatters wordt mee gestuurd. Hiermee wordt de lijst met namen geupdate, waardoor de gebruiker ook kan zien met wie hij in een chat zit. Ook kan de client pakketjes ontvangen die een bericht bevatten. Dan komt er een prive bericht binnen, of een groepsberichtje. Deze worden dan weergeven op de GUI. Als er een file verzonden wordt door iemand anders, dan ontvangt de client berichtjes waarin dit aangegeven wordt. Ontvangt hij een berichtje dat begint met [FILE], dan weet de client dat dit het begin van een file is. De volgende pakketjes buffert hij, tot hij het berichtje krijgt dat het einde van een file verzending aangeeft. Dit is [EOF]. Als de client een NACK ontvangt, weet hij dat er een ander persoon in de chat is die zijn pakketje niet heeft ontvangen. Het sequence number van het missende pakketje wordt ook in de NACK meegestuurd, waarop de client in zijn buffer van verzonden pakketjes op zoek gaat naar dit desbetreffende pakketje en het opnieuw broadcast. Telkens als de client een pakketje heeft afgehandeld, gaat hij weer naar een luisterstaat. De client is wel in staat meerdere pakketjes tegelijkertijd te ontvangen en te behandelen, doordat de code multithreaded is gemaakt.
 
 
 \section{Encryptie}
@@ -135,7 +141,7 @@ Om dit te testen, hebben we een klasse geschreven, die een aantal berichten stuu
 \begin{itemize}
 \item Berichten worden verstuurd
 \item Berichten komen aan
-\item In de goede volgorde
+\item Berichten komen in de goede volgorde aan
 \item Pakketverlies wordt gedecteerd
 \item Verloren pakketten worden opnieuw verstuurd
 \end{itemize}
@@ -152,12 +158,12 @@ De uitkomst van de test is dat clients die elkaar niet meer kunnen bereiken, elk
 
 \subsubsection{Beveiliging}
 We verwachten van de applicatie dat de berichten of data uit pakketten versleuteld worden. \\
-Dit hebben we getest door naar het netwerk te luisteren met wireshark. Van de pakketjes die we binnen kregen konden we de header uitlezen, maar de data van het pakketjes was onleesbaar. Het is met onze encryptie zeer makkelijk om met een paar pakketjes met data de key te achterhalen, maar dat hebben we niet getest. 
+Dit hebben we getest door naar het netwerk te luisteren met wireshark. Van de pakketjes die we binnen kregen konden we de header uitlezen, maar de data van het pakketjes was onleesbaar. Het is met onze encryptie mogelijk om met een paar pakketjes met data de key te achterhalen, maar dat hebben we niet getest. 
 
 \subsubsection{Bestanden versturen}
-We verwachten van de applicatie dat bestanden verstuurd kunenn worden, en indien groter dan wat er in \'{e}\'{e}n pakket, dat het bestand verdeeld wordt over meerdere pakketten. \\
-Om dit te testen, versturen we een aantal bestanden van verschillende groottes. Deze moeten in zijn geheel aankomen. Dit kan gecontroleerd worden door het bestand te openen, en te bekijken of de inhoudt nog klopt. Dit is het makkelijkste met plaatjes, omdat hier afwijkingen makkelijker herkent worden. \\
-We hebben het oversturen van hele bestanden getest door een groot (\emph{100 MegeBytes}) plaatje te sturen. Dit hebben we een aantal keer geprobeert, en dit ging elke keer goed.\\
-We waren van plan om een methode te schrijven die de tijd die het kost om de bestanden te versturen zou meten en uitprinten. Dit is echter niet meer gelukt, en hebben we uiteindelijk geprobeert om de tijd met de hand te meten. Dit is mogelijk doordat het begin van het versturen van het bestand in de chat verschijnt, en als het bestand helemaal binnen is er een pop-up verschijnt voor het opslaan van het bestand. Dit hebben we verschillende keren gemeten, met verschillende soorten bestanden en groottes. Hiervan hebben we het gemiddelde genomen van bytes per seconde. Het gemiddelde is: %TODO
+We verwachten van de applicatie dat bestanden verstuurd kunenn worden, en indien groter dan wat er in \'{e}\'{e}n pakket past, dat het bestand verdeeld wordt over meerdere pakketten. \\
+Om dit te testen, versturen we een aantal bestanden van verschillende groottes. Deze moeten in zijn geheel aankomen. Dit kan gecontroleerd worden door het bestand te openen, en te bekijken of de inhoud nog klopt. Dit is het makkelijkste met plaatjes, omdat hier afwijkingen makkelijker herkent worden. \\
+We hebben het oversturen van hele bestanden getest door een groot (\emph{100 Megabytes}) plaatje te sturen. Dit hebben we een aantal keer geprobeerd, en dit ging elke keer goed.\\
+We waren van plan om een methode te schrijven die de tijd die het kost om de bestanden te versturen zou meten en uitprinten. Dit is echter niet meer gelukt, en hebben we uiteindelijk geprobeerd om de tijd met de hand te meten. Dit is mogelijk doordat het begin van het versturen van het bestand in de chat verschijnt, en als het bestand helemaal binnen is er een pop-up verschijnt voor het opslaan van het bestand. Dit hebben we verschillende keren gemeten, met verschillende soorten bestanden en groottes. Hiervan hebben we het gemiddelde genomen van bytes per seconde. Het gemiddelde is: 6.3 Megabyte per seconde. 
 
 \end{document}

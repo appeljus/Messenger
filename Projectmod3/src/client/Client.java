@@ -214,8 +214,8 @@ public class Client extends Thread {
 	}
 
 	/**
-	 * Een getter voor de huidige <code>Encryption3</code> van de gebruiker.
-	 * @return de huidige <code>Encryption3</code> van de gebruiker.
+	 * Een getter voor de huidige <code>Encryption</code> van de gebruiker.
+	 * @return de huidige <code>Encryption</code> van de gebruiker.
 	 */
 	public Encryption getEncryption() {
 		return encryption;
@@ -234,8 +234,6 @@ public class Client extends Thread {
 			InetAddress sourceAddress, InetAddress destinationAddress,
 			int lengte) {
 		byte[] decrypted = encryption.decryptData(message);
-		//String txt = new String((message));
-		// Of als encryption is toegevoegd:
 		String txt = new String(decrypted);
 
         /*
@@ -248,7 +246,7 @@ public class Client extends Thread {
 				this.sendPacket("[NAME_IN_USE]: " + words[1] + " STUFF");
 			}
 			if(!stillAlive.containsKey(hisNr)) {
-				System.out.println("YO " + words[1]);
+				System.out.println("Hallo " + words[1]);
 				chatwindow.updateNames(words[1]);
 				int index = chatwindow.pNameList.indexOf(words[1]);
 				nameIndex.put(hisNr, index);
@@ -284,7 +282,9 @@ public class Client extends Thread {
 				chatwindow.privateIncoming(words[2], data);
 			}
 		}
-        //TODO
+        /*
+        Als een testRTT binnenkomt, stuur terug
+         */
         else if (txt.startsWith("[TIME_STAMP_1")){
             long timeNow = System.currentTimeMillis();
             byte[] time = new byte[8];
@@ -301,6 +301,9 @@ public class Client extends Thread {
             System.arraycopy(time, 0, dataToSend, messageToSend.length, dataToSend.length);
             sendPacket(messageToSend, false);
         }
+        /*
+        Als een testRTT binnenkomt, print de tijd uit
+         */
         else if (txt.startsWith("[TIME_STAMP_2")){
             long timeNow = System.currentTimeMillis();
             byte[] time = new byte[8];
@@ -364,8 +367,7 @@ public class Client extends Thread {
 		try {
 			s.send(packetToSend);
 		} catch (IOException e) {
-			System.out.println("WE HAVE A PROBLEM AT THE TEST SEND METHOD!!");
-			System.out.println("ERMAGHERD!! D:");
+			e.printStackTrace();
 		}
 	}
 
@@ -378,8 +380,6 @@ public class Client extends Thread {
 			chatwindow.incoming(message);
 		}
 
-		//byte[] data = PacketUtils.getData((message.getBytes()), currentSeq, hopCount, myAddress, group);
-		// Of als encryption toegevoegd is:
 		byte[] data = PacketUtils.getData((encryption.encryptData(message.getBytes())),currentSeq, hopCount, myAddress, group);
 
 		DatagramPacket packetToSend = new DatagramPacket(data, data.length,
@@ -389,8 +389,7 @@ public class Client extends Thread {
 		try {
 			s.send(packetToSend);
 		} catch (IOException e) {
-			System.out.println("WE HAVE A PROBLEM AT THE SEND METHOD!!");
-			System.out.println("ERMAGHERD!! D:");
+			e.printStackTrace();
 		}
 		incrementSeqNr();
 	}
@@ -402,7 +401,7 @@ public class Client extends Thread {
 	 */
 	public void sendPacket(byte[] message, boolean isFile) {
 		byte[] data = PacketUtils.getData(message, currentSeq, hopCount,myAddress, group);
-		//byte[] data = PacketUtils.getData((encryption.encryptData(message)),currentSeq, hopCount, myAddress, group);
+
 		DatagramPacket packetToSend = new DatagramPacket(data, data.length,
 				group, port);
 		packetLog.addSendPacket(packetToSend);
@@ -410,8 +409,7 @@ public class Client extends Thread {
 		try {
 			s.send(packetToSend);
 		} catch (IOException e) {
-			System.out.println("WE HAVE A PROBLEM AT THE SEND METHOD!!");
-			System.out.println("ERMAGHERD!! D:");
+			e.printStackTrace();
 		}
 		incrementSeqNr();
 	}
@@ -425,8 +423,6 @@ public class Client extends Thread {
 			s.send(packet);
 		} catch (IOException e) {
 			e.printStackTrace();
-			System.out.println("WE HAVE A PROBLEM AT THE RESEND METHOD!!");
-			System.out.println("ERMAGHERD!! D:");
 		}
 	}
 	

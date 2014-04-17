@@ -8,9 +8,9 @@
 \contentsline {subsection}{\numberline {2.5}User interface}{6}
 \contentsline {section}{\numberline {3}State diagram}{7}
 \contentsline {section}{\numberline {4}Encryptie}{8}
-\contentsline {section}{\numberline {5}Test plan}{8}
-\contentsline {subsection}{\numberline {5.1}Test cases}{8}
-\contentsline {subsubsection}{\numberline {5.1.1}Verzenden berichten \& Pakket verlies}{8}
+\contentsline {section}{\numberline {5}Test plan}{9}
+\contentsline {subsection}{\numberline {5.1}Test cases}{9}
+\contentsline {subsubsection}{\numberline {5.1.1}Verzenden berichten \& Pakket verlies}{9}
 \contentsline {subsubsection}{\numberline {5.1.2}Multi-hop}{9}
-\contentsline {subsubsection}{\numberline {5.1.3}Beveiliging}{9}
-\contentsline {subsubsection}{\numberline {5.1.4}Bestanden versturen}{9}
+\contentsline {subsubsection}{\numberline {5.1.3}Beveiliging}{10}
+\contentsline {subsubsection}{\numberline {5.1.4}Bestanden versturen}{10}

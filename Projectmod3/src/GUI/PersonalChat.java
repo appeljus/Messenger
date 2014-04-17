@@ -154,7 +154,6 @@ public class PersonalChat extends JFrame implements KeyListener, ActionListener 
 		if (arg0.getKeyCode() == 10 && !typeArea.getText().equals("")) {
 			String txt = typeArea.getText();
 			this.addText(txt);
-			// also.. send the text
 		}
 	}
 
@@ -175,7 +174,6 @@ public class PersonalChat extends JFrame implements KeyListener, ActionListener 
 		if (arg0.getSource() == this.send) {
 			String txt = typeArea.getText();
 			this.addText(txt);
-			// also.. send the text
 		}
 	}
 

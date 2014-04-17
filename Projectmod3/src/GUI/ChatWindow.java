@@ -279,7 +279,6 @@ public class ChatWindow extends JFrame implements KeyListener, ActionListener,
 			list.addElement("From " + sender + ": " + txt);
 			textArea.ensureIndexIsVisible(list.getSize() - 1);
 		}
-		// incoming(sender + ": " + txt);
 	}
 
 	/**
