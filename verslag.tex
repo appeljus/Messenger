@@ -2,6 +2,8 @@
 
 \usepackage[dutch]{babel}
 \usepackage{amsmath}
+\usepackage{graphicx}
+
 \title{Integration Project}
 \author{Kimberly Hengst \emph{1305093}\\ Tim Sonderen \emph{1465252}\\ Kevin Hetterscheid \emph{1490443}\\ Martijn de Bijl \emph{1470108}}
 \date{\today}
@@ -93,7 +95,6 @@ Het verzenden van bestanden gaat ook via Datagram pakketjes. Echter is nu de arr
 \subsection{Pakket verlies}
 Doordat het network via Wi-Fi werkt, is de kans dat een pakket verloren gaat veel groter dan via de kabel. Om te zorgen dat deze pakketjes opnieuw worden verstuurd, gebruiken we sequence nummers en NACK's. Als een pakketje verloren gaat, ziet de applicatie dat pas als het volgende pakketje aankomt met een hoger sequence nummer dan verwacht. Als de applicatie een ander sequence nummer binnen krijgt dan verwacht, stuurt de applicatie een negative aknowledgement, een NACK. Omdat er een lange tijd tussen twee berichten kan zitten, zitten er in broadcast berichten ook een sequence nummer, waardoor elke seconde gekeken wordt naar het sequence nummer en het verwachte sequence nummer. \\
 We doen het om deze manier, omdat er alleen een bericht gestuurd wordt, als er een bericht mist. Als voor elk pakket een bericht van ontvangst zouden sturen, zou de kans op opstopping groter worden. \\
-%TODO
 
 \subsection{Priv\'{e} chat}
 Een gebruiker kan ervoor kiezen om berichten maar naar \'{e}\'{e}n andere gebruiker te sturen. Een gebruiker kan hiervoor kiezen door in de GUI /w en dan de naam van de ontvanger te typen, of op een naam in de lobby te klikken waardoor een priv\'{e} chat begint. Pakketten die alleen voor een bepaalde gebruiker bedoeld zijn worden alleen in zijn GUI weergeven. Andere gebruikers krijgen die pakketten wel binnen, maar ze worden niet standaard uitgelezen. \\
@@ -109,6 +110,10 @@ De gebruiker kan via de user interface met het programma communiceren. De interf
 \end{itemize}
 
 Via deze interface is het makkelijk met de applicatie communiceren. Alle functionaliteiten kunnen via de interface aangeroepen worden. 
+
+\section{State diagram}
+\includegraphics[angle=90, scale=0.6]{chatapplication.png}
+
 
 \section{Encryptie}
 Om te zorgen dat niet iedereen de inhoudt van de pakketten kan lezen, gebruiken we encryptie. Voor de encryptie gebruiken we caesar cipher. Dit betekent dat voor elke byte van de data bij het coderen een vooraf afgesproken getal wordt afgetrokken, en bij het decoderen dat getal er weer bij wordt opgeteld. Dit is geen sterke encryptie, en is makkelijk te kraken met bepaalde algoritmes, maar we hadden geen tijd meer om betere encryptie te implementeren. We waren van plan symetrische AES encryptie te gebruiken. Elke client zou dan een vooraf afgesproken key hebben, waarmee ze zouden kunnen coderen en decoderen. Dit is veel veiliger dan caesar cipher, omdat de data die gecodeerd wordt in blokken gecodeerd wordt. Hierdoor is de key veel lastiger te achter halen. \\
@@ -134,24 +139,25 @@ Om dit te testen, hebben we een klasse geschreven, die een aantal berichten stuu
 \item Pakketverlies wordt gedecteerd
 \item Verloren pakketten worden opnieuw verstuurd
 \end{itemize}
-
+Daarnaast is er een methode die kijkt hoelang een pakketje erover doet om van een client naar een andere te gaan en weer terug. Deze methode wordt niet alleen be\"{i}nvloed door de tijd over de connectie, maar ook het verwerken van het pakketje. Dit wordt hierin ook in meegenomen. 
 
 \subsubsection{Multi-hop}
-We verwachten dat de applicatie berichten doorstuurt, die binnen komen. \\
+We verwachten dat de applicatie berichten doorstuurt die binnen komen. \\
 Om dit te testen proberen we ons te verspreiden, zodat twee individuelen nodes elkaars berichten niet meer ontvangen, maar als een node er tussen in gaat staan, die de berichten doorstuurt, de andere twee elkaars berichten weer binnenkrijgt. Doordat de middelste node de berichten doorstuurt. \\
+De uitkomst van de test is dat clients die elkaar niet meer kunnen bereiken, elkaar nog wel via een tussenliggende client kunnen bereiken, doordat die de pakketten doorstuurt. In enkele rand gevallen gaat het echter nog niet helemaal perfect, maar dit hebben we uiteindelijk niet meer kunnen oplossen. In de volgende gevallen gaat het fout: \\
+\begin{itemize}
+\item Als een client een bestand ontvangt, maar halverwege wegloopt, blijft de client wachten op een end of file die niet meer komt.
+\item Als een client NACKS heeft gestuurd voor pakket, maar de client waaraan de NACK wordt gestuurd niet meer geconnect is, crasht de applicatie.
+\end{itemize}
 
 \subsubsection{Beveiliging}
 We verwachten van de applicatie dat de berichten of data uit pakketten versleuteld worden. \\
-Om dit te testen kijken we naar de berichten na de codering. Als het bericht niet direct hieruit gelezen kan worden, is de codering geslaagd. Het is echter zeer makkelijk als een aantal berichten onderschept zijn, om de sleutel te achterhalen. \\
+Dit hebben we getest door naar het netwerk te luisteren met wireshark. Van de pakketjes die we binnen kregen konden we de header uitlezen, maar de data van het pakketjes was onleesbaar. Het is met onze encryptie zeer makkelijk om met een paar pakketjes met data de key te achterhalen, maar dat hebben we niet getest. 
 
 \subsubsection{Bestanden versturen}
 We verwachten van de applicatie dat bestanden verstuurd kunenn worden, en indien groter dan wat er in \'{e}\'{e}n pakket, dat het bestand verdeeld wordt over meerdere pakketten. \\
-Om dit te testen, versturen we een aantal bestanden van verschillende groottes. 
-%Voor elke caye moet beschreven zijn:
-%		Wat je van het systeem verwacht
-%		Wat de preciese test opstelling is. Aan de hand hiervan moet de test herhaal kunnen worden
-%		Hoe het test scenario er uit ziet
-%		Welke performance we van het systeem verwachten
-
+Om dit te testen, versturen we een aantal bestanden van verschillende groottes. Deze moeten in zijn geheel aankomen. Dit kan gecontroleerd worden door het bestand te openen, en te bekijken of de inhoudt nog klopt. Dit is het makkelijkste met plaatjes, omdat hier afwijkingen makkelijker herkent worden. \\
+We hebben het oversturen van hele bestanden getest door een groot (\emph{100 MegeBytes}) plaatje te sturen. Dit hebben we een aantal keer geprobeert, en dit ging elke keer goed.\\
+We waren van plan om een methode te schrijven die de tijd die het kost om de bestanden te versturen zou meten en uitprinten. Dit is echter niet meer gelukt, en hebben we uiteindelijk geprobeert om de tijd met de hand te meten. Dit is mogelijk doordat het begin van het versturen van het bestand in de chat verschijnt, en als het bestand helemaal binnen is er een pop-up verschijnt voor het opslaan van het bestand. Dit hebben we verschillende keren gemeten, met verschillende soorten bestanden en groottes. Hiervan hebben we het gemiddelde genomen van bytes per seconde. Het gemiddelde is: %TODO
 
 \end{document}
