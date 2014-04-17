@@ -15,18 +15,18 @@
     <loadPerTestData>true</loadPerTestData>
     <filteredHighlight>-4144960</filteredHighlight>
     <relativeInitString>false</relativeInitString>
-    <lastProjectConfigTabSelected>0</lastProjectConfigTabSelected>
     <buildWithClover>true</buildWithClover>
+    <lastProjectConfigTabSelected>0</lastProjectConfigTabSelected>
     <periodicRefresh>false</periodicRefresh>
     <notCoveredStripe>-65536</notCoveredStripe>
     <projectRebuild class="com.atlassian.clover.idea.config.ProjectRebuild">ASK</projectRebuild>
     <flushPolicy>0</flushPolicy>
-    <viewIncludeAnnotation>true</viewIncludeAnnotation>
     <alwaysExpandTestClasses>false</alwaysExpandTestClasses>
+    <viewIncludeAnnotation>true</viewIncludeAnnotation>
     <languageLevel>1.8 - lambda functions, virtual extension methods.</languageLevel>
     <manualInitString null="true" />
-    <autoRefreshInterval>2000</autoRefreshInterval>
     <showInline>true</showInline>
+    <autoRefreshInterval>2000</autoRefreshInterval>
     <flushInterval>5000</flushInterval>
     <showSummaryInToolwindow>true</showSummaryInToolwindow>
     <autoRefresh>true</autoRefresh>
@@ -36,8 +36,8 @@
     <alwaysCollapseTestClasses>false</alwaysCollapseTestClasses>
     <excludes null="true" />
     <filteredStripe>-12566464</filteredStripe>
-    <calculateTestCoverage>true</calculateTestCoverage>
     <instrumentTests>true</instrumentTests>
+    <calculateTestCoverage>true</calculateTestCoverage>
     <outOfDateHighlight>-32</outOfDateHighlight>
     <notCoveredHighlight>-341816</notCoveredHighlight>
     <hideFullyCovered>false</hideFullyCovered>
@@ -47,17 +47,17 @@
     <viewCoverage>true</viewCoverage>
     <contextFilterSpec />
     <coveredStripe>-16711936</coveredStripe>
-    <autoViewInCloudReport>true</autoViewInCloudReport>
     <autoScroll>true</autoScroll>
-    <useGeneratedInitString>true</useGeneratedInitString>
+    <autoViewInCloudReport>true</autoViewInCloudReport>
     <showGutter>true</showGutter>
-    <dumpInstrumentedSources>false</dumpInstrumentedSources>
+    <useGeneratedInitString>true</useGeneratedInitString>
     <testCaseLayout class="com.atlassian.clover.idea.config.TestCaseLayout">TEST_CASES</testCaseLayout>
+    <dumpInstrumentedSources>false</dumpInstrumentedSources>
     <failedCoveredStripe>-14336</failedCoveredStripe>
     <regexpContexts class="java.util.ArrayList" />
     <showErrorMarks>true</showErrorMarks>
-    <flattenPackages>false</flattenPackages>
     <autoScrollFromSource>false</autoScrollFromSource>
+    <flattenPackages>false</flattenPackages>
     <showTooltips>true</showTooltips>
     <showSummaryInToolbar>true</showSummaryInToolbar>
     <span>0</span>
@@ -120,7 +120,35 @@
     <favorites_list name="Projectmod3" />
   </component>
   <component name="FileEditorManager">
-    <leaf />
+    <leaf>
+      <file leaf-file-name="Client.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/client/Client.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="310" column="40" selection-start="8730" selection-end="8730" vertical-scroll-proportion="0.0" vertical-offset="4308" max-vertical-offset="9129">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ChatWindow.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/GUI/ChatWindow.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="243" column="29" selection-start="6703" selection-end="6703" vertical-scroll-proportion="0.86252046" vertical-offset="3400" max-vertical-offset="7990">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="PacketUtils.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/client/PacketUtils.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="8" column="40" selection-start="189" selection-end="189" vertical-scroll-proportion="0.0" vertical-offset="85" max-vertical-offset="1615">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
   </component>
   <component name="FindManager">
     <FindUsagesManager>
@@ -144,16 +172,17 @@
         <option value="$PROJECT_DIR$/src/client/Encryption3.java" />
         <option value="$PROJECT_DIR$/src/client/Encryption2.java" />
         <option value="$PROJECT_DIR$/src/client/Encryption.java" />
-        <option value="$PROJECT_DIR$/src/client/Client.java" />
         <option value="$PROJECT_DIR$/src/client/SendFile.java" />
+        <option value="$PROJECT_DIR$/src/client/Client.java" />
+        <option value="$PROJECT_DIR$/src/GUI/ChatWindow.java" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
     <option name="x" value="-8" />
     <option name="y" value="-8" />
-    <option name="width" value="1696" />
-    <option name="height" value="1026" />
+    <option name="width" value="1382" />
+    <option name="height" value="744" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
     <OptionsSetting value="true" id="Add" />
@@ -182,6 +211,7 @@
     </navigator>
     <panes>
       <pane id="Scope" />
+      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -252,7 +282,6 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -404,6 +433,19 @@
       <option name="PORT" value="5005" />
       <method />
     </configuration>
+    <configuration default="true" type="Applet" factoryName="Applet">
+      <module name="" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="HTML_FILE_NAME" />
+      <option name="HTML_USED" value="false" />
+      <option name="WIDTH" value="400" />
+      <option name="HEIGHT" value="300" />
+      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
+      <option name="VM_PARAMETERS" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <method />
+    </configuration>
     <configuration default="true" type="TestNG" factoryName="TestNG">
       <module name="" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
@@ -429,19 +471,6 @@
       <envs />
       <properties />
       <listeners />
-      <method />
-    </configuration>
-    <configuration default="true" type="Applet" factoryName="Applet">
-      <module name="" />
-      <option name="MAIN_CLASS_NAME" />
-      <option name="HTML_FILE_NAME" />
-      <option name="HTML_USED" value="false" />
-      <option name="WIDTH" value="400" />
-      <option name="HEIGHT" value="300" />
-      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
-      <option name="VM_PARAMETERS" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
       <method />
     </configuration>
     <configuration default="true" type="Application" factoryName="Application">
@@ -533,21 +562,19 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1696" height="1026" extended-state="7" />
-    <editor active="false" />
+    <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32967034" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3987441" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32810047" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Cloverage" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Metrics" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -555,14 +582,16 @@
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.15357143" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.18887262" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33124018" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Test Runs" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32967034" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32810047" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Module Dependencies" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.329429" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout>
     <layout-to-restore>
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -574,8 +603,8 @@
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.1727672" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32810047" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32810047" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Test Runs" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -588,8 +617,8 @@
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32967034" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
       <window_info id="Metrics" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout-to-restore>
   </component>
@@ -619,52 +648,45 @@
     <option name="showOnlyWarnings" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/client/Encryption3.java">
+    <entry file="file://$PROJECT_DIR$/src/client/Client.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="16" column="18" selection-start="466" selection-end="466" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1989">
+        <state line="335" column="46" selection-start="9145" selection-end="9145" vertical-scroll-proportion="0.0" vertical-offset="5695" max-vertical-offset="8687">
           <folding />
         </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/client/Encryption3.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="16" column="18" selection-start="466" selection-end="466" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1989" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/client/Client.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="37" column="22" selection-start="1003" selection-end="1003" vertical-scroll-proportion="0.0" vertical-offset="629" max-vertical-offset="5066">
-          <folding>
-            <element signature="e#1142#1160#0" expanded="true" />
-            <element signature="e#1283#1301#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/client/Encryption3.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="16" column="18" selection-start="466" selection-end="466" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1819">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/client/Encryption3.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="16" column="18" selection-start="466" selection-end="466" vertical-scroll-proportion="0.0" vertical-offset="255" max-vertical-offset="1989">
-          <folding />
-        </state>
+        <state line="16" column="18" selection-start="466" selection-end="466" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1819" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/client/Encryption3.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="16" column="18" selection-start="466" selection-end="466" vertical-scroll-proportion="0.0" vertical-offset="255" max-vertical-offset="1989" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/client/Client.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="28" column="44" selection-start="720" selection-end="720" vertical-scroll-proportion="0.0" vertical-offset="476" max-vertical-offset="4794">
-          <folding>
-            <element signature="e#1142#1160#0" expanded="true" />
-            <element signature="e#1283#1301#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/client/ReceiveFile.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="33" column="56" selection-start="801" selection-end="801" vertical-scroll-proportion="0.0" vertical-offset="561" max-vertical-offset="901">
-          <folding />
-        </state>
+        <state line="33" column="56" selection-start="801" selection-end="801" vertical-scroll-proportion="0.0" vertical-offset="561" max-vertical-offset="901" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Utils/messageUtils.java">
@@ -680,10 +702,7 @@
     <entry file="file://$PROJECT_DIR$/src/client/Client.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="205" column="35" selection-start="6113" selection-end="6113" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="5219">
-          <folding>
-            <element signature="e#1142#1160#0" expanded="true" />
-            <element signature="e#1283#1301#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -700,40 +719,28 @@
     <entry file="file://$PROJECT_DIR$/src/client/Client.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="24" column="36" selection-start="566" selection-end="566" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="5525">
-          <folding>
-            <element signature="e#1142#1160#0" expanded="true" />
-            <element signature="e#1283#1301#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/client/Client.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="256" column="33" selection-start="7776" selection-end="7776" vertical-scroll-proportion="0.0" vertical-offset="170" max-vertical-offset="5423">
-          <folding>
-            <element signature="e#1142#1160#0" expanded="true" />
-            <element signature="e#1283#1301#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/client/Client.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="27" column="4" selection-start="624" selection-end="750" vertical-scroll-proportion="0.0" vertical-offset="170" max-vertical-offset="5134">
-          <folding>
-            <element signature="e#1142#1160#0" expanded="true" />
-            <element signature="e#1283#1301#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/client/Client.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="230" column="76" selection-start="6940" selection-end="6940" vertical-scroll-proportion="0.0" vertical-offset="136" max-vertical-offset="5083">
-          <folding>
-            <element signature="e#1142#1160#0" expanded="true" />
-            <element signature="e#1283#1301#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -745,30 +752,21 @@
     <entry file="file://$PROJECT_DIR$/src/client/Client.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="300" column="22" selection-start="8661" selection-end="8661" vertical-scroll-proportion="0.0" vertical-offset="102" max-vertical-offset="5525">
-          <folding>
-            <element signature="e#1142#1160#0" expanded="true" />
-            <element signature="e#1283#1301#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/client/Client.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="336" column="1" selection-start="8802" selection-end="8802" vertical-scroll-proportion="0.0" vertical-offset="272" max-vertical-offset="5797">
-          <folding>
-            <element signature="e#1142#1160#0" expanded="true" />
-            <element signature="e#1283#1301#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/client/Client.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="15" column="13" selection-start="441" selection-end="441" vertical-scroll-proportion="0.0" vertical-offset="255" max-vertical-offset="4641">
-          <folding>
-            <element signature="e#1142#1160#0" expanded="true" />
-            <element signature="e#1283#1301#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -782,10 +780,7 @@
     <entry file="file://$PROJECT_DIR$/src/client/Client.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="15" column="13" selection-start="441" selection-end="441" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="4641">
-          <folding>
-            <element signature="e#1142#1160#0" expanded="true" />
-            <element signature="e#1283#1301#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -799,10 +794,7 @@
     <entry file="file://$PROJECT_DIR$/src/client/Client.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="13" column="13" selection-start="259" selection-end="259" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2261">
-          <folding>
-            <element signature="e#1142#1160#0" expanded="true" />
-            <element signature="e#1283#1301#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -816,10 +808,7 @@
     <entry file="file://$PROJECT_DIR$/src/client/Client.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="13" column="13" selection-start="259" selection-end="259" vertical-scroll-proportion="0.0" vertical-offset="221" max-vertical-offset="2261">
-          <folding>
-            <element signature="e#1142#1160#0" expanded="true" />
-            <element signature="e#1283#1301#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -833,70 +822,49 @@
     <entry file="file://$PROJECT_DIR$/src/client/Client.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="11" column="23" selection-start="244" selection-end="244" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2261">
-          <folding>
-            <element signature="e#1142#1160#0" expanded="true" />
-            <element signature="e#1283#1301#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/client/Client.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="11" column="26" selection-start="202" selection-end="202" vertical-scroll-proportion="0.0" vertical-offset="187" max-vertical-offset="1445">
-          <folding>
-            <element signature="e#1142#1160#0" expanded="true" />
-            <element signature="e#1283#1301#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/client/Client.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="9" column="26" selection-start="177" selection-end="177" vertical-scroll-proportion="0.0" vertical-offset="153" max-vertical-offset="1530">
-          <folding>
-            <element signature="e#1142#1160#0" expanded="true" />
-            <element signature="e#1283#1301#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/client/Client.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="9" column="26" selection-start="162" selection-end="162" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1479">
-          <folding>
-            <element signature="e#1142#1160#0" expanded="true" />
-            <element signature="e#1283#1301#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/client/Client.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="72" column="21" selection-start="1567" selection-end="1567" vertical-scroll-proportion="0.0" vertical-offset="1224" max-vertical-offset="1496">
-          <folding>
-            <element signature="e#1142#1160#0" expanded="true" />
-            <element signature="e#1283#1301#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/client/Client.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="19" column="5" selection-start="396" selection-end="396" vertical-scroll-proportion="0.0" vertical-offset="323" max-vertical-offset="884">
-          <folding>
-            <element signature="e#1142#1160#0" expanded="true" />
-            <element signature="e#1283#1301#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/client/Client.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="27" column="9" selection-start="553" selection-end="553" vertical-scroll-proportion="0.0" vertical-offset="459" max-vertical-offset="884">
-          <folding>
-            <element signature="e#1142#1160#0" expanded="true" />
-            <element signature="e#1283#1301#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -913,13 +881,6 @@
     <entry file="jar://C:/Program Files/Java/jdk1.7.0_45/src.zip!/java/awt/Component.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="6462" column="0" selection-start="235680" selection-end="235680" vertical-scroll-proportion="0.3325" vertical-offset="107426" max-vertical-offset="169184" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/GUI/ChatWindow.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="71" column="0" selection-start="1548" selection-end="1548" vertical-scroll-proportion="0.3325" vertical-offset="836" max-vertical-offset="6409">
-          <folding />
-        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/client/LogChecker.java">
@@ -947,23 +908,12 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/client/ReceiveFile.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="15" column="40" selection-start="339" selection-end="339" vertical-scroll-proportion="0.11590909" vertical-offset="0" max-vertical-offset="1462">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/client/PacketUtils.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="8" column="40" selection-start="189" selection-end="189" vertical-scroll-proportion="0.09518477" vertical-offset="0" max-vertical-offset="1615">
-          <folding />
-        </state>
+        <state line="15" column="40" selection-start="339" selection-end="339" vertical-scroll-proportion="0.11590909" vertical-offset="0" max-vertical-offset="1462" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/client/PacketLog.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="12" column="40" selection-start="297" selection-end="297" vertical-scroll-proportion="0.09518477" vertical-offset="0" max-vertical-offset="2278">
-          <folding />
-        </state>
+        <state line="12" column="40" selection-start="297" selection-end="297" vertical-scroll-proportion="0.09518477" vertical-offset="0" max-vertical-offset="2278" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/client/Encryption.java">
@@ -975,18 +925,27 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/client/Encryption3.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="18" column="23" selection-start="494" selection-end="494" vertical-scroll-proportion="0.15454546" vertical-offset="0" max-vertical-offset="1819">
+        <state line="18" column="23" selection-start="494" selection-end="494" vertical-scroll-proportion="0.15454546" vertical-offset="0" max-vertical-offset="1819" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/client/PacketUtils.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="8" column="40" selection-start="189" selection-end="189" vertical-scroll-proportion="0.0" vertical-offset="1004" max-vertical-offset="1615">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/client/Client.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="335" column="46" selection-start="9145" selection-end="9145" vertical-scroll-proportion="-1.0257559" vertical-offset="6084" max-vertical-offset="8687">
-          <folding>
-            <element signature="e#1142#1160#0" expanded="true" />
-            <element signature="e#1283#1301#0" expanded="true" />
-          </folding>
+        <state line="310" column="40" selection-start="8730" selection-end="8730" vertical-scroll-proportion="0.0" vertical-offset="4308" max-vertical-offset="9129">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/GUI/ChatWindow.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="243" column="29" selection-start="6703" selection-end="6703" vertical-scroll-proportion="0.86252046" vertical-offset="3400" max-vertical-offset="7990">
+          <folding />
         </state>
       </provider>
     </entry>

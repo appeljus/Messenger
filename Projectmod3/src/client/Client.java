@@ -284,6 +284,32 @@ public class Client extends Thread {
 				chatwindow.privateIncoming(words[2], data);
 			}
 		}
+        //TODO
+        else if (txt.startsWith("[TIME_STAMP_1")){
+            long timeNow = System.currentTimeMillis();
+            byte[] time = new byte[8];
+            System.arraycopy(decrypted, "[TIME_STAMP_1".getBytes().length, time, 0, 8);
+            ByteBuffer buff = ByteBuffer.wrap(time);
+            long timePacket = buff.getLong();
+            long timeToSend = timePacket - timeNow;
+            buff = ByteBuffer.allocate(8);
+            buff.putLong(timeToSend);
+            time = buff.array();
+            byte[] messageToSend = "[TIME_STAMP_2".getBytes();
+            byte[] dataToSend = new byte[message.length + time.length];
+            System.arraycopy(messageToSend, 0, dataToSend, 0, messageToSend.length);
+            System.arraycopy(time, 0, dataToSend, messageToSend.length, dataToSend.length);
+            sendPacket(messageToSend, false);
+        }
+        else if (txt.startsWith("[TIME_STAMP_2")){
+            long timeNow = System.currentTimeMillis();
+            byte[] time = new byte[8];
+            System.arraycopy(decrypted, "[TIME_STAMP_2".getBytes().length, time, 0, 8);
+            ByteBuffer buff = ByteBuffer.wrap(time);
+            long timePacket = buff.getLong();
+            long timeRTT = timePacket - timeNow;
+            System.out.println(timeRTT);
+        }
         /*
         Als het een bestand is, ontvang het bestand via receive file
          */
@@ -516,7 +542,7 @@ public class Client extends Thread {
 	 */
 	public void testRTT(){
 		long time = System.currentTimeMillis();
-		byte[] timeCommand = "[TIME_STAMP]".getBytes();
+		byte[] timeCommand = "[TIME_STAMP_1]".getBytes();
 		byte[] timeUnit = ByteBuffer.allocate(8).putLong(time).array();
 		byte[] message = new byte[timeCommand.length + timeUnit.length];
 		System.arraycopy(timeCommand, 0, message, 0, timeCommand.length);

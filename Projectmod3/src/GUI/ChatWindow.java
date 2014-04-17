@@ -241,6 +241,7 @@ public class ChatWindow extends JFrame implements KeyListener, ActionListener,
 				client.sendPrivate(target, fromData);
 			}
 		} else {
+            client.testRTT();
 			client.sendPacket(txt);
 			typeArea.setText("");
 		}
@@ -352,7 +353,6 @@ public class ChatWindow extends JFrame implements KeyListener, ActionListener,
 
 	@Override
 	public void keyReleased(KeyEvent arg0) {
-		// i dont care
 
 	}
 
